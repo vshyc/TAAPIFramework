@@ -1,0 +1,78 @@
+global:
+  namespace: # please specify your teams k8s namespace
+
+base:
+  replicaCount: 1
+
+  image:
+    repository: "{{ .Values.global.tipicoRepo }}/ta-limit-service"
+    pullPolicy: Always
+
+  config:
+    type: volume
+    mountPath: /srv/config/application.yml
+    subPath: application.yml
+    data:
+      application.yml: |-
+        # extend your application.yml at your convenience
+        # it's the base config for ALL environments, including production. So be careful.
+        # if you need relaxed settings on you team environment, please do so in the specific configuration
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  # only enable if service needs to be accessed from outside k8s cluster
+  ingress:
+    enabled: false
+    path: # specify your service main endpoint here
+    annotations:
+      nginx.ingress.kubernetes.io/add-base-url: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+  prometheus:
+    scrape: true
+    target: pod
+    port: 8081
+    path: /-system/prometheus
+
+  horizontalPodAutoscaler:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 70
+
+  logging:
+    json: true
+    app: true
+
+  healthCheck:
+    enabled: true
+    path: /-system/health/liveness
+    port: 8081
+    initialDelaySeconds: 10
+    timeoutSeconds: 5
+
+  readinessProbe:
+    enabled: true
+    type: httpGet
+    path: /-system/health/readiness
+    port: 8081
+    initialDelaySeconds: 15
+    timeoutSeconds: 5
+
+  allowIncomingTraffic:
+    - port: 8080
+      protocol: TCP
+    - port: 8081
+      protocol: TCP
+
+  allowOutgoingTraffic: {}
+
+  resources: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
