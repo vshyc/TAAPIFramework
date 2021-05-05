@@ -1,6 +1,0 @@
-apiVersion: v1
-description: Test automation for limit service
-name: ta-limit-service
-maintainers:
-  - name: oceans11
-    email: # Please add maintainers email here

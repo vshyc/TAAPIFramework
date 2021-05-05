@@ -1,5 +1,0 @@
-dependencies:
-  - name: base
-    version: 1.2.1  # please check if there's a newer version available
-    repository: '@tipico-bitbucket-public'
-    setImageTag: true
