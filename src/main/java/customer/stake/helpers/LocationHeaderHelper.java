@@ -2,14 +2,13 @@ package customer.stake.helpers;
 
 import customer.stake.properties.EnvConfig;
 import io.restassured.response.Response;
-import org.aeonbits.owner.ConfigFactory;
 import org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
 
 public class LocationHeaderHelper {
 
-    EnvConfig envConfig= ConfigFactory.create(EnvConfig.class);
+    private EnvConfig envConfig = HelpersConfig.envConfig;
 
     public String getLocationHeaderForNewLimit(String customerUUID){
         Response response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).
