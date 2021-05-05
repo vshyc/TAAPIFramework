@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: ta-limit-service
+
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+
+  jmx:
+    enabled: true
+
+server:
+  port: 8080
+  shutdown: graceful
+  tomcat:
+    mbeanregistry:
+      enabled: true
+
+logging:
+  file:
+    name: logs/ta-limit-service.log
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: /-system
+      exposure:
+        include: ["info", "health", "loggers", "prometheus"]
