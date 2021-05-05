@@ -1,12 +1,9 @@
 package limit.service.tests;
 
 import configuration.BaseTest;
-import customer.stake.properties.EnvConfig;
 import io.restassured.response.Response;
-import customer.stake.helpers.LocationHeaderHelper;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
-import org.aeonbits.owner.ConfigFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

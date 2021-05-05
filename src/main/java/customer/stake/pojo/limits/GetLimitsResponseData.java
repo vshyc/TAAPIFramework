@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Builder
-public class GetLimitsResponseData {
+public class GetLimitsResponseData{
 
     private List<LimitsResponseData> limits;
 
