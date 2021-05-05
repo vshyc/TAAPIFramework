@@ -1,7 +1,10 @@
-pipeline {
-    agent any
+@Library(['jenkins-kubernetes-library']) _
+import com.tipico.config.ChartConfig
     JDK_INSTANCE = env.JDK_INSTANCE ?: 'JDK 8 AUTO'
     MAVEN_INSTANCE = env.MAVEN_INSTANCE ?: 'Maven 3.6.2'
+
+pipeline {
+    agent any
     stages {
         stage('Build test code') {
             steps {
