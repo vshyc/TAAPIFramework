@@ -8,7 +8,7 @@ import static io.restassured.RestAssured.given;
 
 public class LocationHeaderHelper {
 
-    private EnvConfig envConfig = HelpersConfig.envConfig;
+    private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     public String getLocationHeaderForNewLimit(String customerUUID){
         Response response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).

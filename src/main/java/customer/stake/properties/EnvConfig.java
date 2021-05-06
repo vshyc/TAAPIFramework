@@ -3,8 +3,9 @@ package customer.stake.properties;
 
 import org.aeonbits.owner.Config;
 
-@Config.Sources("classpath:EnvConfig.properties")
+@Config.Sources("classpath:${file}")
 public interface EnvConfig extends Config {
+
 
     @Key("BASE_O11_URI")
     String baseUri();

@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 
 public class OauthHelper {
 
-    private EnvConfig envConfig = HelpersConfig.envConfig;
+    private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     public String getApplicationToken(){
         JsonPath response = given().baseUri(envConfig.authBaseUri()).basePath(envConfig.authBasePath()).

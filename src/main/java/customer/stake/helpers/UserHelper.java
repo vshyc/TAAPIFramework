@@ -17,7 +17,7 @@ public class UserHelper {
     private UserDataForCRFES germanUserForCRFES = new UserDataGenerator().createGermanUserInCRFES();
     private UserDataForWebTestAPI germanUserForWebTestApi = new UserDataGenerator().createGermanUserForWebTestAPI();
     private JsonPath response;
-    private EnvConfig envConfig = HelpersConfig.envConfig;
+    private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     public String createGermanUserAndGetUuid(){
         return createGermanUserInWebTestApi().getString("tipicoCustomerId");

@@ -4,24 +4,27 @@ import customer.stake.enums.OwnerEnum;
 import customer.stake.pojo.limits.GetLimitsResponseData;
 import customer.stake.pojo.limits.LimitsResponseData;
 import customer.stake.properties.EnvConfig;
+import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
 public class GetLimitsHelper {
 
-    private EnvConfig envConfig = HelpersConfig.envConfig;
+    private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     public LimitsResponseData checkIfLimitExistForUser(String uuid, OwnerEnum limitOwner, String limitType) {
 
-        GetLimitsResponseData responseData = given().auth().oauth2(new OauthHelper().getApplicationToken())
-                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).when().get("customers/" + uuid + "/limits/").then()
-                .statusCode(200).extract().as(GetLimitsResponseData.class);
+        Response responseData = given().auth().oauth2(new OauthHelper().getApplicationToken())
+                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).when().get("customers/" + uuid + "/limits/");
+        LimitsResponseData data;
 
-        return responseData.getLimits().stream()
+        data =  (responseData.getStatusCode() == 200) ?
+         responseData.then().extract().as(GetLimitsResponseData.class).getLimits().stream()
                 .filter(response -> limitOwner.toString().equals(response.getOwner()))
                 .filter(response -> limitType.equals(response.getType()))
                 .findAny()
-                .orElse(null);
+                .orElse(null) :  null;
+        return data;
     }
 
 

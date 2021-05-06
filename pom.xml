@@ -127,6 +127,7 @@
                     <!--Nowy parametr określający gdzie maven-surefire-plugin ma zapisywać wyniki z testów-->
                     <systemPropertyVariables>
                         <allure.results.directory>${basedir}/target/allure-results</allure.results.directory>
+                        <env>EnvConfig.properties</env>
                     </systemPropertyVariables>
                 </configuration>
                 <!--Dodanie dodatkowych zależności do maven-surefire-plugin w postaci biblioteki aspectjweaver-->

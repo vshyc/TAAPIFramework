@@ -14,6 +14,7 @@ public class BaseTest {
 
     @BeforeAll
     public static void baseTestSetUp() {
+        ConfigFactory.setProperty("file","${env}");
         envConfig = ConfigFactory.create(EnvConfig.class);
         RestAssured.baseURI = envConfig.baseUri();
         RestAssured.basePath = envConfig.basePath();
