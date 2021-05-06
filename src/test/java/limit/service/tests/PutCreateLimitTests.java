@@ -11,6 +11,8 @@ import customer.stake.rop.PutCreateLimitEndpoint;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
@@ -24,7 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import static io.restassured.RestAssured.given;
 
-
+@Epic("Create Limits Epic")
+@Feature("Put endpoint tests Features")
 public class PutCreateLimitTests extends BaseTest {
     private String limitUuid =null;
     private UserHelper userHelper;
