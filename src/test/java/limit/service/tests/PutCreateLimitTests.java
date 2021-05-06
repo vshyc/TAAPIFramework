@@ -11,6 +11,8 @@ import customer.stake.rop.PutCreateLimitEndpoint;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
 import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,12 +32,15 @@ public class PutCreateLimitTests extends BaseTest {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @BeforeEach
+    @Step("Create a user for test ")
     public void setUp(){
         userHelper = new UserHelper();
         uuid = userHelper.createGermanUserAndGetUuid();
     }
 
     @DisplayName("Create Limits in Limit service with application token")
+    @Story("Create Limits in Limit service with application token with parameters ")
+    @Description("Creating New Limit's in Limit Service if not exist")
     @ParameterizedTest
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitsTestWithApplicationTokenTest(String type, OwnerEnum owner,
@@ -69,6 +74,7 @@ public class PutCreateLimitTests extends BaseTest {
     }
 
     @DisplayName("Create Limits in Limit service with user token")
+    @Story("Create Limits in Limit service with user token with parameters ")
     @Description("Creating New Limit's in Limit Service if not exist")
     @ParameterizedTest
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
@@ -102,6 +108,9 @@ public class PutCreateLimitTests extends BaseTest {
         }
     }
 
+    @DisplayName("Create and update Limit")
+    @Story("Create and update Limit ")
+    @Description("Create and update Limit")
     @Test
     public void createAndUpdateLimitTest(){
         LimitCreationData body = LimitCreationData.builder().

@@ -4,6 +4,7 @@ import customer.stake.data.generators.UserDataGenerator;
 import customer.stake.pojo.helpers.UserDataForCRFES;
 import customer.stake.pojo.helpers.UserDataForWebTestAPI;
 import customer.stake.properties.EnvConfig;
+import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.aeonbits.owner.ConfigFactory;
@@ -30,6 +31,7 @@ public class UserHelper {
         return germanUserForWebTestApi.getPassword();
     }
 
+    @Step("Sending a call to CRFES to create a user")
     private JsonPath createGermanUserInCRFES(){
 
             response =  given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.crfesPath()).contentType(ContentType.JSON).
@@ -38,7 +40,7 @@ public class UserHelper {
                     .statusCode(HttpStatus.SC_CREATED).extract().jsonPath();
         return response;
     }
-
+    @Step("Sending a call to WebtestAPI to create a user")
     private JsonPath createGermanUserInWebTestApi(){
         response =  given().baseUri(envConfig.holderUrl()).basePath(envConfig.webTestApiPath())
                 .contentType(ContentType.JSON).

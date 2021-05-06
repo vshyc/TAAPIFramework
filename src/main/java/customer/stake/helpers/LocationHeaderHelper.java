@@ -1,6 +1,7 @@
 package customer.stake.helpers;
 
 import customer.stake.properties.EnvConfig;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
@@ -10,6 +11,7 @@ public class LocationHeaderHelper {
 
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
+    @Step("Calling CSS to get location header for creating a new limit")
     public String getLocationHeaderForNewLimit(String customerUUID){
         Response response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).
                 auth().oauth2(new OauthHelper().getApplicationToken())
