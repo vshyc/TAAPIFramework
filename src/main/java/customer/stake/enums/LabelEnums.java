@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum LabelEnums {
 
-    ALL("ALL"),
-    TIPICO("TIPICO"),
-    GAMES("GAMES"),
-    MYSINO("MYSINO");
+    ALL("all"),
+    TIPICO("tipico"),
+    GAMES("games"),
+    MYSINO("mysino");
 
     private String label;
 
