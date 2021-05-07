@@ -4,7 +4,6 @@ import customer.stake.helpers.HelpersConfig;
 import customer.stake.pojo.counters.CustomerFiguresResponse;
 import customer.stake.properties.EnvConfig;
 import customer.stake.request.configuration.RequestConfigurationBuilder;
-import org.aeonbits.owner.ConfigFactory;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;

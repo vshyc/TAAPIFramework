@@ -6,11 +6,7 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.BeforeAll;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class BaseTest {

@@ -7,7 +7,6 @@ import io.restassured.response.Response;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
