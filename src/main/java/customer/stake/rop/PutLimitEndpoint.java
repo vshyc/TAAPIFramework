@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 
 import static io.restassured.RestAssured.given;
 
-public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint, LimitsResponseData>{
+public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsResponseData>{
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
@@ -24,7 +24,7 @@ public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint,
     }
 
 
-    public PutCreateLimitEndpoint sendRequestToCreateNewLimit(LimitCreationData body, String oauthToken, String uuid) {
+    public PutLimitEndpoint sendRequestToCreateNewLimit(LimitCreationData body, String oauthToken, String uuid) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
         response = given().baseUri(envConfig.baseUri()).basePath(location)
                 .contentType(ContentType.JSON)
@@ -32,7 +32,7 @@ public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint,
                 .body(body).when().put();
         return this;
     }
-    public PutCreateLimitEndpoint sendRequestToUpdateLimit(LimitCreationData body, String oauthToken, String uuid){
+    public PutLimitEndpoint sendRequestToUpdateLimit(LimitCreationData body, String oauthToken, String uuid){
 
         GetLimitsResponseData getResponse = given().auth().oauth2(new OauthHelper().getApplicationToken())
                 .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).when().get("customers/{customerUuid}/limits/",uuid).then()

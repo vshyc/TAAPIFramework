@@ -1,0 +1,16 @@
+type,owner,label,product,value,interval,updatedValue
+deposit,AML,TIPICO,sports,900.0,MONTH,1000
+deposit,AML,GAMES,sports,900.0,MONTH,1000
+deposit,AML,MYSINO,sports,900.0,MONTH,1000
+turnover,AML,TIPICO,sports,900.0,MONTH,1000
+turnover,AML,GAMES,sports,900.0,MONTH,1000
+turnover,AML,MYSINO,sports,900.0,MONTH,1000
+loss,AML,TIPICO,sports,900.0,MONTH,1000
+loss,AML,GAMES,sports,900.0,MONTH,1000
+loss,AML,MYSINO,sports,900.0,MONTH,1000
+deposit,AML,TIPICO,games,900.0,MONTH,1000
+deposit,AML,GAMES,games,900.0,MONTH,1000
+deposit,AML,MYSINO,games,900.0,MONTH,1000
+turnover,AML,TIPICO,games,900.0,MONTH,1000
+turnover,AML,GAMES,games,900.0,MONTH,1000
+turnover,AML,MYSINO,games,900.0,MONTH,1000

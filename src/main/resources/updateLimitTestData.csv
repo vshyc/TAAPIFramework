@@ -5,7 +5,6 @@ deposit,PERSONAL,MYSINO,sports,900.0,MONTH,800
 deposit,AML,TIPICO,sports,900.0,MONTH,800
 deposit,AML,GAMES,sports,900.0,MONTH,800
 deposit,AML,MYSINO,sports,900.0,MONTH,800
-turnover,PERSONAL,TIPICO,sports,900.0,MONTH,800
 turnover,PERSONAL,GAMES,sports,900.0,MONTH,800
 turnover,PERSONAL,MYSINO,sports,900.0,MONTH,800
 turnover,AML,TIPICO,sports,900.0,MONTH,800
