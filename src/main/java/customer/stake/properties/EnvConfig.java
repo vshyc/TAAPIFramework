@@ -7,6 +7,9 @@ import org.aeonbits.owner.Config;
 public interface EnvConfig extends Config {
 
 
+    @DefaultValue("OCEANS11")
+    String env();
+
     @Key("BASE_O11_URI")
     String baseUri();
 

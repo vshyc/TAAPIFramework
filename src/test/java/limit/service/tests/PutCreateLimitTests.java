@@ -4,7 +4,6 @@ import configuration.BaseTest;
 import customer.stake.enums.LabelEnums;
 import customer.stake.enums.OwnerEnum;
 import customer.stake.helpers.GetLimitsHelper;
-import customer.stake.pojo.limits.GetLimitsResponseData;
 import customer.stake.pojo.limits.LimitCreationData;
 import customer.stake.pojo.limits.LimitsResponseData;
 import customer.stake.rop.PutCreateLimitEndpoint;
@@ -23,8 +22,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static io.restassured.RestAssured.given;
 
 @Epic("Create Limits Epic")
 @Feature("Put endpoint tests Features")
