@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 @Epic("Create Limits Epic")
 @Feature("Put endpoint tests Features")
+@DisplayName("PUT Endpoint for Limit service Tests")
 public class PutCreateLimitTests extends BaseTest {
     private String limitUuid =null;
     private UserHelper userHelper;
@@ -37,11 +38,12 @@ public class PutCreateLimitTests extends BaseTest {
         userHelper = new UserHelper();
         uuid = userHelper.createGermanUserAndGetUuid();
     }
-
+    @Feature("Put endpoint tests Features")
     @DisplayName("Create Limits in Limit service with application token")
     @Story("Create Limits in Limit service with application token with parameters ")
     @Description("Creating New Limit's in Limit Service if not exist")
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} -> Creating a limit with application token and with type={0} , owner={1}, " +
+            "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitsTestWithApplicationTokenTest(String type, OwnerEnum owner,
                                                                LabelEnums label,String product,
@@ -76,7 +78,8 @@ public class PutCreateLimitTests extends BaseTest {
     @DisplayName("Create Limits in Limit service with user token")
     @Story("Create Limits in Limit service with user token with parameters ")
     @Description("Creating New Limit's in Limit Service if not exist")
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
+            "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitsTestWithUserTokenTest(String type, OwnerEnum owner,
                                                         LabelEnums label,String product,

@@ -1,9 +1,9 @@
 package customer.stake.rop;
 
+import customer.stake.helpers.HelpersConfig;
 import customer.stake.pojo.counters.CustomerFiguresResponse;
 import customer.stake.properties.EnvConfig;
 import customer.stake.request.configuration.RequestConfigurationBuilder;
-import org.aeonbits.owner.ConfigFactory;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 
 public class GetCustomersFiguresEndpoint extends BaseEndpoint<GetCustomersFiguresEndpoint, CustomerFiguresResponse>{
 
-    EnvConfig envConfig = ConfigFactory.create(EnvConfig.class);
+    private EnvConfig envConfig = HelpersConfig.createConfiguration();
     private String user = envConfig.basicUser();
     private String password = envConfig.basicPassword();
 

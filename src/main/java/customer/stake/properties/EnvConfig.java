@@ -10,7 +10,7 @@ public interface EnvConfig extends Config {
     @DefaultValue("OCEANS11")
     String env();
 
-    @Key("BASE_O11_URI")
+    @Key("BASE_URI")
     String baseUri();
 
     @Key("BASE_PATH")

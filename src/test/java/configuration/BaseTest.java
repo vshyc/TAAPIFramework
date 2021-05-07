@@ -6,11 +6,7 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.BeforeAll;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class BaseTest {
@@ -20,6 +16,6 @@ public class BaseTest {
     public static void baseTestSetUp() {
         RestAssured.baseURI = envConfig.baseUri();
         RestAssured.basePath = envConfig.basePath();
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new AllureRestAssured());
+        RestAssured.filters(new RequestLoggingFilter(),new ResponseLoggingFilter(), new AllureRestAssured());
     }
 }

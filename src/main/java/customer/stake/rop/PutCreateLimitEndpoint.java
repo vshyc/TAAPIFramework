@@ -1,5 +1,6 @@
 package customer.stake.rop;
 
+import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.LocationHeaderHelper;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.pojo.limits.GetLimitsResponseData;
@@ -7,7 +8,6 @@ import customer.stake.pojo.limits.LimitCreationData;
 import customer.stake.pojo.limits.LimitsResponseData;
 import customer.stake.properties.EnvConfig;
 import io.restassured.http.ContentType;
-import org.aeonbits.owner.ConfigFactory;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 import static io.restassured.RestAssured.given;
 
 public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint, LimitsResponseData>{
-    EnvConfig envConfig = ConfigFactory.create(EnvConfig.class);
+    private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
     protected Type getModelType() {
