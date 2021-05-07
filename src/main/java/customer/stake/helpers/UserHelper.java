@@ -36,7 +36,7 @@ public class UserHelper {
 
             response =  given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.crfesPath()).contentType(ContentType.JSON).
                     header("X-Requested-By", "97066a5c-fc78-11e8-8eb2-f2801f1b9fd1").
-                    body(germanUserForCRFES).log().all().post().then()
+                    body(germanUserForCRFES).post().then()
                     .statusCode(HttpStatus.SC_CREATED).extract().jsonPath();
         return response;
     }

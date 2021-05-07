@@ -9,10 +9,7 @@ import io.qameta.allure.Step;
 
 public class GetLimitsHelper {
 
-    private EnvConfig envConfig = HelpersConfig.createConfiguration();
-
-
-    @Step("Check if limit exists in CSS")
+    @Step("Check if limit exists in LimitService")
     public LimitsResponseData checkIfLimitExistForUser(String uuid, OwnerEnum limitOwner, String limitType) {
 
         GetLimitEndpoint responseData = new GetLimitEndpoint().sendRequest(uuid);

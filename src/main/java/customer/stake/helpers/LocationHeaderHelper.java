@@ -14,7 +14,7 @@ public class LocationHeaderHelper {
     @Step("Calling CSS to get location header for creating a new limit")
     public String getLocationHeaderForNewLimit(String customerUUID){
         Response response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).
-                auth().oauth2(new OauthHelper().getApplicationToken()).log().all()
+                auth().oauth2(new OauthHelper().getApplicationToken())
                 .when().post("/customers/{customerUuid}/limits",customerUUID)
                 .then().statusCode(HttpStatus.SC_CREATED).extract().response();
         return response.getHeader("location");
