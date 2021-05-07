@@ -1,12 +1,15 @@
 package limit.service.tests;
 
 import configuration.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -20,7 +23,9 @@ public class PostCreateLimitsTest extends BaseTest {
         uuid = new UserHelper().createGermanUserAndGetUuid();
 
     }
-
+    @DisplayName("Send POST to create limit")
+    @Story("Send POST to create limit")
+    @Description("Send POST to create limit")
     @Test
     public void postCreateLimitTestShouldReturnProperLocation(){
         Response response =given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
