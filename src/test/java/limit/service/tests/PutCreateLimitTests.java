@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 @Epic("Create Limits Epic")
 @Feature("Put endpoint tests Features")
+@DisplayName("PUT Endpoint for Limit service Tests")
 public class PutCreateLimitTests extends BaseTest {
     private String limitUuid =null;
     private UserHelper userHelper;

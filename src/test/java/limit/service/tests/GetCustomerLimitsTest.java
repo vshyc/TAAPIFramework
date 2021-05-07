@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-
+@DisplayName("GET Endpoint for Limit service Tests")
 public class GetCustomerLimitsTest extends BaseTest {
     private  String uuid;
 

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+@DisplayName("GET Endpoint for Customer Stake Service Tests")
 public class GetCountersTest extends BaseTest {
 
     @ParameterizedTest(name = "{index} -> Get customers limits with label ={0}")

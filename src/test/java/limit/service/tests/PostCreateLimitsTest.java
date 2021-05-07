@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
+@DisplayName("POST Endpoint for Limit service Tests")
 public class PostCreateLimitsTest extends BaseTest {
 
     private  String uuid;
