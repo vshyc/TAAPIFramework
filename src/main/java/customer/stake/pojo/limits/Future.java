@@ -11,9 +11,9 @@ import lombok.Setter;
 @Builder
 public class Future {
 
-    public Float value;
-    public String interval;
-    public String from;
+    private Float value;
+    private String interval;
+    private String from;
 
     public Future(Float value, String interval, String from) {
         this.value = value;

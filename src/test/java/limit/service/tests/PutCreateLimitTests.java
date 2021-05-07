@@ -17,7 +17,6 @@ import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
@@ -111,18 +110,22 @@ public class PutCreateLimitTests extends BaseTest {
         }
     }
 
-    @DisplayName("Create and update Limit")
-    @Story("Create and update Limit ")
-    @Description("Create and update Limit")
-    @Test
-    public void createAndUpdateLimitTest(){
+    @DisplayName("Create and update Limit to lower value")
+    @Story("Create and update Limit to lower value")
+    @Description("Create and update Limit to lower value")
+    @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
+            "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
+    @CsvFileSource(files = "src/main/resources/updateLimitTestData.csv", numLinesToSkip = 1)
+    public void createAndUpdateLimitTest(String type, OwnerEnum owner,
+                                         LabelEnums label,String product,
+                                         Double value,String interval,Double updatedValue){
         LimitCreationData body = LimitCreationData.builder().
-                type("deposit")
-                .owner(OwnerEnum.PERSONAL)
-                .label(LabelEnums.TIPICO)
-                .product("sports")
-                .value(900.0)
-                .interval("MONTH")
+                type(type)
+                .owner(owner)
+                .label(label)
+                .product(product)
+                .value(value)
+                .interval(interval)
                 .build();
         LimitsResponseData response = new PutCreateLimitEndpoint()
                 .sendRequestToCreateNewLimit(body,new OauthHelper().getUserToken(userHelper.getGermanUserName()
@@ -132,18 +135,62 @@ public class PutCreateLimitTests extends BaseTest {
         Assertions.assertThat(response.getProduct()).isEqualTo(body.getProduct());
         Assertions.assertThat(response.getCreatedBy()).isNotEmpty();
         LimitCreationData updatedBody = LimitCreationData.builder().
-                type("deposit")
-                .owner(OwnerEnum.PERSONAL)
-                .label(LabelEnums.TIPICO)
-                .product("sports")
-                .value(800.0)
-                .interval("MONTH")
+                type(type)
+                .owner(owner)
+                .label(label)
+                .product(product)
+                .value(updatedValue)
+                .interval(interval)
                 .build();
         LimitsResponseData responseData = new  PutCreateLimitEndpoint()
                 .sendRequestToUpdateLimit(updatedBody,new OauthHelper().getUserToken(userHelper.getGermanUserName(),
                         userHelper.getGermanUserPassword()),uuid).assertRequestStatusCode().getResponseModel();
-        Assertions.assertThat(responseData.getCurrent().getValue().doubleValue()).isEqualTo(updatedBody.getValue());
+        Assertions.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
+                "value of the limit is updated to lower value").isEqualTo(updatedBody.getValue());
+        Assertions.assertThat(responseData.getCurrent().getInterval()).isEqualTo(updatedBody.getInterval());
+        Assertions.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
+    }
 
-
+    @DisplayName("Create and update Limit to higher value")
+    @Story("Create and update Limit to higher value")
+    @Description("Create and update Limit to higher value")
+    @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
+            "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
+    @CsvFileSource(files = "src/main/resources/updateLimitToHigherValueTestData.csv", numLinesToSkip = 1)
+    public void createAndUpdateLimitToHigherValueTest(String type, OwnerEnum owner,
+                                         LabelEnums label,String product,
+                                         Double value,String interval,Double updatedValue){
+        LimitCreationData body = LimitCreationData.builder().
+                type(type)
+                .owner(owner)
+                .label(label)
+                .product(product)
+                .value(value)
+                .interval(interval)
+                .build();
+        LimitsResponseData response = new PutCreateLimitEndpoint()
+                .sendRequestToCreateNewLimit(body,new OauthHelper().getUserToken(userHelper.getGermanUserName()
+                        ,userHelper.getGermanUserPassword()),uuid).assertRequestStatusCode().getResponseModel();
+        Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel().toString());
+        Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner().toString());
+        Assertions.assertThat(response.getProduct()).isEqualTo(body.getProduct());
+        Assertions.assertThat(response.getCreatedBy()).isNotEmpty();
+        LimitCreationData updatedBody = LimitCreationData.builder().
+                type(type)
+                .owner(owner)
+                .label(label)
+                .product(product)
+                .value(updatedValue)
+                .interval(interval)
+                .build();
+        LimitsResponseData responseData = new  PutCreateLimitEndpoint()
+                .sendRequestToUpdateLimit(updatedBody,new OauthHelper().getUserToken(userHelper.getGermanUserName(),
+                        userHelper.getGermanUserPassword()),uuid).assertRequestStatusCode().getResponseModel();
+        Assertions.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
+                "value of the limit is not updated to higher value").isEqualTo(body.getValue());
+        Assertions.assertThat(responseData.getFuture().getValue().doubleValue()).describedAs("check if " +
+                "value of the limit is not updated to higher value").isEqualTo(updatedBody.getValue());
+        Assertions.assertThat(responseData.getCurrent().getInterval()).isEqualTo(updatedBody.getInterval());
+        Assertions.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
     }
 }

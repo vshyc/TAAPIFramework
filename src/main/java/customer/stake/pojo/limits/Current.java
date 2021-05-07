@@ -11,8 +11,8 @@ import lombok.Setter;
 @Builder
 public class Current {
 
-    public Float value;
-    public String interval;
+    private Float value;
+    private String interval;
 
     public Current(Float value, String interval) {
         this.value = value;
