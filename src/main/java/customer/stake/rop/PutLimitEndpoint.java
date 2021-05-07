@@ -1,5 +1,6 @@
 package customer.stake.rop;
 
+import customer.stake.helpers.GetLimitsHelper;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.LocationHeaderHelper;
 import customer.stake.helpers.OauthHelper;
@@ -14,7 +15,7 @@ import java.lang.reflect.Type;
 
 import static io.restassured.RestAssured.given;
 
-public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint, LimitsResponseData>{
+public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsResponseData>{
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
@@ -23,7 +24,7 @@ public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint,
     }
 
 
-    public PutCreateLimitEndpoint sendRequestToCreateNewLimit(LimitCreationData body, String oauthToken, String uuid) {
+    public PutLimitEndpoint sendRequestToCreateNewLimit(LimitCreationData body, String oauthToken, String uuid) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
         response = given().baseUri(envConfig.baseUri()).basePath(location)
                 .contentType(ContentType.JSON)
@@ -31,7 +32,7 @@ public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint,
                 .body(body).when().put();
         return this;
     }
-    public PutCreateLimitEndpoint sendRequestToUpdateLimit(LimitCreationData body, String oauthToken, String uuid){
+    public PutLimitEndpoint sendRequestToUpdateLimit(LimitCreationData body, String oauthToken, String uuid){
 
         GetLimitsResponseData getResponse = given().auth().oauth2(new OauthHelper().getApplicationToken())
                 .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).when().get("customers/{customerUuid}/limits/",uuid).then()
@@ -40,7 +41,8 @@ public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint,
         response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
                 .contentType(ContentType.JSON)
                 .auth().oauth2(oauthToken)
-                .body(body).when().put("customers/{customerUuid}/limits/{limitUuid}",uuid,getResponse.getLimits().get(0).getLimitUUID());
+                .body(body).when().put("customers/{customerUuid}/limits/{limitUuid}",uuid,
+                        new GetLimitsHelper().checkIfLimitExistForUser(uuid,body.getOwner(),body.getType(),body.getLabel()).getLimitUUID());
         return this;
     }
 
