@@ -4,13 +4,16 @@ import configuration.BaseTest;
 import customer.stake.enums.LabelEnums;
 import customer.stake.enums.OwnerEnum;
 import customer.stake.helpers.GetLimitsHelper;
-import customer.stake.pojo.limits.GetLimitsResponseData;
 import customer.stake.pojo.limits.LimitCreationData;
 import customer.stake.pojo.limits.LimitsResponseData;
 import customer.stake.rop.PutCreateLimitEndpoint;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,9 +23,8 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static io.restassured.RestAssured.given;
-
-
+@Epic("Create Limits Epic")
+@Feature("Put endpoint tests Features")
 public class PutCreateLimitTests extends BaseTest {
     private String limitUuid =null;
     private UserHelper userHelper;
@@ -30,12 +32,15 @@ public class PutCreateLimitTests extends BaseTest {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @BeforeEach
+    @Step("Create a user for test ")
     public void setUp(){
         userHelper = new UserHelper();
         uuid = userHelper.createGermanUserAndGetUuid();
     }
 
     @DisplayName("Create Limits in Limit service with application token")
+    @Story("Create Limits in Limit service with application token with parameters ")
+    @Description("Creating New Limit's in Limit Service if not exist")
     @ParameterizedTest
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitsTestWithApplicationTokenTest(String type, OwnerEnum owner,
@@ -69,6 +74,7 @@ public class PutCreateLimitTests extends BaseTest {
     }
 
     @DisplayName("Create Limits in Limit service with user token")
+    @Story("Create Limits in Limit service with user token with parameters ")
     @Description("Creating New Limit's in Limit Service if not exist")
     @ParameterizedTest
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
@@ -102,6 +108,9 @@ public class PutCreateLimitTests extends BaseTest {
         }
     }
 
+    @DisplayName("Create and update Limit")
+    @Story("Create and update Limit ")
+    @Description("Create and update Limit")
     @Test
     public void createAndUpdateLimitTest(){
         LimitCreationData body = LimitCreationData.builder().
