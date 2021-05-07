@@ -1,5 +1,6 @@
 package customer.stake.rop;
 
+import customer.stake.helpers.GetLimitsHelper;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.LocationHeaderHelper;
 import customer.stake.helpers.OauthHelper;
@@ -40,7 +41,8 @@ public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint,
         response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
                 .contentType(ContentType.JSON)
                 .auth().oauth2(oauthToken)
-                .body(body).when().put("customers/{customerUuid}/limits/{limitUuid}",uuid,getResponse.getLimits().get(0).getLimitUUID());
+                .body(body).when().put("customers/{customerUuid}/limits/{limitUuid}",uuid,
+                        new GetLimitsHelper().checkIfLimitExistForUser(uuid,body.getOwner(),body.getType(),body.getLabel()).getLimitUUID());
         return this;
     }
 

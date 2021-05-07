@@ -56,7 +56,7 @@ public class PutCreateLimitTests extends BaseTest {
                 .interval(interval)
                 .build();
         try {
-            limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid,owner,type).getLimitUUID();
+            limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid,owner,type,label).getLimitUUID();
         }catch (NullPointerException e){
             log.info("Limit don't exist, creating new one");
         }
@@ -93,7 +93,7 @@ public class PutCreateLimitTests extends BaseTest {
                 .interval(interval)
                 .build();
         try {
-            limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid,owner,type).getLimitUUID();
+            limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid,owner,type,label).getLimitUUID();
         }catch (NullPointerException e){
            log.info("Limit don't exist, creating new one");
         }

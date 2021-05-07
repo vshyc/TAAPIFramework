@@ -1,6 +1,7 @@
 package limit.service.tests;
 
 import configuration.BaseTest;
+import customer.stake.enums.LabelEnums;
 import customer.stake.enums.OwnerEnum;
 import customer.stake.helpers.GetLimitsHelper;
 import customer.stake.helpers.UserHelper;
@@ -31,7 +32,7 @@ public class GetCustomerLimitsTest extends BaseTest {
     public void getCustomerLimitsForNewRegisteredUser(){
 
         try {
-             data = new GetLimitsHelper().checkIfLimitExistForUser(uuid, OwnerEnum.IMPOSED, "turnover");
+             data = new GetLimitsHelper().checkIfLimitExistForUser(uuid, OwnerEnum.IMPOSED, "turnover", LabelEnums.TIPICO);
              Assertions.assertThat(data.getCurrent().getValue()).isEqualTo(1000f);
         }catch (NullPointerException e){
             Assertions.fail("Turnover IMPOSED limit not exist in DB after registration");
