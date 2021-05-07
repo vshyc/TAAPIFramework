@@ -20,6 +20,6 @@ public class BaseTest {
     public static void baseTestSetUp() {
         RestAssured.baseURI = envConfig.baseUri();
         RestAssured.basePath = envConfig.basePath();
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new AllureRestAssured());
+        RestAssured.filters(new ResponseLoggingFilter(), new AllureRestAssured());
     }
 }

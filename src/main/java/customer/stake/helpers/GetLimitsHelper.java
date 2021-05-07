@@ -18,7 +18,7 @@ public class GetLimitsHelper {
     public LimitsResponseData checkIfLimitExistForUser(String uuid, OwnerEnum limitOwner, String limitType) {
 
         Response responseData = given().auth().oauth2(new OauthHelper().getApplicationToken())
-                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).when().get("customers/" + uuid + "/limits/");
+                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).log().all().when().get("customers/" + uuid + "/limits/");
         LimitsResponseData data;
 
         data =  (responseData.getStatusCode() == 200) ?

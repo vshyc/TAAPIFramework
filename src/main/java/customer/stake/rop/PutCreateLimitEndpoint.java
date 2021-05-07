@@ -28,7 +28,7 @@ public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint,
         response = given().baseUri(envConfig.baseUri()).basePath(location)
                 .contentType(ContentType.JSON)
                 .auth().oauth2(oauthToken)
-                .body(body).when().put();
+                .body(body).log().all().when().put();
         return this;
     }
     public PutCreateLimitEndpoint sendRequestToUpdateLimit(LimitCreationData body, String oauthToken, String uuid){
@@ -40,7 +40,7 @@ public class PutCreateLimitEndpoint extends BaseEndpoint<PutCreateLimitEndpoint,
         response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
                 .contentType(ContentType.JSON)
                 .auth().oauth2(oauthToken)
-                .body(body).when().put("customers/{customerUuid}/limits/{limitUuid}",uuid,getResponse.getLimits().get(0).getLimitUUID());
+                .body(body).log().all().when().put("customers/{customerUuid}/limits/{limitUuid}",uuid,getResponse.getLimits().get(0).getLimitUUID());
         return this;
     }
 
