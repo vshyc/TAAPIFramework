@@ -1,13 +1,11 @@
 package customer.stake.helpers;
 
 import customer.stake.enums.OwnerEnum;
-import customer.stake.pojo.limits.GetLimitsResponseData;
 import customer.stake.pojo.limits.LimitsResponseData;
 import customer.stake.properties.EnvConfig;
+import customer.stake.rop.GetLimitEndpoint;
 import io.qameta.allure.Step;
-import io.restassured.response.Response;
 
-import static io.restassured.RestAssured.given;
 
 public class GetLimitsHelper {
 
@@ -17,12 +15,11 @@ public class GetLimitsHelper {
     @Step("Check if limit exists in CSS")
     public LimitsResponseData checkIfLimitExistForUser(String uuid, OwnerEnum limitOwner, String limitType) {
 
-        Response responseData = given().auth().oauth2(new OauthHelper().getApplicationToken())
-                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath()).log().all().when().get("customers/" + uuid + "/limits/");
+        GetLimitEndpoint responseData = new GetLimitEndpoint().sendRequest(uuid);
         LimitsResponseData data;
 
-        data =  (responseData.getStatusCode() == 200) ?
-         responseData.then().extract().as(GetLimitsResponseData.class).getLimits().stream()
+        data =  (responseData.getResponse().getStatusCode() == 200) ?
+         responseData.getResponseModel().getLimits().stream()
                 .filter(response -> limitOwner.toString().equals(response.getOwner()))
                 .filter(response -> limitType.equals(response.getType()))
                 .findAny()

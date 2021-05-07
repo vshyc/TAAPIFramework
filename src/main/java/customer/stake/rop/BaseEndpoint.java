@@ -27,6 +27,7 @@ public abstract class BaseEndpoint<E,M> {
         Assertions.assertThat(response.getStatusCode()).as("Status Code").isEqualTo(statusCode);
         return (E) this;
     }
+    public Response getResponse(){ return response;}
 
 
 
