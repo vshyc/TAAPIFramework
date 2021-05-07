@@ -21,7 +21,7 @@ public class GetLimitsHelper {
          responseData.getResponseModel().getLimits().stream()
                 .filter(response -> limitOwner.toString().equals(response.getOwner()))
                 .filter(response -> limitType.equals(response.getType()))
-                 .filter(response -> label.toString().toLowerCase().equals(response.getLabel()))
+                 .filter(response -> label.toString().equals(response.getLabel()))
                 .findAny()
                 .orElse(null) :  null;
         return data;
