@@ -38,7 +38,7 @@ public class PutCreateLimitTests extends BaseTest {
         userHelper = new UserHelper();
         uuid = userHelper.createGermanUserAndGetUuid();
     }
-
+    @Feature("Put endpoint tests Features")
     @DisplayName("Create Limits in Limit service with application token")
     @Story("Create Limits in Limit service with application token with parameters ")
     @Description("Creating New Limit's in Limit Service if not exist")
