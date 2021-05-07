@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 public class UserDataGenerator extends TestDataGenerator{
 
     public UserDataForCRFES createGermanUserInCRFES(){
-
         int ramdomN = faker().number().numberBetween(0, 1);
         String sex;
         if (ramdomN == 0) {
@@ -18,27 +17,26 @@ public class UserDataGenerator extends TestDataGenerator{
         } else {
             sex = "female";
         }
-        UserDataForCRFES user = new UserDataForCRFES();
-        user.setSalutation(sex);
-        user.setUsername(faker().name().firstName()+faker().number().numberBetween(1,10000));
-        user.setFirstName(faker().name().firstName());
-        user.setLastName(faker().name().lastName());
-        user.setCity(faker().address().cityName());
-        user.setStreet(faker().address().streetAddress());
-        user.setEmail(faker().name().username()+"@mailinator.com");
-        user.setPassword("B00Xware+");
-        user.setPostcode(10115);
-        user.setBirthCountry(CountryCodes.GERMANY.getCountryCode());
-        user.setBirthCity(faker().address().city());
-        user.setBirthName(faker().name().lastName());
-        user.setNationality(CountryCodes.GERMANY.getCountryCode());
-        user.setCountry(CountryCodes.GERMANY.getCountryCode());
-        user.setDataProcessing(true);
-        user.setLicenseRegion(CountryCodes.GERMANY.getCountryCode());
-        user.setOAuthClientId("testing");
-        user.setIoBlackBox("testing");
-        user.setDob(new SimpleDateFormat("yyyy-MM-dd").format(faker().date().birthday(18,40)));
-        return user;
+        return UserDataForCRFES.builder()
+                .salutation(sex)
+                .username(faker().name().firstName()+faker().number().numberBetween(1,10000))
+                .firstName(faker().name().firstName())
+                .lastName(faker().name().lastName())
+                .city(faker().address().cityName())
+                .street(faker().address().streetAddress())
+                .email(faker().name().username()+"@mailinator.com")
+                .password("B00Xware+")
+                .postcode(10115)
+                .birthCountry(CountryCodes.GERMANY.getCountryCode())
+                .birthCity(faker().address().city())
+                .birthName(faker().name().lastName())
+                .nationality(CountryCodes.GERMANY.getCountryCode())
+                .country(CountryCodes.GERMANY.getCountryCode())
+                .dataProcessing(true)
+                .licenseRegion(CountryCodes.GERMANY.getCountryCode())
+                .oAuthClientId("testing")
+                .ioBlackBox("testing")
+                .dob(new SimpleDateFormat("yyyy-MM-dd").format(faker().date().birthday(18,40))).build();
     }
 
     public UserDataForWebTestAPI createGermanUserForWebTestAPI(){
