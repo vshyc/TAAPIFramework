@@ -41,8 +41,8 @@ public class PutCreateLimitTests extends BaseTest {
     @DisplayName("Create Limits in Limit service with application token")
     @Story("Create Limits in Limit service with application token with parameters ")
     @Description("Creating New Limit's in Limit Service if not exist")
-    @ParameterizedTest(name = "{index} -> Creating a limit with application token and with type='{0}' , owner='{1}', " +
-            "label='{2}', product='{3}', value='{4}' and interval='{5}'")
+    @ParameterizedTest(name = "{index} -> Creating a limit with application token and with type={0} , owner={1}, " +
+            "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitsTestWithApplicationTokenTest(String type, OwnerEnum owner,
                                                                LabelEnums label,String product,
@@ -77,8 +77,8 @@ public class PutCreateLimitTests extends BaseTest {
     @DisplayName("Create Limits in Limit service with user token")
     @Story("Create Limits in Limit service with user token with parameters ")
     @Description("Creating New Limit's in Limit Service if not exist")
-    @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type='{0}' , owner='{1}', " +
-            "label='{2}', product='{3}', value='{4}' and interval='{5}'")
+    @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
+            "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitsTestWithUserTokenTest(String type, OwnerEnum owner,
                                                         LabelEnums label,String product,

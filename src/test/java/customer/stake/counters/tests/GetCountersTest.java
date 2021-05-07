@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 public class GetCountersTest extends BaseTest {
 
-    @ParameterizedTest(name = "{index} -> Get customers limits with label ='{0}'")
+    @ParameterizedTest(name = "{index} -> Get customers limits with label ={0}")
     @EnumSource(LabelEnums.class)
     @DisplayName("Get call to CSS with labels:")
     @Description("Checking counters for user using all labels")
