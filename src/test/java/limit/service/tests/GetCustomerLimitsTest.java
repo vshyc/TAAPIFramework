@@ -33,7 +33,10 @@ public class GetCustomerLimitsTest extends BaseTest {
     public void getCustomerLimitsForNewRegisteredUser(){
 
         try {
-             data = new GetLimitsHelper().checkIfLimitExistForUser(uuid, OwnerEnum.PERSONAL, "turnover", LabelEnums.tipico);
+             data = new GetLimitsHelper().checkIfLimitExistForUser(uuid,
+                     OwnerEnum.PERSONAL,
+                     "turnover",
+                     LabelEnums.tipico);
              Assertions.assertThat(data.getCurrent().getValue()).isEqualTo(1000f);
         }catch (NullPointerException e){
             Assertions.fail("Turnover IMPOSED limit not exist in DB after registration");
