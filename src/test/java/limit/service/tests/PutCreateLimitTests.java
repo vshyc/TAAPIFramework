@@ -62,8 +62,8 @@ public class PutCreateLimitTests extends BaseTest {
         if (limitUuid == null) {
             LimitsResponseData response = new PutLimitEndpoint().sendRequestToCreateNewLimit(body, new OauthHelper().getApplicationToken(), uuid)
                     .assertRequestStatusCode().getResponseModel();
-            Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel().toString());
-            Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner().toString());
+            Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel());
+            Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner());
             Assertions.assertThat(response.getProduct()).isEqualTo(body.getProduct());
             Assertions.assertThat(response.getCreatedBy()).isEmpty();
         }else {
@@ -99,8 +99,8 @@ public class PutCreateLimitTests extends BaseTest {
         LimitsResponseData response = new PutLimitEndpoint()
                 .sendRequestToCreateNewLimit(body,new OauthHelper().getUserToken(userHelper.getGermanUserName()
                         ,userHelper.getGermanUserPassword()),uuid).assertRequestStatusCode().getResponseModel();
-        Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel().toString());
-        Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner().toString());
+        Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel());
+        Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner());
         Assertions.assertThat(response.getProduct()).isEqualTo(body.getProduct());
         Assertions.assertThat(response.getCreatedBy()).isNotEmpty();}
         else {
@@ -127,8 +127,8 @@ public class PutCreateLimitTests extends BaseTest {
         LimitsResponseData response = new PutLimitEndpoint()
                 .sendRequestToCreateNewLimit(body,new OauthHelper().getUserToken(userHelper.getGermanUserName()
                         ,userHelper.getGermanUserPassword()),uuid).assertRequestStatusCode().getResponseModel();
-        Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel().toString());
-        Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner().toString());
+        Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel());
+        Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner());
         Assertions.assertThat(response.getProduct()).isEqualTo(body.getProduct());
         Assertions.assertThat(response.getCreatedBy()).isNotEmpty();
         LimitCreationData updatedBody = LimitCreationData.builder().
@@ -168,8 +168,8 @@ public class PutCreateLimitTests extends BaseTest {
         LimitsResponseData response = new PutLimitEndpoint()
                 .sendRequestToCreateNewLimit(body,new OauthHelper().getUserToken(userHelper.getGermanUserName()
                         ,userHelper.getGermanUserPassword()),uuid).assertRequestStatusCode().getResponseModel();
-        Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel().toString());
-        Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner().toString());
+        Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel());
+        Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner());
         Assertions.assertThat(response.getProduct()).isEqualTo(body.getProduct());
         Assertions.assertThat(response.getCreatedBy()).isNotEmpty();
         LimitCreationData updatedBody = LimitCreationData.builder().
@@ -210,8 +210,8 @@ public class PutCreateLimitTests extends BaseTest {
         LimitsResponseData response = new PutLimitEndpoint()
                 .sendRequestToCreateNewLimit(body,new OauthHelper().getUserToken(userHelper.getGermanUserName()
                         ,userHelper.getGermanUserPassword()),uuid).assertRequestStatusCode().getResponseModel();
-        Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel().toString());
-        Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner().toString());
+        Assertions.assertThat(response.getLabel()).isEqualTo(body.getLabel());
+        Assertions.assertThat(response.getOwner()).isEqualTo(body.getOwner());
         Assertions.assertThat(response.getProduct()).isEqualTo(body.getProduct());
         Assertions.assertThat(response.getCreatedBy()).isNotEmpty();
         LimitCreationData updatedBody = LimitCreationData.builder().

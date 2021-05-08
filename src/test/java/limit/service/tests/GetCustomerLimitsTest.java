@@ -20,6 +20,7 @@ public class GetCustomerLimitsTest extends BaseTest {
     private  String uuid;
     protected final Logger log = LoggerFactory.getLogger(getClass());
     private LimitsResponseData data;
+
     @BeforeEach
     public void setUp(){
         uuid = new UserHelper().createGermanUserAndGetUuid();
@@ -32,7 +33,7 @@ public class GetCustomerLimitsTest extends BaseTest {
     public void getCustomerLimitsForNewRegisteredUser(){
 
         try {
-             data = new GetLimitsHelper().checkIfLimitExistForUser(uuid, OwnerEnum.IMPOSED, "turnover", LabelEnums.TIPICO);
+             data = new GetLimitsHelper().checkIfLimitExistForUser(uuid, OwnerEnum.PERSONAL, "turnover", LabelEnums.tipico);
              Assertions.assertThat(data.getCurrent().getValue()).isEqualTo(1000f);
         }catch (NullPointerException e){
             Assertions.fail("Turnover IMPOSED limit not exist in DB after registration");

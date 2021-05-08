@@ -1,6 +1,8 @@
 package customer.stake.pojo.limits;
 
 
+import customer.stake.enums.LabelEnums;
+import customer.stake.enums.OwnerEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +16,8 @@ public class LimitsResponseData {
 
     private String limitUUID;
     private String type;
-    private String owner;
-    private String label;
+    private OwnerEnum owner;
+    private LabelEnums label;
     private String product;
     private Float used;
     private Float remaining;
@@ -32,7 +34,7 @@ public class LimitsResponseData {
     private String updatedSource;
 
 
-    public LimitsResponseData(String limitUUID, String type, String owner, String label, String product, Float used,
+    public LimitsResponseData(String limitUUID, String type, OwnerEnum owner, LabelEnums label, String product, Float used,
                               Float remaining, Integer leftTime, Current current, Future future, String createdAt,
                               String createdBy, String createdByClient, String updatedAt, String updatedBy,
                               String updatedByClient, String createdSource, String updatedSource) {

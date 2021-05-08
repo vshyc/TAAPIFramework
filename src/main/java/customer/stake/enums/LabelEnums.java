@@ -1,14 +1,17 @@
 package customer.stake.enums;
 
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-@Getter
 public enum LabelEnums {
 
     ALL("ALL"),
     TIPICO("TIPICO"),
     GAMES("GAMES"),
-    MYSINO("MYSINO");
+    MYSINO("MYSINO"),
+    all("all"),
+    tipico("tipico"),
+    games("games"),
+    mysino("mysino");
 
     private String label;
 
@@ -16,5 +19,8 @@ public enum LabelEnums {
         this.label = label;
     }
 
-
+    @JsonValue
+    public String getLabel() {
+        return label;
+    }
 }
