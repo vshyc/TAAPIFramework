@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Epic("Create Limits Epic")
-@Feature("Put endpoint tests Features")
 @DisplayName("PUT Endpoint for Limit service Tests")
 public class PutCreateLimitTests extends BaseTest {
     private String limitUuid =null;
@@ -37,9 +36,9 @@ public class PutCreateLimitTests extends BaseTest {
         userHelper = new UserHelper();
         uuid = userHelper.createGermanUserAndGetUuid();
     }
-    @Feature("Put endpoint tests Features")
+
+    @Feature("Create Limits in Limit service with application token")
     @DisplayName("Create Limits in Limit service with application token")
-    @Story("Create Limits in Limit service with application token with parameters ")
     @Description("Creating New Limit's in Limit Service if not exist")
     @ParameterizedTest(name = "{index} -> Creating a limit with application token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} and interval={5}")
@@ -73,9 +72,8 @@ public class PutCreateLimitTests extends BaseTest {
 
 
     }
-
+    @Feature("Create Limits in Limit service with user token")
     @DisplayName("Create Limits in Limit service with user token")
-    @Story("Create Limits in Limit service with user token with parameters ")
     @Description("Creating New Limit's in Limit Service if not exist")
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} and interval={5}")
@@ -109,9 +107,8 @@ public class PutCreateLimitTests extends BaseTest {
             log.info("Limit exist, skip creating new one");
         }
     }
-
+    @Feature("Create and update Limit to lower value")
     @DisplayName("Create and update Limit to lower value")
-    @Story("Create and update Limit to lower value")
     @Description("Create and update Limit to lower value")
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
@@ -151,8 +148,8 @@ public class PutCreateLimitTests extends BaseTest {
         Assertions.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
     }
 
+    @Feature("Create and update Limit to higher value")
     @DisplayName("Create and update Limit to higher value")
-    @Story("Create and update Limit to higher value")
     @Description("Create and update Limit to higher value")
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
@@ -193,8 +190,8 @@ public class PutCreateLimitTests extends BaseTest {
         Assertions.assertThat(responseData.getCurrent().getInterval()).isEqualTo(updatedBody.getInterval());
         Assertions.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
     }
+    @Feature("Create and update AML Limit to higher value")
     @DisplayName("Create and update AML Limit to higher value")
-    @Story("Create and update AML Limit to higher value")
     @Description("Create and update AML Limit to higher value, the limit should be updated")
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")

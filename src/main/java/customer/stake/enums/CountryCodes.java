@@ -1,5 +1,8 @@
 package customer.stake.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum CountryCodes {
     GERMANY("DE"),
     AUSTRIA("AT"),
@@ -11,8 +14,5 @@ public enum CountryCodes {
         this.countryCode = countryCode;
     }
 
-    public String getCountryCode() {
-        return countryCode;
-    }
 
 }
