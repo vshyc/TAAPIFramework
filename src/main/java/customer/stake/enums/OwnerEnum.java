@@ -1,8 +1,7 @@
 package customer.stake.enums;
 
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-@Getter
 public enum OwnerEnum {
     AML("AML"),
     PERSONAL("PERSONAL"),
@@ -14,4 +13,8 @@ public enum OwnerEnum {
         this.owner = owner;
     }
 
+    @JsonValue
+    public String getOwner() {
+        return owner;
+    }
 }
