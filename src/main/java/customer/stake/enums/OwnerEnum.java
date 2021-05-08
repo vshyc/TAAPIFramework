@@ -8,7 +8,10 @@ public enum OwnerEnum {
     PERSONAL("PERSONAL"),
     IMPOSED("IMPOSED");
 
+    private String owner;
+
     OwnerEnum(String owner) {
+        this.owner = owner;
     }
 
 }

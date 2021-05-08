@@ -6,8 +6,6 @@ import customer.stake.pojo.limits.LimitsResponseData;
 import customer.stake.rop.GetLimitEndpoint;
 import io.qameta.allure.Step;
 
-import java.util.Locale;
-
 
 public class GetLimitsHelper {
 
