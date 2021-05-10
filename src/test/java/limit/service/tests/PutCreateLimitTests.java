@@ -3,6 +3,7 @@ package limit.service.tests;
 import configuration.BaseTest;
 import customer.stake.enums.LabelEnums;
 import customer.stake.enums.OwnerEnum;
+import customer.stake.enums.TypeEnum;
 import customer.stake.helpers.GetLimitsHelper;
 import customer.stake.pojo.limits.LimitCreationData;
 import customer.stake.pojo.limits.LimitsResponseData;
@@ -13,9 +14,11 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
+import io.restassured.path.json.JsonPath;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
@@ -27,13 +30,17 @@ public class PutCreateLimitTests extends BaseTest {
     private String limitUuid =null;
     private UserHelper userHelper;
     private String uuid;
+    private String id;
+    private JsonPath createdUser;
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @BeforeEach
     @Step("Create a user for test ")
     public void setUp(){
         userHelper = new UserHelper();
-        uuid = userHelper.createGermanUserAndGetUuid();
+        createdUser = userHelper.createGermanUserInWebTestApi();
+        uuid = userHelper.getUuid(createdUser);
+        id = userHelper.getId(createdUser);
     }
 
     @Feature("Create Limits in Limit service with application token")
@@ -42,7 +49,7 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with application token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
-    public void createLimitsTestWithApplicationTokenTest(String type, OwnerEnum owner,
+    public void createLimitsTestWithApplicationTokenTest(TypeEnum type, OwnerEnum owner,
                                                                LabelEnums label,String product,
                                                                Double value,String interval){
         try {
@@ -68,7 +75,7 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/main/resources/createLimitTestData.csv", numLinesToSkip = 1)
-    public void createLimitsTestWithUserTokenTest(String type, OwnerEnum owner,
+    public void createLimitsTestWithUserTokenTest(TypeEnum type, OwnerEnum owner,
                                                         LabelEnums label,String product,
                                                         Double value,String interval){
 
@@ -93,7 +100,7 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
     @CsvFileSource(files = "src/main/resources/updateLimitTestData.csv", numLinesToSkip = 1)
-    public void createAndUpdateLimitToLowerValueTest(String type, OwnerEnum owner,
+    public void createAndUpdateLimitToLowerValueTest(TypeEnum type, OwnerEnum owner,
                                          LabelEnums label,String product,
                                          Double value,String interval,Double updatedValue){
         LimitsResponseData response = createLimitWithUserToken(type,owner,label,product,value,interval);
@@ -115,7 +122,7 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
     @CsvFileSource(files = "src/main/resources/updateLimitToHigherValueTestData.csv", numLinesToSkip = 1)
-    public void createAndUpdateLimitToHigherValueTest(String type, OwnerEnum owner,
+    public void createAndUpdateLimitToHigherValueTest(TypeEnum type, OwnerEnum owner,
                                          LabelEnums label,String product,
                                          Double value,String interval,Double updatedValue){
         LimitsResponseData response = createLimitWithUserToken(type,owner,label,product,value,interval);
@@ -141,7 +148,7 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
     @CsvFileSource(files = "src/main/resources/updateLimitTestData.csv", numLinesToSkip = 1)
-    public void createAndUpdateAMLLimitToHigherValueTest(String type, OwnerEnum owner,
+    public void createAndUpdateAMLLimitToHigherValueTest(TypeEnum type, OwnerEnum owner,
                                          LabelEnums label,String product,
                                          Double value,String interval,Double updatedValue){
         LimitsResponseData response = createLimitWithUserToken(type,owner,label,product,value,interval);
@@ -159,9 +166,30 @@ public class PutCreateLimitTests extends BaseTest {
         Assertions.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
     }
 
+    @DisplayName("Check if PUT call to Limit Service with no auth will respond with 401 Error code")
+    @Test
+    public void createLimitWithNoAuthTest(){
+        LimitCreationData body = LimitCreationData.builder().
+                type(TypeEnum.DEPOSIT)
+                .owner(OwnerEnum.PERSONAL)
+                .label(LabelEnums.TIPICO)
+                .product("sports")
+                .value(200d)
+                .interval("MONTH")
+                .build();
+        new PutLimitEndpoint().sendRequestToCreateNewLimitWithNoAuth(body,uuid).assertNoAuthRequestStatusCode();
+    }
+
+    @DisplayName("Check if PUT call to Limit Service with no body will respond with 400 Error code")
+    @Test
+    public void createLimitWithNoBodyTest(){
+        new PutLimitEndpoint().sendRequestWithNoBodyToCreateNewLimit(new OauthHelper().getApplicationToken(),uuid)
+                .assertBadRequestStatusCode();
+    }
+
 
     @Step("Sending a call to Limit Service with User Token to create Limit")
-    private LimitsResponseData createLimitWithUserToken(String type, OwnerEnum owner,
+    private LimitsResponseData createLimitWithUserToken(TypeEnum type, OwnerEnum owner,
                                            LabelEnums label,String product,
                                            Double value,String interval){
         LimitCreationData body = LimitCreationData.builder().
@@ -172,11 +200,12 @@ public class PutCreateLimitTests extends BaseTest {
                 .value(value)
                 .interval(interval)
                 .build();
-       return new PutLimitEndpoint().sendRequestToCreateNewLimit(body,new OauthHelper().getUserToken(userHelper.getGermanUserName()
-                        ,userHelper.getGermanUserPassword()),uuid).assertRequestStatusCode().getResponseModel();
+       return new PutLimitEndpoint().sendRequestToCreateNewLimit(body,new OauthHelper()
+               .getUserToken(userHelper.getGermanUserName(),userHelper.getGermanUserPassword()),uuid)
+               .assertRequestStatusCode().getResponseModel();
     }
     @Step("Sending a call to Limit Service with Application Token to create Limit")
-    private LimitsResponseData createLimitWithApplicationToken(String type, OwnerEnum owner,
+    private LimitsResponseData createLimitWithApplicationToken(TypeEnum type, OwnerEnum owner,
                                            LabelEnums label,String product,
                                            Double value,String interval){
         LimitCreationData body = LimitCreationData.builder().
@@ -187,11 +216,12 @@ public class PutCreateLimitTests extends BaseTest {
                 .value(value)
                 .interval(interval)
                 .build();
-        return new PutLimitEndpoint().sendRequestToCreateNewLimit(body,new OauthHelper().getApplicationToken(),uuid).assertRequestStatusCode().getResponseModel();
+        return new PutLimitEndpoint().sendRequestToCreateNewLimit(body,new OauthHelper().getApplicationToken(),uuid)
+                .assertRequestStatusCode().getResponseModel();
     }
 
     @Step("Sending a call to Limit Service with User Token to update Limit")
-    private LimitsResponseData updateLimit(String type, OwnerEnum owner,
+    private LimitsResponseData updateLimit(TypeEnum type, OwnerEnum owner,
                                            LabelEnums label,String product,
                                            Double value,String interval){
         LimitCreationData updatedBody = LimitCreationData.builder().
@@ -202,8 +232,9 @@ public class PutCreateLimitTests extends BaseTest {
                 .value(value)
                 .interval(interval)
                 .build();
-        return new PutLimitEndpoint().sendRequestToUpdateLimit(updatedBody,new OauthHelper().getUserToken(userHelper.getGermanUserName(),
-                        userHelper.getGermanUserPassword()),uuid).assertRequestStatusCode().getResponseModel();
+        return new PutLimitEndpoint().sendRequestToUpdateLimit(updatedBody,new OauthHelper()
+                .getUserToken(userHelper.getGermanUserName(), userHelper.getGermanUserPassword()),uuid)
+                .assertRequestStatusCode().getResponseModel();
 
     }
 

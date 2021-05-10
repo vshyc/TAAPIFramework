@@ -1,12 +1,12 @@
 package customer.stake.pojo.counters;
 
+import customer.stake.enums.TypeEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 @Getter
 @Setter
@@ -14,10 +14,10 @@ import java.util.Map;
 @Builder
 public class Attribute {
 
-    private String type;
-    private Integer amount;
+    private TypeEnum type;
+    private Double amount;
 
-    public Attribute(String type, Integer amount) {
+    public Attribute(TypeEnum type, Double amount) {
         super();
         this.type = type;
         this.amount = amount;

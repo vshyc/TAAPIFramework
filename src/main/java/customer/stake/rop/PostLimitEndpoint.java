@@ -30,5 +30,10 @@ public class PostLimitEndpoint extends BaseEndpoint<PostLimitEndpoint, Response>
                 .post("/customers/{customerUuid}/limits",uuid);
         return this;
     }
+    public PostLimitEndpoint sendRequestWithNoAuth(String uuid){
+        response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+                .post("/customers/{customerUuid}/limits",uuid);
+        return this;
+    }
 
 }

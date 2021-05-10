@@ -8,23 +8,20 @@ import lombok.Setter;
 
 import java.util.List;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @Builder
-public class CustomerFiguresRequest {
+public class PostCountersRequest {
 
     private Customer customer;
     private LabelEnums label;
     private List<Attribute> attributes = null;
 
-    public CustomerFiguresRequest(Customer customer, LabelEnums label, List<Attribute> attributes) {
-        super();
+    public PostCountersRequest(Customer customer, LabelEnums label, List<Attribute> attributes) {
         this.customer = customer;
         this.label = label;
         this.attributes = attributes;
     }
-
-
 }
+

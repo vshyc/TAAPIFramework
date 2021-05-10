@@ -1,6 +1,7 @@
 package customer.stake.rop;
 
 import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.Assertions;
 
 import java.lang.reflect.Type;
@@ -12,7 +13,6 @@ public abstract class BaseEndpoint<E,M> {
 
     protected abstract Type getModelType();
 
-
     protected abstract int getSuccessStatusCode();
 
     public M getResponseModel(){
@@ -21,6 +21,15 @@ public abstract class BaseEndpoint<E,M> {
 
     public E assertRequestStatusCode(){
         return assertStatusCode(getSuccessStatusCode());
+    }
+
+    public E assertNoAuthRequestStatusCode() { return assertStatusCode(HttpStatus.SC_UNAUTHORIZED);}
+
+    public E assertUnsupportedMediaTypeRequestStatusCode() {
+        return assertStatusCode(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE);}
+
+    public E assertBadRequestStatusCode(){
+        return assertStatusCode(HttpStatus.SC_BAD_REQUEST);
     }
 
     public E assertStatusCode(int statusCode){

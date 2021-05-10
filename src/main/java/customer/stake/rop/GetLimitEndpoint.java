@@ -30,6 +30,11 @@ public class GetLimitEndpoint extends BaseEndpoint<GetLimitEndpoint, GetLimitsRe
                     .when().get("customers/{customerUuid}/limits/",uuid);
         return this;
     }
+    public GetLimitEndpoint sendRequestWithNoAuth(String uuid){
+        response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+                .when().get("customers/{customerUuid}/limits/",uuid);
+        return this;
+    }
 
     protected int getMissingLimitStatusCode() {
         return HttpStatus.SC_NOT_FOUND;
