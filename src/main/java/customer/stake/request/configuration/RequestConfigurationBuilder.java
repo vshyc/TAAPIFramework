@@ -13,7 +13,7 @@ public class RequestConfigurationBuilder {
     public RequestSpecBuilder getRequestSpecBuilder() {
         return new RequestSpecBuilder()
                 .setConfig(RestAssuredConfig.config().objectMapperConfig(objectMapperConfig().
-                        defaultObjectMapperType(ObjectMapperType.GSON)))
+                        defaultObjectMapperType(ObjectMapperType.JACKSON_2)))
                 .setContentType(ContentType.JSON);
     }
 

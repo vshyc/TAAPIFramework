@@ -21,6 +21,7 @@ public class PostCreateLimitsTest extends BaseTest {
         uuid = new UserHelper().createGermanUserAndGetUuid();
 
     }
+
     @DisplayName("Send POST to create limit")
     @Story("Send POST to create limit")
     @Description("Send POST to create limit")
@@ -33,6 +34,12 @@ public class PostCreateLimitsTest extends BaseTest {
         Assertions.assertThat(response.getHeader("location")).describedAs("check if location header " +
                 "contains user UUID").contains(uuid);
 
+    }
+
+    @DisplayName("Check if POST call to Limit Service with no auth will respond with 401 Error code")
+    @Test
+    public void postCreateLimitWithNoAuthTest(){
+        new PostLimitEndpoint().sendRequestWithNoAuth(uuid).assertNoAuthRequestStatusCode();
     }
 
 

@@ -60,6 +60,6 @@ public class UserDataGenerator extends TestDataGenerator{
                 .address(Address.builder().street("BRIGITTEWEG 10")
                         .postcode("10115")
                         .city(faker().address().cityName())
-                        .country("DE").build()).build();
+                        .country(CountryCodes.GERMANY.getCountryCode()).build()).build();
     }
 }

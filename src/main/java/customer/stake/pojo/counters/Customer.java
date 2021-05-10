@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Getter
 @Setter
@@ -15,14 +13,14 @@ import java.util.Map;
 public class Customer {
 
     private String uuid;
-    private Integer id;
+    private String id;
 
-    public Customer(Integer id) {
+    public Customer(String id) {
         super();
         this.id = id;
     }
 
-    public Customer(String uuid, Integer id) {
+    public Customer(String uuid, String id) {
         this.uuid = uuid;
         this.id = id;
     }
