@@ -22,7 +22,7 @@ public class GetCustomersFiguresEndpoint extends BaseEndpoint<GetCustomersFigure
     }
 
 
-    public GetCustomersFiguresEndpoint sendRequest(int id,String label) {
+    public GetCustomersFiguresEndpoint sendRequest(String id,String label) {
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
                 .auth().basic(user,password).when().get("/risks/{id}?label={label}",id,label);
         return this;
