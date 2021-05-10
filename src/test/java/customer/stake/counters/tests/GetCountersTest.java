@@ -20,11 +20,11 @@ public class GetCountersTest extends BaseTest {
     @DisplayName("Get call to CSS with labels:")
     @Description("Checking counters for user using all labels")
     public void getCustomerCountersTest(@NotNull LabelEnums label){
-        int userId = 100;
+        String userId = "100";
         CustomerFiguresResponse response =new GetCustomersFiguresEndpoint().sendRequest(userId,label.getLabel())
                 .assertRequestStatusCode().getResponseModel();
         Assertions.assertThat(response.getCustomer().getId()).isEqualTo(userId);
-        Assertions.assertThat(response.getLabel()).isEqualTo(label.getLabel());
+        Assertions.assertThat(response.getLabel()).isEqualTo(label);
     }
 
 
