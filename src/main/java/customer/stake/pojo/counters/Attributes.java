@@ -1,6 +1,7 @@
 package customer.stake.pojo.counters;
 
-import customer.stake.enums.TypeEnum;
+import customer.stake.enums.CounterTypeEnum;
+import customer.stake.enums.LimitTypeEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,26 +46,26 @@ public class Attributes {
         this.stakeBet = stakeBet;
     }
 
-    public List<Double> getAtribute(TypeEnum type) {
-        if(type == TypeEnum.PAYIN) {
+    public List<Double> getAtribute(CounterTypeEnum type) {
+        if(type == CounterTypeEnum.PAYIN) {
             return payin;
         }
-        else if(type == TypeEnum.PAYIN_BET){
+        else if(type == CounterTypeEnum.PAYIN_BET){
             return payinBet;
         }
-        else if(type == TypeEnum.PAYIN_CASINO){
+        else if(type == CounterTypeEnum.PAYIN_CASINO){
             return payinCasino;
         }
-        else if(type == TypeEnum.LOSS_BET){
+        else if(type == CounterTypeEnum.LOSS_BET){
             return lossBet;
         }
-        else if(type == TypeEnum.LOSS_STAKE){
+        else if(type == CounterTypeEnum.LOSS_STAKE){
             return lossStake;
         }
-        else if(type == TypeEnum.STAKE){
+        else if(type == CounterTypeEnum.STAKE){
             return stake;
         }
-        else if(type == TypeEnum.STAKE_BET){
+        else if(type == CounterTypeEnum.STAKE_BET){
             return stakeBet;
         }
         else return null;

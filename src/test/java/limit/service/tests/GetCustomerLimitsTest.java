@@ -3,8 +3,10 @@ package limit.service.tests;
 import configuration.BaseTest;
 import customer.stake.enums.LabelEnums;
 import customer.stake.enums.OwnerEnum;
-import customer.stake.enums.TypeEnum;
+import customer.stake.enums.LimitTypeEnum;
 import customer.stake.helpers.GetLimitsHelper;
+import customer.stake.helpers.LoginHelper;
+import customer.stake.helpers.PaymentHelper;
 import customer.stake.helpers.UserHelper;
 import customer.stake.pojo.limits.LimitsResponseData;
 import customer.stake.rop.GetLimitEndpoint;
@@ -22,10 +24,11 @@ public class GetCustomerLimitsTest extends BaseTest {
     private  String uuid;
     protected final Logger log = LoggerFactory.getLogger(getClass());
     private LimitsResponseData data;
+    private UserHelper userHelper = new UserHelper();
 
     @BeforeEach
     public void setUp(){
-        uuid = new UserHelper().createGermanUserAndGetUuid();
+        uuid = userHelper.createGermanUserAndGetUuid();
     }
 
     @DisplayName("Check if new created user have imposed turnover limit")
@@ -37,7 +40,7 @@ public class GetCustomerLimitsTest extends BaseTest {
         try {
              data = new GetLimitsHelper().checkIfLimitExistForUser(uuid,
                      OwnerEnum.PERSONAL,
-                     TypeEnum.TURNOVER,
+                     LimitTypeEnum.TURNOVER,
                      LabelEnums.tipico);
              Assertions.assertThat(data.getCurrent().getValue()).isEqualTo(1000f);
         }catch (NullPointerException e){
@@ -51,4 +54,5 @@ public class GetCustomerLimitsTest extends BaseTest {
     public void getCustomerLimitsWithNoAuthTest(){
         new GetLimitEndpoint().sendRequestWithNoAuth(uuid).assertNoAuthRequestStatusCode();
     }
+
 }

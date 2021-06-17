@@ -40,6 +40,9 @@ public interface EnvConfig extends Config {
     @Key("ACCOUNT_DE_URI")
     String accountDeUrl();
 
+    @Key("PAYMENT_DE_URI")
+    String paymentDeUrl();
+
     @Key("CRFES_PATH")
     String crfesPath();
 
@@ -49,6 +52,13 @@ public interface EnvConfig extends Config {
     @Key("WEB_TEST_API_PATH")
     String webTestApiPath();
 
+    @Key("CAFES_PATH")
+    String cafesPath();
 
+    @Key("PAYMENT_PATH")
+    String paymentPath();
+
+    @Key("RGFES_PATH")
+    String rgfesPath();
 
 }

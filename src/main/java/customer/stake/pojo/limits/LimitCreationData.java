@@ -1,8 +1,9 @@
 package customer.stake.pojo.limits;
 
+import customer.stake.enums.IntervalEnum;
 import customer.stake.enums.LabelEnums;
 import customer.stake.enums.OwnerEnum;
-import customer.stake.enums.TypeEnum;
+import customer.stake.enums.LimitTypeEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,14 +15,14 @@ import lombok.Setter;
 @Builder
 public class LimitCreationData {
 
-    private TypeEnum type;
+    private LimitTypeEnum type;
     private OwnerEnum owner;
     private LabelEnums label;
     private String product;
     private Double value;
-    private String interval;
+    private IntervalEnum interval;
 
-    public LimitCreationData(TypeEnum type, OwnerEnum owner, LabelEnums label, String product, Double value, String interval) {
+    public LimitCreationData(LimitTypeEnum type, OwnerEnum owner, LabelEnums label, String product, Double value, IntervalEnum interval) {
         this.type = type;
         this.owner = owner;
         this.label = label;

@@ -1,7 +1,8 @@
 package customer.stake.helpers;
 
+import customer.stake.enums.CounterTypeEnum;
 import customer.stake.enums.LabelEnums;
-import customer.stake.enums.TypeEnum;
+import customer.stake.enums.LimitTypeEnum;
 import customer.stake.pojo.counters.Attribute;
 import customer.stake.pojo.counters.Customer;
 import customer.stake.pojo.counters.PostCountersRequest;
@@ -13,7 +14,7 @@ import java.util.Collections;
 public class AddCounterHelper {
 
     public PostCountersResponse addSingleCounterToCustomerStakeService(String uuid, String id, LabelEnums label,
-                                                                       TypeEnum type, double amount) {
+                                                                       CounterTypeEnum type, double amount) {
         Attribute attribute = new Attribute(type, amount);
 
         PostCountersRequest body = new PostCountersRequest(new Customer(uuid, id), label,

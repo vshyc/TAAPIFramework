@@ -2,6 +2,7 @@ package customer.stake.counters.tests;
 
 
 import configuration.BaseTest;
+import customer.stake.enums.CounterTypeEnum;
 import customer.stake.enums.LabelEnums;
 import customer.stake.pojo.counters.CustomerFiguresResponse;
 import customer.stake.rop.GetCustomersFiguresEndpoint;
@@ -21,7 +22,8 @@ public class GetCountersTest extends BaseTest {
     @Description("Checking counters for user using all labels")
     public void getCustomerCountersTest(@NotNull LabelEnums label){
         String userId = "100";
-        CustomerFiguresResponse response =new GetCustomersFiguresEndpoint().sendRequest(userId,label.getLabel())
+        CustomerFiguresResponse response =new GetCustomersFiguresEndpoint().sendRequest(userId,
+                CounterTypeEnum.PAYIN,label)
                 .assertRequestStatusCode().getResponseModel();
         Assertions.assertThat(response.getCustomer().getId()).isEqualTo(userId);
         Assertions.assertThat(response.getLabel()).isEqualTo(label);
