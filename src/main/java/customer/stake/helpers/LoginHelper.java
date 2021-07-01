@@ -3,6 +3,7 @@ package customer.stake.helpers;
 import customer.stake.properties.EnvConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.jetbrains.annotations.NotNull;
 
 import static io.restassured.RestAssured.given;
 
@@ -17,17 +18,17 @@ public class LoginHelper {
                 .header("X-Forwarded-For","10.2.7.9").body(body).post();
     }
 
-    public String getSessionId(Response response){
+    public String getSessionId(@NotNull Response response){
        return response.getCookie("SESSION_ID");
     }
 
-    public String getJSessionId(Response response){
+    public String getJSessionId(@NotNull Response response){
         return response.getCookie("JSESSIONID");
     }
-    public String getSlaveId(Response response){
+    public String getSlaveId(@NotNull Response response){
         return response.getCookie("SLAVE_ID");
     }
-    public String getLanguage(Response response){
+    public String getLanguage(@NotNull Response response){
         return response.getCookie("language");
     }
 

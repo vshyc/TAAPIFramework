@@ -206,13 +206,6 @@ public class PutCreateLimitTests extends BaseTest {
 
     }
 
-    @Test
-    public void multilineString(){
-        String hmmm = """why not working;/this""";
-        System.out.println(hmmm);
-
-    }
-
 
     @Step("Sending a call to Limit Service with User Token to create Limit")
     private LimitsResponseData createLimitWithUserToken(LimitTypeEnum type, OwnerEnum owner,
