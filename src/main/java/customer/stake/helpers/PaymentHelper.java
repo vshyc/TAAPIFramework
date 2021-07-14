@@ -3,7 +3,6 @@ package customer.stake.helpers;
 import customer.stake.enums.CountryCodes;
 import customer.stake.pojo.helpers.Payment;
 import customer.stake.properties.EnvConfig;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;

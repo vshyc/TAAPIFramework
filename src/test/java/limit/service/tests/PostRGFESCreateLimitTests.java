@@ -6,6 +6,7 @@ import customer.stake.enums.LabelEnums;
 import customer.stake.enums.LimitTypeEnum;
 import customer.stake.enums.OwnerEnum;
 import customer.stake.helpers.LoginHelper;
+import customer.stake.helpers.TermsAndConditionsHelper;
 import customer.stake.helpers.UserHelper;
 import customer.stake.pojo.limits.LimitCreationData;
 import customer.stake.pojo.rgfes.RGFESCreateLimitResponse;
@@ -27,8 +28,10 @@ import org.slf4j.LoggerFactory;
 public class PostRGFESCreateLimitTests extends BaseTest {
 
     private UserHelper userHelper;
+    private TermsAndConditionsHelper tacHelper;
     private LoginHelper loginHelper;
     private Response loginResponse;
+    private Response tacResponse;
     private String sessionId;
     private JsonPath createdUser;
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -39,8 +42,9 @@ public class PostRGFESCreateLimitTests extends BaseTest {
         loginHelper = new LoginHelper();
         userHelper = new UserHelper();
         createdUser = userHelper.createGermanUserInWebTestApi();
-        loginResponse = loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName());
-        sessionId = loginHelper.getSessionId(loginResponse);
+        tacHelper = new TermsAndConditionsHelper();
+        tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
+        sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
     }
 
     @Feature("Create Limits in Limit service RGFES")
@@ -52,10 +56,10 @@ public class PostRGFESCreateLimitTests extends BaseTest {
     public void createLimitWithRGFESTest(LimitTypeEnum type, OwnerEnum owner,
                                          LabelEnums label, String product,
                                          Double value, IntervalEnum interval){
-        RGFESCreateLimitResponse response = new PostRGFESLimitEndpoint().sendRequest(sessionId,LimitCreationData
+        RGFESLimit response = new PostRGFESLimitEndpoint().sendRequest(sessionId,LimitCreationData
                 .builder().type(type).owner(owner).label(label)
                 .product(product).value(value).interval(interval).build()).assertRequestStatusCode()
-                .getResponseModel();
-        Assertions.assertThat(response.getLimit(product).getLimit(type).getCurrent().getValue()).isEqualTo(value);
+                .getResponse().as(RGFESLimit.class);
+        Assertions.assertThat(response.getLimit(type).getCurrent().getValue()).isEqualTo(value);
     }
 }

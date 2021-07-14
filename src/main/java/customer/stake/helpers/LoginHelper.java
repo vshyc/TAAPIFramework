@@ -12,9 +12,8 @@ public class LoginHelper {
     public Response LoginUserToAccountApp(String username){
         String body = String.format("username=%s&password=Secret123!", username);
         return given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.cafesPath())
-                .contentType(ContentType.URLENC).header("Origin",envConfig.accountDeUrl())
-                .header("Referer",envConfig.accountDeUrl())
-                .header("X-Forwarded-For","10.2.7.9").body(body).post();
+                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                .header("X-Forwarded-For","10.10.9.254").body(body).post();
     }
 
     public String getSessionId(Response response){

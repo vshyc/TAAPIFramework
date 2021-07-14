@@ -61,4 +61,13 @@ public interface EnvConfig extends Config {
     @Key("RGFES_PATH")
     String rgfesPath();
 
+    @Key("TAC_PATH")
+    String tacPath();
+
+    @Key("TAC_PASS")
+    String tacPass();
+
+    @Key("TAC_BASE_URI")
+    String tacBaseUri();
+
 }

@@ -6,6 +6,7 @@ import customer.stake.pojo.rgfes.RGFESCreateLimitResponse;
 import customer.stake.pojo.rgfes.RGFESLimit;
 import customer.stake.properties.EnvConfig;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
@@ -13,7 +14,7 @@ import java.lang.reflect.Type;
 import static io.restassured.RestAssured.given;
 
 
-public class PostRGFESLimitEndpoint extends BaseEndpoint<PostRGFESLimitEndpoint, RGFESCreateLimitResponse> {
+public class PostRGFESLimitEndpoint extends BaseEndpoint<PostRGFESLimitEndpoint, RGFESCreateLimitResponse>{
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
