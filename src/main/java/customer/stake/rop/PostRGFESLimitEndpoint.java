@@ -3,10 +3,8 @@ package customer.stake.rop;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.pojo.limits.LimitCreationData;
 import customer.stake.pojo.rgfes.RGFESCreateLimitResponse;
-import customer.stake.pojo.rgfes.RGFESLimit;
 import customer.stake.properties.EnvConfig;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;

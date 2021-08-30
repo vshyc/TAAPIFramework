@@ -10,7 +10,6 @@ import customer.stake.helpers.TermsAndConditionsHelper;
 import customer.stake.helpers.UserHelper;
 import customer.stake.pojo.limits.LimitCreationData;
 import customer.stake.pojo.rgfes.RGFESCreateLimitResponse;
-import customer.stake.pojo.rgfes.RGFESLimit;
 import customer.stake.rop.PostRGFESLimitEndpoint;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
@@ -30,7 +29,6 @@ public class PostRGFESCreateLimitTests extends BaseTest {
     private UserHelper userHelper;
     private TermsAndConditionsHelper tacHelper;
     private LoginHelper loginHelper;
-    private Response loginResponse;
     private Response tacResponse;
     private String sessionId;
     private JsonPath createdUser;
@@ -56,10 +54,10 @@ public class PostRGFESCreateLimitTests extends BaseTest {
     public void createLimitWithRGFESTest(LimitTypeEnum type, OwnerEnum owner,
                                          LabelEnums label, String product,
                                          Double value, IntervalEnum interval){
-        RGFESLimit response = new PostRGFESLimitEndpoint().sendRequest(sessionId,LimitCreationData
+        RGFESCreateLimitResponse response = new PostRGFESLimitEndpoint().sendRequest(sessionId,LimitCreationData
                 .builder().type(type).owner(owner).label(label)
                 .product(product).value(value).interval(interval).build()).assertRequestStatusCode()
-                .getResponse().as(RGFESLimit.class);
-        Assertions.assertThat(response.getLimit(type).getCurrent().getValue()).isEqualTo(value);
+                .getResponseModel();
+        Assertions.assertThat(response.getLimit(product).getLimit(type).getCurrent().getValue()).isEqualTo(value);
     }
 }
