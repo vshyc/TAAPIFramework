@@ -44,8 +44,15 @@ public class GetCustomerLimitsTest extends BaseTest {
                      LabelEnums.tipico);
              Assertions.assertThat(data.getCurrent().getValue()).isEqualTo(1000f);
         }catch (NullPointerException e){
+            if (envConfig.env().equals("staging")){
+                log.info("On staging we are not imposing Turnover Limit yet");
+                Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> {
+                    data.getCurrent().getValue();
+                });
+            }
+            else {
             Assertions.fail("Turnover IMPOSED limit not exist in DB after registration");
-            log.error("Turnover IMPOSED limit not exist in DB ");
+            log.error("Turnover IMPOSED limit not exist in DB ");}
         }
     }
 

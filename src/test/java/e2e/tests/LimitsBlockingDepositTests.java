@@ -21,6 +21,9 @@ public class LimitsBlockingDepositTests extends BaseTest {
     private String aml150ErrorMsg = "Jetzt Konto verifizieren! Damit du insgesamt mehr als 150,00 € einzahlen kannst, " +
             "musst du dein <a style=\"color:#004a67\" href=\"/#account/verification/options\" target=\"_self\">Konto " +
             "verifizieren</a>. Alternativ kannst du deinen Einzahlungsbetrag verringern.";
+    private String aml100ErrorMsg ="Verify your account now! In order to deposit more than 100.00€ in total, you need" +
+            " to <a style=\"color:#004a67\" href=\"/#account/verification/options\" target=\"_self\">verify your " +
+            "account</a>. Alternatively, you can decrease your deposit amount.";
 
     private UserHelper userHelper;
     private PaymentHelper paymentHelper;
@@ -54,8 +57,12 @@ public class LimitsBlockingDepositTests extends BaseTest {
     public void checkIfAmlLimitIsBlockingDepositIfHigherThenAMLLimit(){
         Response paymentResponse = paymentHelper.payIn(sessionId,jsession,slaveId,"de",200,"app-tipico-sports");
         Assertions.assertThat(paymentResponse.getStatusCode()).isEqualTo(500);
-        Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("metadata.globalMessage.message"))
-                .isEqualTo(aml150ErrorMsg);
+        if (envConfig.env().equals("staging")){
+            Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("metadata.globalMessage.message"))
+                    .isEqualTo(aml100ErrorMsg);}
+        else {
+            Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("metadata.globalMessage.message"))
+                    .isEqualTo(aml150ErrorMsg);}
     }
 
     @Test
