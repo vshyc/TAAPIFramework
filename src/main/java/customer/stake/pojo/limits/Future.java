@@ -12,11 +12,11 @@ import lombok.Setter;
 @Builder
 public class Future {
 
-    private Float value;
+    private Double value;
     private IntervalEnum interval;
     private String from;
 
-    public Future(Float value, IntervalEnum interval, String from) {
+    public Future(Double value, IntervalEnum interval, String from) {
         this.value = value;
         this.interval = interval;
         this.from = from;
