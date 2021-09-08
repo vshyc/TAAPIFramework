@@ -1,5 +1,6 @@
 package customer.stake.pojo.limits;
 
+import customer.stake.enums.IntervalEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,10 @@ import lombok.Setter;
 public class Future {
 
     private Float value;
-    private String interval;
+    private IntervalEnum interval;
     private String from;
 
-    public Future(Float value, String interval, String from) {
+    public Future(Float value, IntervalEnum interval, String from) {
         this.value = value;
         this.interval = interval;
         this.from = from;
