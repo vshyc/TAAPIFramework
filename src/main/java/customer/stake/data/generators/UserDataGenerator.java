@@ -55,7 +55,7 @@ public class UserDataGenerator extends TestDataGenerator{
                 .salutation(sex)
                 .dateOfBirth(faker().date().birthday(18,40))
                 .phone("+44555666777")
-                .email(faker().name().username()+"@springfield.gov")
+                .email(faker().name().username()+faker().number().numberBetween(1,10000)+"@springfield.gov")
                 .language("en")
                 .address(Address.builder().street("BRIGITTEWEG 10")
                         .postcode("10115")
