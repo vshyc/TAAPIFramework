@@ -24,7 +24,6 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@DisplayName("Creating Limits using RGFES")
 public class PostRGFESCreateLimitTests extends BaseTest {
 
     private UserHelper userHelper;
