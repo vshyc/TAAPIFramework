@@ -29,7 +29,7 @@ public class GetCountersTest extends BaseTest {
                 CounterTypeEnum.PAYIN,label)
                 .assertRequestStatusCode().getResponseModel();
         Assertions.assertThat(response.getCustomer().getId()).isEqualTo(userId);
-        Assertions.assertThat(response.getLabel().toString()).isEqualTo(label.getLabel().toLowerCase(Locale.ENGLISH));
+        Assertions.assertThat(response.getLabel()).isEqualTo(label);
     }
 
 
