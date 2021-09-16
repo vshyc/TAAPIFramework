@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import java.util.Locale;
+
 @DisplayName("GET Endpoint for Customer Stake Service Tests")
 public class GetCountersTest extends BaseTest {
 
@@ -27,7 +29,7 @@ public class GetCountersTest extends BaseTest {
                 CounterTypeEnum.PAYIN,label)
                 .assertRequestStatusCode().getResponseModel();
         Assertions.assertThat(response.getCustomer().getId()).isEqualTo(userId);
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
+        Assertions.assertThat(response.getLabel().toString()).isEqualTo(label.getLabel().toLowerCase(Locale.ENGLISH));
     }
 
 

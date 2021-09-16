@@ -18,6 +18,8 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Locale;
+
 @DisplayName("POST Endpoint for Customer Stake Service Tests")
 public class PostCreateUserCountersTests extends BaseTest {
 
@@ -45,7 +47,7 @@ public class PostCreateUserCountersTests extends BaseTest {
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid,id,label,
                 type,amount);
 
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
+        Assertions.assertThat(response.getLabel().toString()).isEqualTo(label.getLabel().toLowerCase(Locale.ENGLISH));
         Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
                 .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
     }
