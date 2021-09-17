@@ -47,7 +47,7 @@ public class PostCreateUserCountersTests extends BaseTest {
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid,id,label,
                 type,amount);
 
-        Assertions.assertThat(response.getLabel().toString()).isEqualTo(label.getLabel().toLowerCase(Locale.ENGLISH));
+        Assertions.assertThat(response.getLabel()).isEqualTo(label);
         Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
                 .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
     }
