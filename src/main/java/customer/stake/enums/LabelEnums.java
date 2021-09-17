@@ -11,7 +11,11 @@ public enum LabelEnums {
     all("all"),
     tipico("tipico"),
     games("games"),
-    mysino("mysino");
+    mysino("mysino"),
+    All("All"),
+    Tipico("Tipico"),
+    Games("Games"),
+    Mysino("Mysino");
 
     private String label;
 
