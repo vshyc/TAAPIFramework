@@ -20,8 +20,8 @@ public class LimitsResponseData {
     private OwnerEnum owner;
     private LabelEnums label;
     private String product;
-    private Float used;
-    private Float remaining;
+    private Double used;
+    private Double remaining;
     private Integer leftTime;
     private Current current;
     private Future future;
@@ -35,8 +35,8 @@ public class LimitsResponseData {
     private String updatedSource;
 
 
-    public LimitsResponseData(String limitUUID, LimitTypeEnum type, OwnerEnum owner, LabelEnums label, String product, Float used,
-                              Float remaining, Integer leftTime, Current current, Future future, String createdAt,
+    public LimitsResponseData(String limitUUID, LimitTypeEnum type, OwnerEnum owner, LabelEnums label, String product, Double used,
+                              Double remaining, Integer leftTime, Current current, Future future, String createdAt,
                               String createdBy, String createdByClient, String updatedAt, String updatedBy,
                               String updatedByClient, String createdSource, String updatedSource) {
         this.limitUUID = limitUUID;
