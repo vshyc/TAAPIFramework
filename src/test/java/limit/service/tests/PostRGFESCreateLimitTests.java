@@ -54,10 +54,15 @@ public class PostRGFESCreateLimitTests extends BaseTest {
     public void createLimitWithRGFESTest(LimitTypeEnum type, OwnerEnum owner,
                                          LabelEnums label, String product,
                                          Double value, IntervalEnum interval){
-        RGFESCreateLimitResponse response = new PostRGFESLimitEndpoint().sendRequest(sessionId,LimitCreationData
-                .builder().type(type).owner(owner).label(label)
-                .product(product).value(value).interval(interval).build()).assertRequestStatusCode()
-                .getResponseModel();
-        Assertions.assertThat(response.getLimit(product).getLimit(type).getCurrent().getValue()).isEqualTo(value);
+        if (!(envConfig.env().equals("staging")) && type==LimitTypeEnum.TURNOVER){
+            Assertions.assertThat(true).as("The turnover limit exist on registration so " +
+                    "creating it by RGFES is not posible");
+        }else {
+            RGFESCreateLimitResponse response = new PostRGFESLimitEndpoint().sendRequest(sessionId, LimitCreationData
+                            .builder().type(type).owner(owner).label(label)
+                            .product(product).value(value).interval(interval).build()).assertRequestStatusCode()
+                    .getResponseModel();
+            Assertions.assertThat(response.getLimit(product).getLimit(type).getCurrent().getValue()).isEqualTo(value);
+        }
     }
 }

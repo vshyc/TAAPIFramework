@@ -195,7 +195,6 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} adding a counter with value = {6} and checking if " +
             "remaining value is calculated correctly ")
-    @Disabled("Disabled until implementation of maping counters and limits ")
     @CsvFileSource(files = "src/test/resources/limitsWithCountersData.csv", numLinesToSkip = 1)
     public void checkIfRemainingValueIsCalculatedCorrectlyTest(LimitTypeEnum LimitType, OwnerEnum owner,
                                                                LabelEnums label, String product,
