@@ -1,5 +1,6 @@
 package customer.stake.pojo.helpers;
 
+import customer.stake.enums.LabelEnums;
 import customer.stake.enums.LicenceRegion;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,11 +15,13 @@ public class TAC {
     private String clientId;
     private Boolean isAffiliate;
     private LicenceRegion licenseRegion;
+    private LabelEnums label;
 
-    public TAC(String clientId, Boolean isAffiliate, LicenceRegion licenseRegion) {
+    public TAC(String clientId, Boolean isAffiliate, LicenceRegion licenseRegion, LabelEnums label) {
         this.clientId = clientId;
         this.isAffiliate = isAffiliate;
         this.licenseRegion = licenseRegion;
+        this.label = label;
     }
 }
 
