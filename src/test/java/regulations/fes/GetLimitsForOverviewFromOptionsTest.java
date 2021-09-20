@@ -37,7 +37,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
         createdUser = userHelper.createGermanUserInWebTestApi();
         tacHelper = new TermsAndConditionsHelper();
         tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
-        sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
     }
 
     @Feature("Getting Limits from RGFES")
@@ -45,6 +44,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Description("Getting Limits by RGFES from Option Service")
     @Test
     public void getLimitsForOverview(){
+        sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
         RGFESGetOptionServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId).assertRequestStatusCode()
                 .getModelTypeForLimitServiceResponse();
         Assertions.assertThat(response.getCustomLimits().getDepositLimits().get(0).getName()).isEqualTo("max-payin");
