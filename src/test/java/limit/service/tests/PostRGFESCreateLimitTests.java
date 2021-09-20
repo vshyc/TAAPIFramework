@@ -54,7 +54,7 @@ public class PostRGFESCreateLimitTests extends BaseTest {
     public void createLimitWithRGFESTest(LimitTypeEnum type, OwnerEnum owner,
                                          LabelEnums label, String product,
                                          Double value, IntervalEnum interval){
-        if (!(envConfig.env()=="staging") && type==LimitTypeEnum.TURNOVER){
+        if (!(envConfig.env().equals("staging")) && type==LimitTypeEnum.TURNOVER){
             Assertions.assertThat(true).as("The turnover limit exist on registration so " +
                     "creating it by RGFES is not posible");
         }else {
