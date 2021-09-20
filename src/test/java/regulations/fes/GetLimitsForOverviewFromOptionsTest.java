@@ -1,6 +1,7 @@
 package regulations.fes;
 
 import configuration.BaseTest;
+import customer.stake.db.CSSDBConnector;
 import customer.stake.helpers.LoginHelper;
 import customer.stake.helpers.TermsAndConditionsHelper;
 import customer.stake.helpers.UserHelper;
@@ -46,7 +47,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     public void getLimitsForOverview(){
         sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
         RGFESGetOptionServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId).assertRequestStatusCode()
-                .getModelTypeForLimitServiceResponse();
+                .getResponseModel();
         Assertions.assertThat(response.getCustomLimits().getDepositLimits().get(0).getName()).isEqualTo("max-payin");
         Assertions.assertThat(response.getAccountLimits().getDepositLimits().get(0).getName()).isEqualTo("max-payin-aml");
     }
