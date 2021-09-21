@@ -194,14 +194,19 @@ public class PutCreateLimitTests extends BaseTest {
             "label={2}, product={3}, value={4} , interval={5} adding a counter with value = {6} and checking if " +
             "remaining value is calculated correctly ")
     @CsvFileSource(files = "src/test/resources/limitsWithCountersData.csv", numLinesToSkip = 1)
-    public void checkIfRemainingValueIsCalculatedCorrectlyTest(LimitTypeEnum LimitType, OwnerEnum owner,
+    public void checkIfRemainingValueIsCalculatedCorrectlyTest(LimitTypeEnum limitType, OwnerEnum owner,
                                                                LabelEnums label, String product,
                                                                Double value, IntervalEnum interval,
                                                                Double counterValue, CounterTypeEnum counterType){
-        createLimitWithApplicationToken(LimitType, owner,label,product,value,interval);
-        addCounterForLimit(uuid,id,label, counterType,counterValue);
-        LimitsResponseData response = getLimit(uuid,owner,LimitType,label);
-        Assertions.assertThat(response.getRemaining()).isEqualTo(value-counterValue);
+        if (!(envConfig.env().equals("staging")) && limitType==LimitTypeEnum.TURNOVER){
+            Assertions.assertThat(true).as("The turnover limit exist on registration so " +
+                    "creating it by RGFES is not posible");
+        }else {
+            createLimitWithApplicationToken(limitType, owner, label, product, value, interval);
+            addCounterForLimit(uuid, id, label, counterType, counterValue);
+            LimitsResponseData response = getLimit(uuid, owner, limitType, label);
+            Assertions.assertThat(response.getRemaining()).isEqualTo(value - counterValue);
+        }
 
     }
 

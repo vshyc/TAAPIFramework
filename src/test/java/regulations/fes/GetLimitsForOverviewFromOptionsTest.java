@@ -3,12 +3,19 @@ package regulations.fes;
 import configuration.BaseTest;
 import customer.stake.db.CSSDBConnector;
 import customer.stake.enums.IntervalEnum;
+import customer.stake.enums.LabelEnums;
+import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.OwnerEnum;
 import customer.stake.helpers.LoginHelper;
+import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.TermsAndConditionsHelper;
 import customer.stake.helpers.UserHelper;
+import customer.stake.pojo.limits.LimitCreationData;
+import customer.stake.pojo.limits.LimitsResponseData;
 import customer.stake.pojo.rgfes.RGFESGetLimitServiceLimitResponse;
 import customer.stake.pojo.rgfes.RGFESGetOptionServiceLimitResponse;
 import customer.stake.rop.GetRGFESLimitEndpoint;
+import customer.stake.rop.PutLimitEndpoint;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
@@ -19,6 +26,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +40,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     private Response tacResponse;
     private String sessionId;
     private JsonPath createdUser;
+    private String uuid;
     protected final Logger log = LoggerFactory.getLogger(getClass());
     private String acceptV3Header ="application/vnd.tipico.regulations.customer.limits-v3+json";
 
@@ -42,6 +52,8 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
         createdUser = userHelper.createGermanUserInWebTestApi();
         tacHelper = new TermsAndConditionsHelper();
         tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
+        sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
+        uuid = userHelper.getUuid(createdUser);
     }
 
     @Feature("Getting Limits from RGFES V2")
@@ -49,7 +61,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Description("Getting Limits by RGFES from Option Service")
     @Test
     public void getLimitsForOverview(){
-        sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
         RGFESGetOptionServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId).assertRequestStatusCode()
                 .getResponseModel();
         Assertions.assertThat(response.getCustomLimits().getDepositLimits().get(0).getName()).isEqualTo("max-payin");
@@ -61,7 +72,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Description("Getting Limits by RGFES from Limit Service")
     @Test
     public void getLimitsForOverviewFromLimitService(){
-        sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
         RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId,acceptV3Header)
                 .assertStatusCode(HttpStatus.SC_OK)
                 .getModelTypeForLimitServiceResponse();
@@ -71,6 +81,27 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
             Assertions.assertThat(response.getSports().getTurnover().getCurrent().getInterval()).isEqualTo(IntervalEnum.MONTH);
         }
     }
+    @Feature("Getting Limits from RGFES V3")
+    @DisplayName("Getting Limits from RGFES V3")
+    @Description("Getting Limits by RGFES from Limit Service")
+    @ParameterizedTest(name = "{index} -> Creating a limit type={0} , owner={1}, " +
+            "label={2}, product={3}, value={4} , interval={5} and checking if limit is visible in GET call")
+    @CsvFileSource(files = "src/test/resources/getNewCreatedLimit.csv", numLinesToSkip = 1)
+    public void getNewCreatedLimitForOverviewFromLimitService(LimitTypeEnum limitType,OwnerEnum owner,LabelEnums label,
+                                                              String product,Double value,IntervalEnum interval){
+        if (!(envConfig.env().equals("staging")) && limitType==LimitTypeEnum.TURNOVER){
+            Assertions.assertThat(true).as("The turnover limit exist on registration so " +
+                    "creating it by RGFES is not posible");
+        }else {
+            createLimitWithApplicationToken(limitType, owner, label, product, value, interval);
+            RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, acceptV3Header)
+                    .assertStatusCode(HttpStatus.SC_OK)
+                    .getModelTypeForLimitServiceResponse();
+            Assertions.assertThat(response.getSports().getLimitType(limitType).getRemaining()).isEqualTo(value);
+            Assertions.assertThat(response.getSports().getLimitType(limitType).getCurrent().getValue()).isEqualTo(value);
+            Assertions.assertThat(response.getSports().getLimitType(limitType).getCurrent().getInterval()).isEqualTo(interval);
+        }
+    }
 
     @Feature("Getting Limits from RGFES")
     @DisplayName("Getting Limits from RGFES no auth")
@@ -78,5 +109,21 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Test
     public void getLimitsNoAuthForOverview(){
          new GetRGFESLimitEndpoint().sendRequest("").assertNoAuthRequestStatusCode();
+    }
+
+    @Step("Sending a call to Limit Service with Application Token to create Limit")
+    private LimitsResponseData createLimitWithApplicationToken(LimitTypeEnum type, OwnerEnum owner,
+                                                               LabelEnums label, String product,
+                                                               Double value, IntervalEnum interval){
+        LimitCreationData body = LimitCreationData.builder().
+                type(type)
+                .owner(owner)
+                .label(label)
+                .product(product)
+                .value(value)
+                .interval(interval)
+                .build();
+        return new PutLimitEndpoint().sendRequestToCreateNewLimit(body,new OauthHelper().getApplicationToken(),uuid)
+                .assertRequestStatusCode().getResponseModel();
     }
 }
