@@ -63,10 +63,13 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     public void getLimitsForOverviewFromLimitService(){
         sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
         RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId,acceptV3Header)
+                .assertStatusCode(HttpStatus.SC_OK)
                 .getModelTypeForLimitServiceResponse();
-        Assertions.assertThat(response.getSports().getTurnover().getRemaining()).isEqualTo(1000.0);
-        Assertions.assertThat(response.getSports().getTurnover().getCurrent().getValue()).isEqualTo(1000.0);
-        Assertions.assertThat(response.getSports().getTurnover().getCurrent().getInterval()).isEqualTo(IntervalEnum.MONTH);
+        if (!envConfig.env().equals("staging")) {
+            Assertions.assertThat(response.getSports().getTurnover().getRemaining()).isEqualTo(1000.0);
+            Assertions.assertThat(response.getSports().getTurnover().getCurrent().getValue()).isEqualTo(1000.0);
+            Assertions.assertThat(response.getSports().getTurnover().getCurrent().getInterval()).isEqualTo(IntervalEnum.MONTH);
+        }
     }
 
     @Feature("Getting Limits from RGFES")
@@ -74,7 +77,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Description("Getting Limits by RGFES from Option Service without providing proper sessionId")
     @Test
     public void getLimitsNoAuthForOverview(){
-        Response response = new GetRGFESLimitEndpoint().sendRequest("").getResponse();
-        Assertions.assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_UNAUTHORIZED);
+         new GetRGFESLimitEndpoint().sendRequest("").assertNoAuthRequestStatusCode();
     }
 }

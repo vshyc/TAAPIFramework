@@ -14,7 +14,6 @@ import static io.restassured.RestAssured.given;
 public class GetRGFESLimitEndpoint extends BaseEndpoint<GetRGFESLimitEndpoint, RGFESGetOptionServiceLimitResponse>{
 
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
-    protected Response response;
 
     @Override
     protected Type getModelType() {
