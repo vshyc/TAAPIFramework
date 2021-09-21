@@ -1,8 +1,10 @@
 package customer.stake.rop;
 
 import customer.stake.helpers.HelpersConfig;
+import customer.stake.pojo.rgfes.RGFESGetLimitServiceLimitResponse;
 import customer.stake.pojo.rgfes.RGFESGetOptionServiceLimitResponse;
 import customer.stake.properties.EnvConfig;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
@@ -12,14 +14,15 @@ import static io.restassured.RestAssured.given;
 public class GetRGFESLimitEndpoint extends BaseEndpoint<GetRGFESLimitEndpoint, RGFESGetOptionServiceLimitResponse>{
 
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
+    protected Response response;
 
     @Override
     protected Type getModelType() {
         return RGFESGetOptionServiceLimitResponse.class;
     }
 
-    public RGFESGetOptionServiceLimitResponse getModelTypeForLimitServiceResponse() {
-        return new RGFESGetOptionServiceLimitResponse();
+    public RGFESGetLimitServiceLimitResponse getModelTypeForLimitServiceResponse() {
+        return response.as(RGFESGetLimitServiceLimitResponse.class);
     }
 
     @Override

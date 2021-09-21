@@ -19,8 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DecimalFormat;
-
 
 @DisplayName("E2E Tests for Limits blocking proper deposits")
 public class LimitsBlockingDepositTests extends BaseTest {
@@ -34,6 +32,9 @@ public class LimitsBlockingDepositTests extends BaseTest {
             " to <a style=\"color:#004a67\" href=\"/#account/verification/options\" target=\"_self\">verify your " +
             "account</a>. Alternatively, you can decrease your deposit amount.";
     private String sddErrorMsg = "Simple EDD Confirmation Required";
+    private String over1kLimitErrorMsg = "Sie haben Ihr Einzahlungslimit von 1.000,00 € pro Monat erreicht. Bitte ändern" +
+            " Sie Ihren Einzahlungsbetrag auf 1.000,00 € oder <a href=\"/#account/depositlimit?" +
+            "fromRegistration=0\">passen Sie Ihr Limit</a> entsprechend an.";
 
 
 
@@ -112,7 +113,7 @@ public class LimitsBlockingDepositTests extends BaseTest {
         Assertions.assertThat(paymentResponse.getStatusCode()).isEqualTo(500);
         if (envConfig.env().equals("staging")){
             Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("metadata.globalMessage.message"))
-                    .isEqualTo(getDeposit1kErrorMsg(0));}
+                    .isEqualTo(over1kLimitErrorMsg);}
         else {
             Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("message"))
                     .isEqualTo(sddErrorMsg);}
@@ -136,7 +137,6 @@ public class LimitsBlockingDepositTests extends BaseTest {
 
     private String getDeposit1kErrorMsg(double counterAmount){
         double finalValue = 1000.00-counterAmount;
-        DecimalFormat dfGerman = new DecimalFormat("#,###.##");
         return  "Sie haben Ihr Einzahlungslimit von 1.000,00 € pro Monat erreicht. Bitte ändern" +
                 " Sie Ihren Einzahlungsbetrag auf "+String.format("%,.2f", finalValue).replace('.',',')
                 +" € oder <a href=\"/#account/depositlimit?" +
