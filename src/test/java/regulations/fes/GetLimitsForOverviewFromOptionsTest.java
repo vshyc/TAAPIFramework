@@ -43,6 +43,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     private String uuid;
     protected final Logger log = LoggerFactory.getLogger(getClass());
     private String acceptV3Header ="application/vnd.tipico.regulations.customer.limits-v3+json";
+    private boolean isStaging;
 
     @BeforeEach
     @Step("Create and login user for test ")
@@ -54,6 +55,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
         tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
         sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
         uuid = userHelper.getUuid(createdUser);
+        isStaging = envConfig.env().equals("staging");
     }
 
     @Feature("Getting Limits from RGFES V2")
@@ -75,7 +77,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
         RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId,acceptV3Header)
                 .assertStatusCode(HttpStatus.SC_OK)
                 .getModelTypeForLimitServiceResponse();
-        if (!envConfig.env().equals("staging")) {
+        if (!isStaging) {
             Assertions.assertThat(response.getSports().getTurnover().getRemaining()).isEqualTo(1000.0);
             Assertions.assertThat(response.getSports().getTurnover().getCurrent().getValue()).isEqualTo(1000.0);
             Assertions.assertThat(response.getSports().getTurnover().getCurrent().getInterval()).isEqualTo(IntervalEnum.MONTH);
@@ -89,7 +91,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @CsvFileSource(files = "src/test/resources/getNewCreatedLimit.csv", numLinesToSkip = 1)
     public void getNewCreatedLimitForOverviewFromLimitService(LimitTypeEnum limitType,OwnerEnum owner,LabelEnums label,
                                                               String product,Double value,IntervalEnum interval){
-        if (!(envConfig.env().equals("staging")) && limitType==LimitTypeEnum.TURNOVER){
+        if (!isStaging && limitType==LimitTypeEnum.TURNOVER){
             Assertions.assertThat(true).as("The turnover limit exist on registration so " +
                     "creating it by RGFES is not posible");
         }else {
