@@ -83,6 +83,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
             Assertions.assertThat(response.getSports().getTurnover().getCurrent().getInterval()).isEqualTo(IntervalEnum.MONTH);
         }
     }
+
     @Feature("Getting Limits from RGFES V3")
     @DisplayName("Getting Limits from RGFES V3")
     @Description("Getting Limits by RGFES from Limit Service")

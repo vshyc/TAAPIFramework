@@ -44,6 +44,7 @@ public class UserHelper {
                     .statusCode(HttpStatus.SC_CREATED).extract().jsonPath();
         return response;
     }
+
     @Step("Sending a call to WebtestAPI to create a user")
     public JsonPath createGermanUserInWebTestApi(){
         response =  given().baseUri(envConfig.holderUrl()).basePath(envConfig.webTestApiPath())
@@ -52,7 +53,6 @@ public class UserHelper {
                 .statusCode(HttpStatus.SC_CREATED).extract().jsonPath();
         return response;
     }
-
 
     private void requestVideoVerification(final String username, String uuid) throws EbetGatewayException {
         String kycRequestExceptionMessage = "KYC video verification has not been requested due to unexpected response from ebet gateway";

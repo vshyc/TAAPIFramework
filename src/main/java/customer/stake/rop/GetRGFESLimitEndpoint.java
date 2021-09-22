@@ -37,6 +37,7 @@ public class GetRGFESLimitEndpoint extends BaseEndpoint<GetRGFESLimitEndpoint, R
                 .get("/customer/limits");
         return this;
     }
+
     public GetRGFESLimitEndpoint sendRequest(String sessionId, String acceptAndContentTypeHeader){
         response = given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
                 .contentType(acceptAndContentTypeHeader)
