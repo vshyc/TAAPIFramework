@@ -70,4 +70,25 @@ public interface EnvConfig extends Config {
     @Key("TAC_BASE_URI")
     String tacBaseUri();
 
+    @Key("CSS_DB_HOST")
+    String CSSDbHost();
+
+    @Key("CSS_DB_CLIENT")
+    String CSSDbClient();
+
+    @Key("CSS_DB_PASSWORD")
+    String CSSDbPassword();
+
+    @Key("CSS_DB_SCHEMA")
+    String CSSDbSchema();
+
+    @Key("API_INT")
+    String apiInt();
+
+    @Key("EBET_GATEWAY_CUSTOMERS_REQUEST_ENDPOINT")
+    String ebetGatewayCustomerRequestEndpoint();
+
+    @Key("EBET_GATEWAY_CUSTOMERS_STATUS_ENDPOINT")
+    String ebetGatewayCustomerStatusEndpoint();
+
 }

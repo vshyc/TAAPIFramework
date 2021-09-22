@@ -3,7 +3,6 @@ package customer.stake.counters.tests;
 import configuration.BaseTest;
 import customer.stake.enums.CounterTypeEnum;
 import customer.stake.enums.LabelEnums;
-import customer.stake.enums.LimitTypeEnum;
 import customer.stake.helpers.AddCounterHelper;
 import customer.stake.helpers.UserHelper;
 import customer.stake.pojo.counters.PostCountersResponse;
@@ -17,8 +16,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Locale;
 
 @DisplayName("POST Endpoint for Customer Stake Service Tests")
 public class PostCreateUserCountersTests extends BaseTest {

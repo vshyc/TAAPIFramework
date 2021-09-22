@@ -24,6 +24,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@DisplayName("POST RGFES Endpoint for Limit service Tests")
 public class PostRGFESCreateLimitTests extends BaseTest {
 
     private UserHelper userHelper;
