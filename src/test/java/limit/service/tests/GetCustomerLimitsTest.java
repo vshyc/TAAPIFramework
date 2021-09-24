@@ -21,13 +21,13 @@ import org.slf4j.LoggerFactory;
 
 @DisplayName("GET Endpoint for Limit service Tests")
 public class GetCustomerLimitsTest extends BaseTest {
-    private  String uuid;
+    private String uuid;
     protected final Logger log = LoggerFactory.getLogger(getClass());
     private LimitsResponseData data;
     private UserHelper userHelper = new UserHelper();
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         uuid = userHelper.createGermanUserAndGetUuid();
     }
 
@@ -35,30 +35,28 @@ public class GetCustomerLimitsTest extends BaseTest {
     @Story("Check if new created user have imposed turnover limit")
     @Description("Check if new created user have imposed turnover limit")
     @Test
-    public void getCustomerLimitsForNewRegisteredUserTest(){
+    public void getCustomerLimitsForNewRegisteredUserTest() {
 
         try {
-             data = new GetLimitsHelper().checkIfLimitExistForUser(uuid,
-                     OwnerEnum.PERSONAL,
-                     LimitTypeEnum.TURNOVER,
-                     LabelEnums.tipico);
-             Assertions.assertThat(data.getCurrent().getValue()).isEqualTo(1000f);
-        }catch (NullPointerException e){
-            if (envConfig.env().equals("staging")){
+            data = new GetLimitsHelper().checkIfLimitExistForUser(uuid,
+                    OwnerEnum.PERSONAL,
+                    LimitTypeEnum.TURNOVER,
+                    LabelEnums.tipico);
+            Assertions.assertThat(data.getCurrent().getValue()).isEqualTo(1000f);
+        } catch (NullPointerException e) {
+            if (envConfig.env().equals("staging")) {
                 log.info("On staging we are not imposing Turnover Limit yet");
-                Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> {
-                    data.getCurrent().getValue();
-                });
+                Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> data.getCurrent().getValue());
+            } else {
+                Assertions.fail("Turnover IMPOSED limit not exist in DB after registration");
+                log.error("Turnover IMPOSED limit not exist in DB ");
             }
-            else {
-            Assertions.fail("Turnover IMPOSED limit not exist in DB after registration");
-            log.error("Turnover IMPOSED limit not exist in DB ");}
         }
     }
 
     @DisplayName("Check if call to Limit Service with no auth will respond with 401 Error code")
     @Test
-    public void getCustomerLimitsWithNoAuthTest(){
+    public void getCustomerLimitsWithNoAuthTest() {
         new GetLimitEndpoint().sendRequestWithNoAuth(uuid).assertNoAuthRequestStatusCode();
     }
 

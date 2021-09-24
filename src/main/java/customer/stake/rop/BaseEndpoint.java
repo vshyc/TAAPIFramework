@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions;
 
 import java.lang.reflect.Type;
 
-public abstract class BaseEndpoint<E,M> {
+public abstract class BaseEndpoint<E, M> {
 
     protected Response response;
 
@@ -15,29 +15,34 @@ public abstract class BaseEndpoint<E,M> {
 
     protected abstract int getSuccessStatusCode();
 
-    public M getResponseModel(){
+    public M getResponseModel() {
         return response.as(getModelType());
     }
 
-    public E assertRequestStatusCode(){
+    public E assertRequestStatusCode() {
         return assertStatusCode(getSuccessStatusCode());
     }
 
-    public E assertNoAuthRequestStatusCode() { return assertStatusCode(HttpStatus.SC_UNAUTHORIZED);}
+    public E assertNoAuthRequestStatusCode() {
+        return assertStatusCode(HttpStatus.SC_UNAUTHORIZED);
+    }
 
     public E assertUnsupportedMediaTypeRequestStatusCode() {
-        return assertStatusCode(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE);}
+        return assertStatusCode(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE);
+    }
 
-    public E assertBadRequestStatusCode(){
+    public E assertBadRequestStatusCode() {
         return assertStatusCode(HttpStatus.SC_BAD_REQUEST);
     }
 
-    public E assertStatusCode(int statusCode){
+    public E assertStatusCode(int statusCode) {
         Assertions.assertThat(response.getStatusCode()).as("Status Code").isEqualTo(statusCode);
         return (E) this;
     }
-    public Response getResponse(){ return response;}
 
+    public Response getResponse() {
+        return response;
+    }
 
 
 }

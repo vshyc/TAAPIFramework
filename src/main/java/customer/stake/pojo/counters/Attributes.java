@@ -47,27 +47,20 @@ public class Attributes {
     }
 
     public List<Double> getAtribute(CounterTypeEnum type) {
-        if(type == CounterTypeEnum.PAYIN) {
+        if (type == CounterTypeEnum.PAYIN) {
             return payin;
-        }
-        else if(type == CounterTypeEnum.PAYIN_BET){
+        } else if (type == CounterTypeEnum.PAYIN_BET) {
             return payinBet;
-        }
-        else if(type == CounterTypeEnum.PAYIN_CASINO){
+        } else if (type == CounterTypeEnum.PAYIN_CASINO) {
             return payinCasino;
-        }
-        else if(type == CounterTypeEnum.LOSS_BET){
+        } else if (type == CounterTypeEnum.LOSS_BET) {
             return lossBet;
-        }
-        else if(type == CounterTypeEnum.LOSS_STAKE){
+        } else if (type == CounterTypeEnum.LOSS_STAKE) {
             return lossStake;
-        }
-        else if(type == CounterTypeEnum.STAKE){
+        } else if (type == CounterTypeEnum.STAKE) {
             return stake;
-        }
-        else if(type == CounterTypeEnum.STAKE_BET){
+        } else if (type == CounterTypeEnum.STAKE_BET) {
             return stakeBet;
-        }
-        else return null;
-        }
+        } else return null;
     }
+}

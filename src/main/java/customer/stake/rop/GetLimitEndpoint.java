@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 
 import static io.restassured.RestAssured.given;
 
-public class GetLimitEndpoint extends BaseEndpoint<GetLimitEndpoint, GetLimitsResponseData>{
+public class GetLimitEndpoint extends BaseEndpoint<GetLimitEndpoint, GetLimitsResponseData> {
 
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
@@ -24,15 +24,16 @@ public class GetLimitEndpoint extends BaseEndpoint<GetLimitEndpoint, GetLimitsRe
         return HttpStatus.SC_OK;
     }
 
-    public GetLimitEndpoint sendRequest(String uuid){
-            response = given().auth().oauth2(new OauthHelper().getApplicationToken())
-                    .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
-                    .when().get("customers/{customerUuid}/limits/",uuid);
+    public GetLimitEndpoint sendRequest(String uuid) {
+        response = given().auth().oauth2(new OauthHelper().getApplicationToken())
+                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+                .when().get("customers/{customerUuid}/limits/", uuid);
         return this;
     }
-    public GetLimitEndpoint sendRequestWithNoAuth(String uuid){
+
+    public GetLimitEndpoint sendRequestWithNoAuth(String uuid) {
         response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
-                .when().get("customers/{customerUuid}/limits/",uuid);
+                .when().get("customers/{customerUuid}/limits/", uuid);
         return this;
     }
 
@@ -40,7 +41,7 @@ public class GetLimitEndpoint extends BaseEndpoint<GetLimitEndpoint, GetLimitsRe
         return HttpStatus.SC_NOT_FOUND;
     }
 
-    public GetLimitEndpoint assertMissingLimitRequestStatusCode(){
+    public GetLimitEndpoint assertMissingLimitRequestStatusCode() {
         return assertStatusCode(getMissingLimitStatusCode());
     }
 }

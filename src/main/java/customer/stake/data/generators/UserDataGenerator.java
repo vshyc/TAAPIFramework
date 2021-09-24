@@ -7,9 +7,9 @@ import customer.stake.pojo.helpers.UserDataForWebTestAPI;
 
 import java.text.SimpleDateFormat;
 
-public class UserDataGenerator extends TestDataGenerator{
+public class UserDataGenerator extends TestDataGenerator {
 
-    public UserDataForCRFES createGermanUserInCRFES(){
+    public UserDataForCRFES createGermanUserInCRFES() {
         int ramdomN = faker().number().numberBetween(0, 1);
         String sex;
         if (ramdomN == 0) {
@@ -19,12 +19,12 @@ public class UserDataGenerator extends TestDataGenerator{
         }
         return UserDataForCRFES.builder()
                 .salutation(sex)
-                .username(faker().name().firstName()+faker().number().numberBetween(1,10000))
+                .username(faker().name().firstName() + faker().number().numberBetween(1, 10000))
                 .firstName(faker().name().firstName())
                 .lastName(faker().name().lastName())
                 .city(faker().address().cityName())
                 .street(faker().address().streetAddress())
-                .email(faker().name().username()+"@mailinator.com")
+                .email(faker().name().username() + "@mailinator.com")
                 .password("B00Xware+")
                 .postcode(10115)
                 .birthCountry(CountryCodes.GERMANY.getCountryCode())
@@ -36,10 +36,10 @@ public class UserDataGenerator extends TestDataGenerator{
                 .licenseRegion(CountryCodes.GERMANY.getCountryCode())
                 .oAuthClientId("testing")
                 .ioBlackBox("testing")
-                .dob(new SimpleDateFormat("yyyy-MM-dd").format(faker().date().birthday(18,40))).build();
+                .dob(new SimpleDateFormat("yyyy-MM-dd").format(faker().date().birthday(18, 40))).build();
     }
 
-    public UserDataForWebTestAPI createGermanUserForWebTestAPI(){
+    public UserDataForWebTestAPI createGermanUserForWebTestAPI() {
         int ramdomN = faker().number().numberBetween(0, 1);
         String sex;
         if (ramdomN == 0) {
@@ -48,14 +48,14 @@ public class UserDataGenerator extends TestDataGenerator{
             sex = "female";
         }
         return UserDataForWebTestAPI.builder().registrationIp("89.247.25.21")
-                .login(faker().name().firstName()+faker().number().numberBetween(1,10000))
+                .login(faker().name().firstName() + faker().number().numberBetween(1, 10000))
                 .firstName("Tom")
                 .lastName(faker().name().lastName())
                 .password("Secret123!")
                 .salutation(sex)
-                .dateOfBirth(faker().date().birthday(18,40))
+                .dateOfBirth(faker().date().birthday(18, 40))
                 .phone("+44555666777")
-                .email(faker().name().username()+faker().number().numberBetween(1,10000)+"@springfield.gov")
+                .email(faker().name().username() + faker().number().numberBetween(1, 10000) + "@springfield.gov")
                 .language("en")
                 .address(Address.builder().street("BRIGITTEWEG 10")
                         .postcode("10115")
