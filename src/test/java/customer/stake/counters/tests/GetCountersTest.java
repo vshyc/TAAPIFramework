@@ -26,7 +26,7 @@ public class GetCountersTest extends BaseTest {
     @Tag("SmokeTests")
     @CsvFileSource(files = "src/test/resources/getCountersFromCustomerStakeService.csv", numLinesToSkip = 1)
     public void getCustomerCountersTest(LabelEnums label, CounterTypeEnum counter, IntervalEnum interval) {
-         new GetCustomersFiguresEndpoint().sendRequest(userId, counter, label, interval).assertBadRequestStatusCode();
+         new GetCustomersFiguresEndpoint().sendRequest(userId, counter, label, interval).assertNotFoundStatusCode();
     }
 
     @ParameterizedTest(name = "{index} -> Get customers limits with label = {0},counter type = {1} and interval = {2}")

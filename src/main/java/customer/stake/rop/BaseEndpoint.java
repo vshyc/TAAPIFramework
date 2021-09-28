@@ -34,6 +34,9 @@ public abstract class BaseEndpoint<E, M> {
     public E assertBadRequestStatusCode() {
         return assertStatusCode(HttpStatus.SC_BAD_REQUEST);
     }
+    public E assertNotFoundStatusCode() {
+        return assertStatusCode(HttpStatus.SC_NOT_FOUND);
+    }
 
     public E assertStatusCode(int statusCode) {
         Assertions.assertThat(response.getStatusCode()).as("Status Code").isEqualTo(statusCode);
