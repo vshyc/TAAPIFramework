@@ -9,6 +9,7 @@ import customer.stake.pojo.counters.CustomerFiguresResponse;
 import customer.stake.rop.GetCustomersFiguresEndpoint;
 import io.qameta.allure.Description;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,6 +21,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 public class GetCountersTest extends BaseTest {
     String userId = "100";
 
+    @Disabled("Disabled after decommission of id field in DB")
     @ParameterizedTest(name = "{index} -> Get customers limits with label ={0}")
     @DisplayName("Get call to CSS with labels:")
     @Description("Checking counters for user using all labels")
