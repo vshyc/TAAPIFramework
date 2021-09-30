@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 public class PostCreateLimitsTest extends BaseTest {
 
     private String uuid;
+    private final String locationPath = "/v1/limits-service/customers";
 
     @BeforeEach
     public void setUp() {
@@ -30,7 +31,7 @@ public class PostCreateLimitsTest extends BaseTest {
         Response response = new PostLimitEndpoint().sendRequest(uuid).assertRequestStatusCode().getResponse();
 
         Assertions.assertThat(response.getHeader("location")).describedAs("check if location header " +
-                "contains path to limit service").contains("/v1/limits-service/customers");
+                "contains path to limit service").contains(locationPath);
         Assertions.assertThat(response.getHeader("location")).describedAs("check if location header " +
                 "contains user UUID").contains(uuid);
 

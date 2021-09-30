@@ -1,4 +1,4 @@
-package limit.service.tests;
+package regulations.fes;
 
 import configuration.BaseTest;
 import customer.stake.enums.IntervalEnum;

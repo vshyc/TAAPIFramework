@@ -23,6 +23,8 @@ public abstract class BaseEndpoint<E, M> {
         return assertStatusCode(getSuccessStatusCode());
     }
 
+    public E assertNoContentStatusCode() {return assertStatusCode(HttpStatus.SC_NO_CONTENT); }
+
     public E assertNoAuthRequestStatusCode() {
         return assertStatusCode(HttpStatus.SC_UNAUTHORIZED);
     }

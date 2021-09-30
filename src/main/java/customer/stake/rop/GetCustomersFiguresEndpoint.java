@@ -10,7 +10,6 @@ import customer.stake.request.configuration.RequestConfigurationBuilder;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
-import java.util.Date;
 
 import static io.restassured.RestAssured.given;
 

@@ -19,7 +19,7 @@ public class GetCountersTest extends BaseTest {
     String userUuid = "17467f0e-3192-408a-85cc-422643f2f858";
 
     @ParameterizedTest(name = "{index} -> Get customers limits with label ={0},counter type = {1} and interval = {2}" +
-            "on id field")
+            " on id field should return 404 code")
     @DisplayName("Get call to CSS with labels on id endpoint")
     @Description("Checking counters for user using all labels, counter types and intervals on id field should return " +
             "400 status code")
@@ -30,7 +30,7 @@ public class GetCountersTest extends BaseTest {
     }
 
     @ParameterizedTest(name = "{index} -> Get customers limits with label = {0},counter type = {1} and interval = {2}")
-    @DisplayName("Get call to CSS with labels:")
+    @DisplayName("Get call to CSS with labels on uuid endpoint")
     @Description("Checking counters for user using all labels and diff interval")
     @Tag("SmokeTests")
     @CsvFileSource(files = "src/test/resources/getCountersFromCustomerStakeService.csv", numLinesToSkip = 1)
@@ -42,8 +42,9 @@ public class GetCountersTest extends BaseTest {
         Assertions.assertThat(response.getLabel()).isEqualTo(label);
     }
 
-    @ParameterizedTest(name = "{index} -> Get customers limits with label = {0},counter type = {1} and interval = {2}")
-    @DisplayName("Get call to CSS with labels")
+    @ParameterizedTest(name = "{index} -> Get customers limits with label = {0},counter type = {1}, interval = {2}" +
+            " dateFrom = {3} and dateTo = {4}")
+    @DisplayName("Get call to CSS with labels and dates on uuid endpoint ")
     @Description("Checking counters for user using all labels and diff interval")
     @Tag("SmokeTests")
     @CsvFileSource(files = "src/test/resources/getCountersFromCustomerStakeServiceWithDates.csv", numLinesToSkip = 1)
