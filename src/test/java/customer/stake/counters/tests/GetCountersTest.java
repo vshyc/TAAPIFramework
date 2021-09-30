@@ -22,7 +22,7 @@ public class GetCountersTest extends BaseTest {
             " on id field should return 404 code")
     @DisplayName("Get call to CSS with labels on id endpoint")
     @Description("Checking counters for user using all labels, counter types and intervals on id field should return " +
-            "400 status code")
+            "404 status code")
     @Tag("SmokeTests")
     @CsvFileSource(files = "src/test/resources/getCountersFromCustomerStakeService.csv", numLinesToSkip = 1)
     public void getCustomerCountersTest(LabelEnums label, CounterTypeEnum counter, IntervalEnum interval) {
