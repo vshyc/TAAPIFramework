@@ -6,11 +6,11 @@ import java.util.Random;
 
 public class TestDataGenerator {
 
-    public Faker faker(){
+    public Faker faker() {
         return Faker.instance();
     }
 
-    public Random random(){
+    public Random random() {
         return new Random();
     }
 }

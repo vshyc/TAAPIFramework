@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
 
 import static io.restassured.RestAssured.given;
 
-public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsResponseData>{
+public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsResponseData> {
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
@@ -31,6 +31,7 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
                 .body(body).when().put();
         return this;
     }
+
     public PutLimitEndpoint sendRequestWithNoBodyToCreateNewLimit(String oauthToken, String uuid) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
         response = given().baseUri(envConfig.baseUri()).basePath(location)
@@ -38,6 +39,7 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
                 .auth().oauth2(oauthToken).when().put();
         return this;
     }
+
     public PutLimitEndpoint sendRequestToCreateNewLimitWithNoAuth(LimitCreationData body, String uuid) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
         response = given().baseUri(envConfig.baseUri()).basePath(location)
@@ -45,6 +47,7 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
                 .body(body).when().put();
         return this;
     }
+
     public PutLimitEndpoint sendRequestToCreateNewLimitWithNoContentType(LimitCreationData body,
                                                                          String oauthToken,
                                                                          String uuid) {
@@ -54,13 +57,14 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
                 .body(body).when().put();
         return this;
     }
-    public PutLimitEndpoint sendRequestToUpdateLimit(LimitCreationData body, String oauthToken, String uuid){
+
+    public PutLimitEndpoint sendRequestToUpdateLimit(LimitCreationData body, String oauthToken, String uuid) {
 
         response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
                 .contentType(ContentType.JSON)
                 .auth().oauth2(oauthToken)
-                .body(body).when().put("customers/{customerUuid}/limits/{limitUuid}",uuid,
-                        new GetLimitsHelper().checkIfLimitExistForUser(uuid,body.getOwner(),body.getType(),
+                .body(body).when().put("customers/{customerUuid}/limits/{limitUuid}", uuid,
+                        new GetLimitsHelper().checkIfLimitExistForUser(uuid, body.getOwner(), body.getType(),
                                 body.getLabel()).getLimitUUID());
         return this;
     }

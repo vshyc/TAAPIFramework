@@ -24,15 +24,12 @@ public class RGFESLimit {
     }
 
     public RGFESLimitValues getLimit(LimitTypeEnum type) {
-        if(type == LimitTypeEnum.DEPOSIT) {
+        if (type == LimitTypeEnum.DEPOSIT) {
             return deposit;
-        }
-        else if(type == LimitTypeEnum.LOSS){
+        } else if (type == LimitTypeEnum.LOSS) {
             return loss;
-        }
-        else if(type == LimitTypeEnum.TURNOVER){
+        } else if (type == LimitTypeEnum.TURNOVER) {
             return turnover;
-        }
-        else return null;
+        } else return null;
     }
 }

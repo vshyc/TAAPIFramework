@@ -23,20 +23,20 @@ public class PaymentHelper {
             "cIGdPhRrtzbR61jU4LMmyetn+Q5xuroXiCstGIyJUkimf3o0=";
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
-    public Response payIn(String sessionId,String jSessionId, String slaveId , String language,double value, String origin){
+    public Response payIn(String sessionId, String jSessionId, String slaveId, String language, double value, String origin) {
         String cookie = String.format("SESSION_ID=%s;JSESSIONID=%s;SLAVE_ID=%s;language=%s",
-                sessionId,jSessionId,slaveId,language);
+                sessionId, jSessionId, slaveId, language);
 
         return given().baseUri(envConfig.paymentDeUrl()).basePath(envConfig.paymentPath())
-                .contentType("application/vnd.tipico.sofort.payin-v1+json").header("mobileProductClientType","DESKTOP_WEB_RETH")
-                .header("OriginRefer",envConfig.paymentDeUrl())
-                .header("X-Forwarded-For","10.2.7.9")
-                .header("X-Forwarded-Host",envConfig.paymentDeUrl())
+                .contentType("application/vnd.tipico.sofort.payin-v1+json").header("mobileProductClientType", "DESKTOP_WEB_RETH")
+                .header("OriginRefer", envConfig.paymentDeUrl())
+                .header("X-Forwarded-For", "10.2.7.9")
+                .header("X-Forwarded-Host", envConfig.paymentDeUrl())
                 .header("TPAPI-Domain", CountryCodes.GERMANY.getCountryCode())
-                .header("TPAPI-Client-Type","DESKTOP_WEB_RETH")
-                .header("Product-Platform","desktop")
-                .header("Product-Id",origin)
-                .header("Cookie",cookie)
+                .header("TPAPI-Client-Type", "DESKTOP_WEB_RETH")
+                .header("Product-Platform", "desktop")
+                .header("Product-Id", origin)
+                .header("Cookie", cookie)
                 .body(Payment.builder().amount(value)
                         .bonusId("no-bonus").iovationBlackbox(iOvationBlackbox).sofortShDetails(null)
                         .origin(origin).build()

@@ -28,7 +28,7 @@ public class PostCreateUserCountersTests extends BaseTest {
 
     @BeforeEach
     @Step("Create a user for test ")
-    public void setUp(){
+    public void setUp() {
         userHelper = new UserHelper();
         createdUser = userHelper.createGermanUserInWebTestApi();
         uuid = userHelper.getUuid(createdUser);
@@ -40,9 +40,9 @@ public class PostCreateUserCountersTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Adding a counter for new created user with label = {0}  , " +
             "type = {1} and amount = {2} ")
     @CsvFileSource(files = "src/test/resources/addCounterToCustomerStakeService.csv", numLinesToSkip = 1)
-    public void addPayInCountersToCustomerStakeService(LabelEnums label, CounterTypeEnum type, double amount){
-        PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid,id,label,
-                type,amount);
+    public void addPayInCountersToCustomerStakeService(LabelEnums label, CounterTypeEnum type, double amount) {
+        PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
+                type, amount);
 
         Assertions.assertThat(response.getLabel()).isEqualTo(label);
         Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))

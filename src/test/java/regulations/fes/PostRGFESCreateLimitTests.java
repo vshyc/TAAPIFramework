@@ -1,4 +1,4 @@
-package limit.service.tests;
+package regulations.fes;
 
 import configuration.BaseTest;
 import customer.stake.enums.IntervalEnum;
@@ -37,7 +37,7 @@ public class PostRGFESCreateLimitTests extends BaseTest {
 
     @BeforeEach
     @Step("Create and login user for test ")
-    public void setUp(){
+    public void setUp() {
         loginHelper = new LoginHelper();
         userHelper = new UserHelper();
         createdUser = userHelper.createGermanUserInWebTestApi();
@@ -54,11 +54,11 @@ public class PostRGFESCreateLimitTests extends BaseTest {
     @CsvFileSource(files = "src/test/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitWithRGFESTest(LimitTypeEnum type, OwnerEnum owner,
                                          LabelEnums label, String product,
-                                         Double value, IntervalEnum interval){
-        if (!(envConfig.env().equals("staging")) && type==LimitTypeEnum.TURNOVER){
+                                         Double value, IntervalEnum interval) {
+        if (!(envConfig.env().equals("staging")) && type == LimitTypeEnum.TURNOVER) {
             Assertions.assertThat(true).as("The turnover limit exist on registration so " +
                     "creating it by RGFES is not posible");
-        }else {
+        } else {
             RGFESCreateLimitResponse response = new PostRGFESLimitEndpoint().sendRequest(sessionId, LimitCreationData
                             .builder().type(type).owner(owner).label(label)
                             .product(product).value(value).interval(interval).build()).assertRequestStatusCode()

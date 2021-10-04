@@ -10,12 +10,12 @@ import org.junit.jupiter.api.BeforeAll;
 
 
 public class BaseTest {
-    public static EnvConfig envConfig =HelpersConfig.createConfiguration();
+    public static EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @BeforeAll
     public static void baseTestSetUp() {
         RestAssured.baseURI = envConfig.baseUri();
         RestAssured.basePath = envConfig.basePath();
-        RestAssured.filters(new RequestLoggingFilter(),new ResponseLoggingFilter(), new AllureRestAssured());
+        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new AllureRestAssured());
     }
 }

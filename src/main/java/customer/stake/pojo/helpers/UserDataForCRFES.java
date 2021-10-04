@@ -33,9 +33,9 @@ public class UserDataForCRFES {
 
 
     public UserDataForCRFES(String salutation, String username, String firstName, String lastName, String city, String street,
-                    String email, String password, String dob, Integer postcode, String birthCountry, String birthCity,
-                    String birthName, String nationality, String country, boolean dataProcessing, String licenseRegion,
-                    String oAuthClientId, String ioBlackBox) {
+                            String email, String password, String dob, Integer postcode, String birthCountry, String birthCity,
+                            String birthName, String nationality, String country, boolean dataProcessing, String licenseRegion,
+                            String oAuthClientId, String ioBlackBox) {
         super();
         this.salutation = salutation;
         this.username = username;

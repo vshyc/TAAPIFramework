@@ -21,12 +21,10 @@ public class RGFESCreateLimitResponse {
     }
 
     public RGFESLimit getLimit(String type) {
-        if(type.equals("sports")) {
+        if (type.equals("sports")) {
             return sports;
-        }
-        else if(type.equals("games")){
+        } else if (type.equals("games")) {
             return games;
-        }
-        else return null;
+        } else return null;
     }
 }

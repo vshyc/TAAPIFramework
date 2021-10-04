@@ -16,13 +16,13 @@ public class GetLimitsHelper {
         GetLimitEndpoint responseData = new GetLimitEndpoint().sendRequest(uuid);
         LimitsResponseData data;
 
-        data =  (responseData.getResponse().getStatusCode() == 200) ?
-         responseData.getResponseModel().getLimits().stream()
-                .filter(response -> limitOwner.equals(response.getOwner()))
-                .filter(response -> limitType.equals(response.getType()))
-                 .filter(response -> label.equals(response.getLabel()))
-                .findAny()
-                .orElse(null) :  null;
+        data = (responseData.getResponse().getStatusCode() == 200) ?
+                responseData.getResponseModel().getLimits().stream()
+                        .filter(response -> limitOwner.equals(response.getOwner()))
+                        .filter(response -> limitType.equals(response.getType()))
+                        .filter(response -> label.equals(response.getLabel()))
+                        .findAny()
+                        .orElse(null) : null;
         return data;
     }
 

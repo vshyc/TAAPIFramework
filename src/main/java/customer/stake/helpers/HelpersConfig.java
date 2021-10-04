@@ -10,15 +10,15 @@ public class HelpersConfig {
     private static EnvConfig envConfig;
 
     public static EnvConfig createConfiguration() {
-        if (!System.getenv("env").equals("staging")){
-            ConfigFactory.setProperty("file","EnvConfig.properties");
-        }else {
-            ConfigFactory.setProperty("file","EnvConfigStaging.properties");
+        if (!System.getenv("env").equals("staging")) {
+            ConfigFactory.setProperty("file", "EnvConfig.properties");
+        } else {
+            ConfigFactory.setProperty("file", "EnvConfigStaging.properties");
         }
 
         Map myVars = new HashMap();
         myVars.put("env", System.getenv("env"));
-        envConfig = ConfigFactory.create(EnvConfig.class,myVars);
+        envConfig = ConfigFactory.create(EnvConfig.class, myVars);
         return envConfig;
     }
 }

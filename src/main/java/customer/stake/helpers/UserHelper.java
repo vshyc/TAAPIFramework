@@ -1,4 +1,5 @@
 package customer.stake.helpers;
+
 import com.google.gson.JsonObject;
 import customer.stake.exeptions.EbetGatewayException;
 import customer.stake.helpers.HelpersConfig;
@@ -24,30 +25,31 @@ public class UserHelper {
     private JsonPath response;
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
-    public String createGermanUserAndGetUuid(){
+    public String createGermanUserAndGetUuid() {
         return createGermanUserInWebTestApi().getString("tipicoCustomerId");
     }
 
     public String getGermanUserName() {
         return germanUserForWebTestApi.getLogin();
     }
-    public String getGermanUserPassword(){
+
+    public String getGermanUserPassword() {
         return germanUserForWebTestApi.getPassword();
     }
 
     @Step("Sending a call to CRFES to create a user")
-    public JsonPath createGermanUserInCRFES(){
+    public JsonPath createGermanUserInCRFES() {
 
-            response =  given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.crfesPath()).contentType(ContentType.JSON).
-                    header("X-Requested-By", "97066a5c-fc78-11e8-8eb2-f2801f1b9fd1").
-                    body(germanUserForCRFES).post().then()
-                    .statusCode(HttpStatus.SC_CREATED).extract().jsonPath();
+        response = given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.crfesPath()).contentType(ContentType.JSON).
+                header("X-Requested-By", "97066a5c-fc78-11e8-8eb2-f2801f1b9fd1").
+                body(germanUserForCRFES).post().then()
+                .statusCode(HttpStatus.SC_CREATED).extract().jsonPath();
         return response;
     }
 
     @Step("Sending a call to WebtestAPI to create a user")
-    public JsonPath createGermanUserInWebTestApi(){
-        response =  given().baseUri(envConfig.holderUrl()).basePath(envConfig.webTestApiPath())
+    public JsonPath createGermanUserInWebTestApi() {
+        response = given().baseUri(envConfig.holderUrl()).basePath(envConfig.webTestApiPath())
                 .contentType(ContentType.JSON).
                 body(germanUserForWebTestApi).post().then()
                 .statusCode(HttpStatus.SC_CREATED).extract().jsonPath();
@@ -86,19 +88,21 @@ public class UserHelper {
         }
     }
 
-    public void getKYCVerifiedStatus(final String username ,String uuid) throws EbetGatewayException {
-        requestVideoVerification(username,uuid);
-        approveVideoVerification(username,uuid);
+    public void getKYCVerifiedStatus(final String username, String uuid) throws EbetGatewayException {
+        requestVideoVerification(username, uuid);
+        approveVideoVerification(username, uuid);
     }
 
 
-    public String getId(JsonPath jsonPath){
+    public String getId(JsonPath jsonPath) {
         return jsonPath.getString("id");
     }
-    public String getUuid(JsonPath jsonPath){
+
+    public String getUuid(JsonPath jsonPath) {
         return jsonPath.getString("tipicoCustomerId");
     }
-    public String getLogin(JsonPath jsonPath){
+
+    public String getLogin(JsonPath jsonPath) {
         return jsonPath.getString("login");
     }
 

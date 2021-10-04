@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 import static io.restassured.RestAssured.given;
 
 
-public class PostRGFESLimitEndpoint extends BaseEndpoint<PostRGFESLimitEndpoint, RGFESCreateLimitResponse>{
+public class PostRGFESLimitEndpoint extends BaseEndpoint<PostRGFESLimitEndpoint, RGFESCreateLimitResponse> {
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
@@ -25,9 +25,9 @@ public class PostRGFESLimitEndpoint extends BaseEndpoint<PostRGFESLimitEndpoint,
         return HttpStatus.SC_OK;
     }
 
-    public PostRGFESLimitEndpoint sendRequest(String sessionId , LimitCreationData body){
+    public PostRGFESLimitEndpoint sendRequest(String sessionId, LimitCreationData body) {
         response = given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
-                .header("Cookie",String.format("SESSION_ID=%s",sessionId))
+                .header("Cookie", String.format("SESSION_ID=%s", sessionId))
                 .contentType(ContentType.JSON)
                 .accept("application/vnd.tipico.regulations.customer.limits-v2+json")
                 .body(body)

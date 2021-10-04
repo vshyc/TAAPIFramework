@@ -24,16 +24,14 @@ public class RGFESLimitsFromLimitService {
         this.turnover = turnover;
         this.loss = loss;
     }
+
     public RGFESLimitFromLimitService getLimitType(LimitTypeEnum limitType) {
-        if(limitType == LimitTypeEnum.DEPOSIT) {
+        if (limitType == LimitTypeEnum.DEPOSIT) {
             return deposit;
-        }
-        else if(limitType == LimitTypeEnum.TURNOVER){
+        } else if (limitType == LimitTypeEnum.TURNOVER) {
             return turnover;
-        }
-        else if(limitType == LimitTypeEnum.LOSS){
+        } else if (limitType == LimitTypeEnum.LOSS) {
             return loss;
-        }
-        else return null;
+        } else return null;
     }
 }
