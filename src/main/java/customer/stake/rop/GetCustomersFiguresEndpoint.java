@@ -4,7 +4,7 @@ import customer.stake.enums.CounterTypeEnum;
 import customer.stake.enums.IntervalEnum;
 import customer.stake.enums.LabelEnums;
 import customer.stake.helpers.HelpersConfig;
-import customer.stake.pojo.counters.CustomerFiguresResponse;
+import customer.stake.dto.counters.CustomerFiguresResponse;
 import customer.stake.properties.EnvConfig;
 import customer.stake.request.configuration.RequestConfigurationBuilder;
 import org.apache.http.HttpStatus;

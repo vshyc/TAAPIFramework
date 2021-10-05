@@ -2,7 +2,7 @@ package customer.stake.rop;
 
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.OauthHelper;
-import customer.stake.pojo.limits.GetLimitsResponseData;
+import customer.stake.dto.limits.GetLimitsResponseData;
 import customer.stake.properties.EnvConfig;
 import org.apache.http.HttpStatus;
 

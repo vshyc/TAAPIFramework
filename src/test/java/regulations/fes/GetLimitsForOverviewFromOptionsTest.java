@@ -1,7 +1,6 @@
 package regulations.fes;
 
 import configuration.BaseTest;
-import customer.stake.db.CSSDBConnector;
 import customer.stake.enums.IntervalEnum;
 import customer.stake.enums.LabelEnums;
 import customer.stake.enums.LimitTypeEnum;
@@ -10,10 +9,10 @@ import customer.stake.helpers.LoginHelper;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.TermsAndConditionsHelper;
 import customer.stake.helpers.UserHelper;
-import customer.stake.pojo.limits.LimitCreationData;
-import customer.stake.pojo.limits.LimitsResponseData;
-import customer.stake.pojo.rgfes.RGFESGetLimitServiceLimitResponse;
-import customer.stake.pojo.rgfes.RGFESGetOptionServiceLimitResponse;
+import customer.stake.dto.limits.LimitCreationData;
+import customer.stake.dto.limits.LimitsResponseData;
+import customer.stake.dto.rgfes.RGFESGetLimitServiceLimitResponse;
+import customer.stake.dto.rgfes.RGFESGetOptionServiceLimitResponse;
 import customer.stake.rop.GetRGFESLimitEndpoint;
 import customer.stake.rop.PutLimitEndpoint;
 import io.qameta.allure.Description;

@@ -1,4 +1,4 @@
-package customer.stake.pojo.rgfes;
+package customer.stake.dto.rgfes;
 
 import lombok.Builder;
 import lombok.Getter;

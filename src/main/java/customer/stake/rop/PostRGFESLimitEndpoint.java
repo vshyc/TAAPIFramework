@@ -1,8 +1,8 @@
 package customer.stake.rop;
 
 import customer.stake.helpers.HelpersConfig;
-import customer.stake.pojo.limits.LimitCreationData;
-import customer.stake.pojo.rgfes.RGFESCreateLimitResponse;
+import customer.stake.dto.limits.LimitCreationData;
+import customer.stake.dto.rgfes.RGFESCreateLimitResponse;
 import customer.stake.properties.EnvConfig;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;

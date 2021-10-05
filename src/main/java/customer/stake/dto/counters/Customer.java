@@ -1,4 +1,4 @@
-package customer.stake.pojo.counters;
+package customer.stake.dto.counters;
 
 import lombok.Builder;
 import lombok.Getter;

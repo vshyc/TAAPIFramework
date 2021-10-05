@@ -1,6 +1,5 @@
-package customer.stake.pojo.rgfes;
+package customer.stake.dto.rgfes;
 
-import customer.stake.enums.LimitTypeEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

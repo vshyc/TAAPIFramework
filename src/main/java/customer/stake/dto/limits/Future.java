@@ -1,4 +1,4 @@
-package customer.stake.pojo.limits;
+package customer.stake.dto.limits;
 
 import customer.stake.enums.IntervalEnum;
 import lombok.Builder;
@@ -10,13 +10,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Builder
-public class Current {
+public class Future {
 
     private Double value;
     private IntervalEnum interval;
+    private String from;
 
-    public Current(Double value, IntervalEnum interval) {
+    public Future(Double value, IntervalEnum interval, String from) {
         this.value = value;
         this.interval = interval;
+        this.from = from;
     }
 }

@@ -2,7 +2,7 @@ package customer.stake.helpers;
 
 import customer.stake.enums.LabelEnums;
 import customer.stake.enums.LicenceRegion;
-import customer.stake.pojo.helpers.TAC;
+import customer.stake.dto.helpers.TAC;
 import customer.stake.properties.EnvConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;

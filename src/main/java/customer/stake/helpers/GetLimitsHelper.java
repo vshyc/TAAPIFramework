@@ -3,7 +3,7 @@ package customer.stake.helpers;
 import customer.stake.enums.LabelEnums;
 import customer.stake.enums.OwnerEnum;
 import customer.stake.enums.LimitTypeEnum;
-import customer.stake.pojo.limits.LimitsResponseData;
+import customer.stake.dto.limits.LimitsResponseData;
 import customer.stake.rop.GetLimitEndpoint;
 import io.qameta.allure.Step;
 

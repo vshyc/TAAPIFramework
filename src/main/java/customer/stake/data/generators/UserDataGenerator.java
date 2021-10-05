@@ -1,9 +1,9 @@
 package customer.stake.data.generators;
 
 import customer.stake.enums.CountryCodes;
-import customer.stake.pojo.helpers.Address;
-import customer.stake.pojo.helpers.UserDataForCRFES;
-import customer.stake.pojo.helpers.UserDataForWebTestAPI;
+import customer.stake.dto.helpers.Address;
+import customer.stake.dto.helpers.UserDataForCRFES;
+import customer.stake.dto.helpers.UserDataForWebTestAPI;
 
 import java.text.SimpleDateFormat;
 

@@ -1,6 +1,6 @@
-package customer.stake.pojo.rgfes;
+package customer.stake.dto.rgfes;
 
-import customer.stake.pojo.limits.Current;
+import customer.stake.dto.limits.Current;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

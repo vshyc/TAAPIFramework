@@ -1,10 +1,9 @@
 package customer.stake.rop;
 
 import customer.stake.helpers.HelpersConfig;
-import customer.stake.pojo.rgfes.RGFESGetLimitServiceLimitResponse;
-import customer.stake.pojo.rgfes.RGFESGetOptionServiceLimitResponse;
+import customer.stake.dto.rgfes.RGFESGetLimitServiceLimitResponse;
+import customer.stake.dto.rgfes.RGFESGetOptionServiceLimitResponse;
 import customer.stake.properties.EnvConfig;
-import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;

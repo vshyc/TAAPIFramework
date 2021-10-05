@@ -1,7 +1,7 @@
 package customer.stake.helpers;
 
 import customer.stake.enums.CountryCodes;
-import customer.stake.pojo.helpers.Payment;
+import customer.stake.dto.helpers.Payment;
 import customer.stake.properties.EnvConfig;
 import io.restassured.response.Response;
 

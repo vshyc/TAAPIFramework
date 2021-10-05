@@ -2,15 +2,13 @@ package customer.stake.helpers;
 
 import com.google.gson.JsonObject;
 import customer.stake.exeptions.EbetGatewayException;
-import customer.stake.helpers.HelpersConfig;
 import customer.stake.data.generators.UserDataGenerator;
-import customer.stake.pojo.helpers.UserDataForCRFES;
-import customer.stake.pojo.helpers.UserDataForWebTestAPI;
+import customer.stake.dto.helpers.UserDataForCRFES;
+import customer.stake.dto.helpers.UserDataForWebTestAPI;
 import customer.stake.properties.EnvConfig;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
-import org.aeonbits.owner.ConfigFactory;
 import org.apache.http.HttpStatus;
 
 import static customer.stake.constants.MediaTypes.EBET_GATEWAY_CUSTOMER_DOCUMENT_REQUEST_JSON;

@@ -1,4 +1,4 @@
-package customer.stake.pojo.counters;
+package customer.stake.dto.counters;
 
 import customer.stake.enums.LabelEnums;
 import lombok.Builder;

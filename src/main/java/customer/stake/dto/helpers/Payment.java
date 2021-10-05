@@ -1,4 +1,4 @@
-package customer.stake.pojo.helpers;
+package customer.stake.dto.helpers;
 
 import lombok.Builder;
 import lombok.Getter;

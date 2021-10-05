@@ -1,4 +1,4 @@
-package customer.stake.pojo.limits;
+package customer.stake.dto.limits;
 
 import lombok.Builder;
 import lombok.Getter;

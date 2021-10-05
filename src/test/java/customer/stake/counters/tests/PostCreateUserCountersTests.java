@@ -5,7 +5,7 @@ import customer.stake.enums.CounterTypeEnum;
 import customer.stake.enums.LabelEnums;
 import customer.stake.helpers.AddCounterHelper;
 import customer.stake.helpers.UserHelper;
-import customer.stake.pojo.counters.PostCountersResponse;
+import customer.stake.dto.counters.PostCountersResponse;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;

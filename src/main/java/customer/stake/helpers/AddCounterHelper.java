@@ -2,11 +2,10 @@ package customer.stake.helpers;
 
 import customer.stake.enums.CounterTypeEnum;
 import customer.stake.enums.LabelEnums;
-import customer.stake.enums.LimitTypeEnum;
-import customer.stake.pojo.counters.Attribute;
-import customer.stake.pojo.counters.Customer;
-import customer.stake.pojo.counters.PostCountersRequest;
-import customer.stake.pojo.counters.PostCountersResponse;
+import customer.stake.dto.counters.Attribute;
+import customer.stake.dto.counters.Customer;
+import customer.stake.dto.counters.PostCountersRequest;
+import customer.stake.dto.counters.PostCountersResponse;
 import customer.stake.rop.PostCustomerFiguresEndpoint;
 
 import java.util.Collections;

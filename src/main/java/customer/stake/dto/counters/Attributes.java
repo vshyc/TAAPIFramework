@@ -1,7 +1,6 @@
-package customer.stake.pojo.counters;
+package customer.stake.dto.counters;
 
 import customer.stake.enums.CounterTypeEnum;
-import customer.stake.enums.LimitTypeEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
