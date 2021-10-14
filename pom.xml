@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tipico.limitservice</groupId>
-    <artifactId>ta-limitService-api</artifactId>
+    <groupId>com.tipico.services.taLimitService</groupId>
+    <artifactId>taLimitService-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <parent>
-        <groupId>com.tipico</groupId>
-        <artifactId>tipico-parent</artifactId>
-        <version>3.1.5</version>
-    </parent>
+<!--    <parent>-->
+<!--        <groupId>com.tipico</groupId>-->
+<!--        <artifactId>tipico-parent</artifactId>-->
+<!--        <version>3.1.5</version>-->
+<!--    </parent>-->
     <dependencies>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -114,12 +114,12 @@
             <artifactId>annotations</artifactId>
             <version>16.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.tipico.ta</groupId>
-            <artifactId>reqtest-junit-5-extension</artifactId>
-            <version>1.0.2</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.tipico.ta</groupId>-->
+<!--            <artifactId>reqtest-junit-5-extension</artifactId>-->
+<!--            <version>1.0.2</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
     </dependencies>
 
     <properties>
