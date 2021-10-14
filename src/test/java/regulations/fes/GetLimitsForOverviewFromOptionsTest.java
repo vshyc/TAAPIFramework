@@ -1,7 +1,6 @@
 package regulations.fes;
 
 import configuration.BaseTest;
-import customer.stake.db.CSSDBConnector;
 import customer.stake.enums.IntervalEnum;
 import customer.stake.enums.LabelEnums;
 import customer.stake.enums.LimitTypeEnum;
@@ -21,7 +20,6 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.apache.http.HttpStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -75,7 +73,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Test
     public void getLimitsForOverviewFromLimitService() {
         RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, acceptV3Header)
-                .assertStatusCode(HttpStatus.SC_OK)
+                .assertRequestStatusCode()
                 .getModelTypeForLimitServiceResponse();
         if (!isStaging) {
             Assertions.assertThat(response.getSports().getTurnover().getRemaining()).isEqualTo(1000.0);
@@ -98,7 +96,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
         } else {
             createLimitWithApplicationToken(limitType, owner, label, product, value, interval);
             RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, acceptV3Header)
-                    .assertStatusCode(HttpStatus.SC_OK)
+                    .assertRequestStatusCode()
                     .getModelTypeForLimitServiceResponse();
             Assertions.assertThat(response.getSports().getLimitType(limitType).getRemaining()).isEqualTo(value);
             Assertions.assertThat(response.getSports().getLimitType(limitType).getCurrent().getValue()).isEqualTo(value);
