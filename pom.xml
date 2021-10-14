@@ -129,9 +129,8 @@
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
         <dependencies.selenium.version>4.0.0-rc-1</dependencies.selenium.version>
         <dependencies.okhttp.version>4.9.1</dependencies.okhttp.version>
-        <java.version>12</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
     </properties>
 
     <build>
@@ -172,8 +171,8 @@
                 <version>3.8.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>12</source>
-                    <target>12</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
             <!--Plugin Allure do generowania raportów-->
