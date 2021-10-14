@@ -153,16 +153,16 @@
 <!--                    </dependency>-->
 <!--                </dependencies>-->
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>12</source>
-                    <target>12</target>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.8.1</version>-->
+<!--                <configuration>-->
+<!--                    <encoding>UTF-8</encoding>-->
+<!--                    <source>12</source>-->
+<!--                    <target>12</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
             <!--Plugin Allure do generowania raportów-->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
