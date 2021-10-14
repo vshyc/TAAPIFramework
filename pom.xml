@@ -7,11 +7,11 @@
     <groupId>com.tipico.services.taLimitService</groupId>
     <artifactId>taLimitService-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <!--    <parent>-->
-    <!--        <groupId>com.tipico</groupId>-->
-    <!--        <artifactId>tipico-parent</artifactId>-->
-    <!--        <version>3.1.5</version>-->
-    <!--    </parent>-->
+        <parent>
+            <groupId>com.tipico</groupId>
+            <artifactId>tipico-parent</artifactId>
+            <version>3.1.5</version>
+        </parent>
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -96,7 +96,6 @@
             <version>2.11.3</version>
             <scope>compile</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
@@ -111,7 +110,6 @@
     </dependencies>
 
     <properties>
-
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
     </properties>
@@ -123,11 +121,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-                    <!--Konfiguracja Allura ze ścieżką do biblioteki aspectjweaver-->
-<!--                    <argLine>-->
-<!--                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.6/aspectjweaver-1.9.6.jar"-->
-<!--                    </argLine>-->
-                    <!--Nowy parametr określający gdzie maven-surefire-plugin ma zapisywać wyniki z testów-->
                     <systemPropertyVariables>
                         <allure.results.directory>${basedir}/target/allure-results</allure.results.directory>
                         <env>oceans11</env>
@@ -142,15 +135,6 @@
                         </configurationParameters>
                     </properties>
                 </configuration>
-                <!--Dodanie dodatkowych zależności do maven-surefire-plugin w postaci biblioteki aspectjweaver-->
-                <!--Sekcja ta określa zależności dla danego pluginu-->
-<!--                <dependencies>-->
-<!--                    <dependency>-->
-<!--                        <groupId>org.aspectj</groupId>-->
-<!--                        <artifactId>aspectjweaver</artifactId>-->
-<!--                        <version>1.9.6</version>-->
-<!--                    </dependency>-->
-<!--                </dependencies>-->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -163,7 +147,6 @@
                     <release>12</release>
                 </configuration>
             </plugin>
-            <!--Plugin Allure do generowania raportów-->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
