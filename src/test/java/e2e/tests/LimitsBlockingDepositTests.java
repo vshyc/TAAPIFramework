@@ -77,7 +77,7 @@ public class LimitsBlockingDepositTests extends BaseTest {
     }
 
     @Test
-    @TestCaseId(3445)
+    @TestCaseId(3173591)
     @DisplayName("Check if AML Limit is blocking deposit higher then 100 on staging or 150 on TTS")
     public void checkIfAmlLimitIsBlockingDepositIfHigherThenAMLLimit() {
         Response paymentResponse = paymentHelper.payIn(sessionId, jsession, slaveId, "de",
