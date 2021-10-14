@@ -4,9 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>com.tipico.limitservice</groupId>
     <artifactId>ta-limitService-api</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <parent>
+        <groupId>com.tipico</groupId>
+        <artifactId>tipico-parent</artifactId>
+        <version>3.1.5</version>
+    </parent>
     <dependencies>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -112,11 +117,21 @@
             <artifactId>annotations</artifactId>
             <version>16.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.tipico.ta</groupId>
+            <artifactId>reqtest-junit-5-extension</artifactId>
+            <version>1.0.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <properties>
-        <maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>
+        <junit.jupiter.version>5.7.1</junit.jupiter.version>
+        <dependencies.selenium.version>4.0.0-rc-1</dependencies.selenium.version>
+        <dependencies.okhttp.version>4.9.1</dependencies.okhttp.version>
+        <java.version>14</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
     <build>
@@ -135,6 +150,11 @@
                         <allure.results.directory>${basedir}/target/allure-results</allure.results.directory>
                         <env>oceans11</env>
                     </systemPropertyVariables>
+                    <properties>
+                        <configurationParameters>
+                            junit.jupiter.extensions.autodetection.enabled = true
+                        </configurationParameters>
+                    </properties>
                 </configuration>
                 <!--Dodanie dodatkowych zależności do maven-surefire-plugin w postaci biblioteki aspectjweaver-->
                 <!--Sekcja ta określa zależności dla danego pluginu-->
