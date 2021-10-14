@@ -114,12 +114,12 @@
             <artifactId>annotations</artifactId>
             <version>16.0.1</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.tipico.ta</groupId>-->
-<!--            <artifactId>reqtest-junit-5-extension</artifactId>-->
-<!--            <version>1.0.2</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.tipico.ta</groupId>
+            <artifactId>reqtest-junit-5-extension</artifactId>
+            <version>1.0.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <properties>
