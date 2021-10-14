@@ -129,7 +129,7 @@
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
         <dependencies.selenium.version>4.0.0-rc-1</dependencies.selenium.version>
         <dependencies.okhttp.version>4.9.1</dependencies.okhttp.version>
-        <java.version>14</java.version>
+        <java.version>12</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
