@@ -127,6 +127,7 @@
                         <reqtest.hostname>https://secure.reqtest.com/</reqtest.hostname>
                         <reqtest.PAT>/VWPsU1CI3SuKlebVCgqw5aThHyQHkG43EJdpggDekQcyYZ0U9Tv/xYkFbdL+itA</reqtest.PAT>
                         <test.plan.id>0</test.plan.id>
+                        <test.run.id>0</test.run.id>
                         <reqtest.runtype>DF_ReleaseCandidate</reqtest.runtype>
                     </systemPropertyVariables>
                     <properties>
