@@ -10,6 +10,7 @@ import org.apache.http.HttpStatus;
 import java.lang.reflect.Type;
 
 import static customer.stake.constants.MediaTypes.RGFS_LIMIT_SERVICE_V2_JSON;
+import static customer.stake.constants.RequestPaths.LIMITS_REQUEST_PATH;
 import static io.restassured.RestAssured.given;
 
 
@@ -32,7 +33,7 @@ public class PostRGFESLimitEndpoint extends BaseEndpoint<PostRGFESLimitEndpoint,
                 .contentType(ContentType.JSON)
                 .accept(RGFS_LIMIT_SERVICE_V2_JSON)
                 .body(body)
-                .post("/customer/limits");
+                .post(LIMITS_REQUEST_PATH);
         return this;
     }
 

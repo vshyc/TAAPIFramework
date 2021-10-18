@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 
 import static customer.stake.constants.MediaTypes.RGFS_LIMIT_HISTORY_V2_JSON;
 import static customer.stake.constants.MediaTypes.RGFS_LIMIT_SERVICE_V2_JSON;
+import static customer.stake.constants.RequestPaths.LIMIT_HISTORY_REQUEST_PATH;
 import static io.restassured.RestAssured.given;
 
 
@@ -39,7 +40,7 @@ public class GetRGFESLimitHistoryEndpoint extends BaseEndpoint<GetRGFESLimitHist
                 .contentType(RGFS_LIMIT_SERVICE_V2_JSON)
                 .header("Cookie", String.format("SESSION_ID=%s", sessionId))
                 .accept(RGFS_LIMIT_SERVICE_V2_JSON)
-                .get("/customer/limits/history");
+                .get(LIMIT_HISTORY_REQUEST_PATH);
         return this;
     }
     public GetRGFESLimitHistoryEndpoint sendRequest(String sessionId, String product , LabelEnums label, LimitTypeEnum type) {
@@ -50,7 +51,7 @@ public class GetRGFESLimitHistoryEndpoint extends BaseEndpoint<GetRGFESLimitHist
                 .header("Cookie", String.format("SESSION_ID=%s", sessionId))
                 .header("tipico-license-region-context",LicenceRegionContext)
                 .accept(RGFS_LIMIT_HISTORY_V2_JSON)
-                .get("/customer/limits/history?limitTypes={limitType}",type);
+                .get(LIMIT_HISTORY_REQUEST_PATH+"?limitTypes={limitType}",type);
         return this;
     }
 }
