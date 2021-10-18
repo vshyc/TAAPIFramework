@@ -17,6 +17,7 @@ import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
@@ -77,7 +78,8 @@ public class LimitsBlockingDepositTests extends BaseTest {
     }
 
     @Test
-    @TestCaseId(3173591)
+    @Tag("SmokeTests")
+    @TestCaseId(3445)
     @DisplayName("Check if AML Limit is blocking deposit higher then 100 on staging or 150 on TTS")
     public void checkIfAmlLimitIsBlockingDepositIfHigherThenAMLLimit() {
         Response paymentResponse = paymentHelper.payIn(sessionId, jsession, slaveId, "de",
