@@ -38,7 +38,7 @@ public class GetLimitEndpoint extends BaseEndpoint<GetLimitEndpoint, GetLimitsRe
     }
 
     protected int getMissingLimitStatusCode() {
-        return HttpStatus.SC_NOT_FOUND;
+        return HttpStatus.SC_NO_CONTENT;
     }
 
     public GetLimitEndpoint assertMissingLimitRequestStatusCode() {
