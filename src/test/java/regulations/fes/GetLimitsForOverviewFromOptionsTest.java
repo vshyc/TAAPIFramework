@@ -1,5 +1,6 @@
 package regulations.fes;
 
+import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.enums.IntervalEnum;
 import customer.stake.enums.LabelEnums;
@@ -23,6 +24,7 @@ import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -60,6 +62,8 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @DisplayName("Getting Limits from RGFES V2")
     @Description("Getting Limits by RGFES from Option Service")
     @Test
+    @Tag("RegressionTests")
+    @TestCaseId(3458)
     public void getLimitsForOverview() {
         RGFESGetOptionServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId).assertRequestStatusCode()
                 .getResponseModel();
@@ -71,6 +75,8 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @DisplayName("Getting Limits from RGFES V3")
     @Description("Getting Limits by RGFES from Limit Service")
     @Test
+    @Tag("RegressionTests")
+    @TestCaseId(3459)
     public void getLimitsForOverviewFromLimitService() {
         RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, acceptV3Header)
                 .assertRequestStatusCode()
@@ -83,11 +89,13 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     }
 
     @Feature("Getting Limits from RGFES V3")
-    @DisplayName("Getting Limits from RGFES V3")
-    @Description("Getting Limits by RGFES from Limit Service")
+    @DisplayName("Creating and getting Limits from RGFES V3")
+    @Description("Creating and getting Limits by RGFES from Limit Service")
     @ParameterizedTest(name = "{index} -> Creating a limit type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and checking if limit is visible in GET call")
     @CsvFileSource(files = "src/test/resources/getNewCreatedLimit.csv", numLinesToSkip = 1)
+    @Tag("RegressionTests")
+    @TestCaseId(3460)
     public void getNewCreatedLimitForOverviewFromLimitService(LimitTypeEnum limitType, OwnerEnum owner, LabelEnums label,
                                                               String product, Double value, IntervalEnum interval) {
         if (!isStaging && limitType == LimitTypeEnum.TURNOVER) {
@@ -108,6 +116,8 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @DisplayName("Getting Limits from RGFES no auth")
     @Description("Getting Limits by RGFES from Option Service without providing proper sessionId")
     @Test
+    @Tag("RegressionTests")
+    @TestCaseId(3461)
     public void getLimitsNoAuthForOverview() {
         new GetRGFESLimitEndpoint().sendRequest("").assertNoAuthRequestStatusCode();
     }

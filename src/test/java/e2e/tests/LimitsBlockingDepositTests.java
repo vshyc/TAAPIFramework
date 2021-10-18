@@ -78,7 +78,7 @@ public class LimitsBlockingDepositTests extends BaseTest {
     }
 
     @Test
-    @Tag("SmokeTests")
+    @Tag("RegressionTests")
     @TestCaseId(3445)
     @DisplayName("Check if AML Limit is blocking deposit higher then 100 on staging or 150 on TTS")
     public void checkIfAmlLimitIsBlockingDepositIfHigherThenAMLLimit() {
@@ -95,6 +95,8 @@ public class LimitsBlockingDepositTests extends BaseTest {
     }
 
     @Test
+    @Tag("RegressionTests")
+    @TestCaseId(3454)
     @DisplayName("Check if AML Limit is not blocking deposits below limit")
     public void checkIfAmlLimitIsNotBlockingDepositIfLowerThenAMLLimit() {
         Response paymentResponse = paymentHelper.payIn(sessionId, jsession, slaveId, "de",
@@ -103,6 +105,8 @@ public class LimitsBlockingDepositTests extends BaseTest {
     }
 
     @Test
+    @Tag("RegressionTests")
+    @TestCaseId(3455)
     @DisplayName("Check if KYC'd user can deposit over AML limit")
     public void checkIf1kLimitIsNotBlockingDepositForKycedCustomersWithDepositHigherThenAMLLimit() throws EbetGatewayException {
         userHelper.getKYCVerifiedStatus(username, uuid);
@@ -112,6 +116,8 @@ public class LimitsBlockingDepositTests extends BaseTest {
     }
 
     @Test
+    @Tag("RegressionTests")
+    @TestCaseId(3456)
     @DisplayName("Check if 1k deposit Limit is blocking deposits over the limit")
     public void checkIf1kLimitIstBlockingDepositForKycedCustomersWithDepositHigherThen1k() throws EbetGatewayException {
         userHelper.getKYCVerifiedStatus(username, uuid);
@@ -128,6 +134,8 @@ public class LimitsBlockingDepositTests extends BaseTest {
     }
 
     @Test
+    @Tag("RegressionTests")
+    @TestCaseId(3457)
     @DisplayName("Check if 1k deposit Limit is blocking deposits lower then the limit with counters in CSS table")
     public void checkIf1kLimitIstBlockingDepositForKycedCustomersWithLowerHigherThen1kButWithCounters() throws EbetGatewayException {
         userHelper.getKYCVerifiedStatus(username, uuid);
