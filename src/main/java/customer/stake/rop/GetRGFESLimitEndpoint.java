@@ -8,6 +8,7 @@ import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
 
+import static customer.stake.constants.MediaTypes.RGFS_LIMIT_SERVICE_V2_JSON;
 import static io.restassured.RestAssured.given;
 
 public class GetRGFESLimitEndpoint extends BaseEndpoint<GetRGFESLimitEndpoint, RGFESGetOptionServiceLimitResponse> {
@@ -30,9 +31,9 @@ public class GetRGFESLimitEndpoint extends BaseEndpoint<GetRGFESLimitEndpoint, R
 
     public GetRGFESLimitEndpoint sendRequest(String sessionId) {
         response = given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
-                .contentType("application/vnd.tipico.regulations.customer.limits-v2+json")
+                .contentType(RGFS_LIMIT_SERVICE_V2_JSON)
                 .header("Cookie", String.format("SESSION_ID=%s", sessionId))
-                .accept("application/vnd.tipico.regulations.customer.limits-v2+json")
+                .accept(RGFS_LIMIT_SERVICE_V2_JSON)
                 .get("/customer/limits");
         return this;
     }

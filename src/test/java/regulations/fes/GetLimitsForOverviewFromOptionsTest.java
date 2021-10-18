@@ -31,6 +31,8 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static customer.stake.constants.MediaTypes.RGFS_LIMIT_HISTORY_V3_JSON;
+
 @DisplayName("RGFES Geting Limits Tests")
 public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
 
@@ -42,7 +44,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     private JsonPath createdUser;
     private String uuid;
     protected final Logger log = LoggerFactory.getLogger(getClass());
-    private String acceptV3Header = "application/vnd.tipico.regulations.customer.limits-v3+json";
     private boolean isStaging;
 
     @BeforeEach
@@ -78,7 +79,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Tag("RegressionTests")
     @TestCaseId(3459)
     public void getLimitsForOverviewFromLimitService() {
-        RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, acceptV3Header)
+        RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, RGFS_LIMIT_HISTORY_V3_JSON)
                 .assertRequestStatusCode()
                 .getModelTypeForLimitServiceResponse();
         if (!isStaging) {
@@ -103,7 +104,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
                     "creating it by RGFES is not posible");
         } else {
             createLimitWithApplicationToken(limitType, owner, label, product, value, interval);
-            RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, acceptV3Header)
+            RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, RGFS_LIMIT_HISTORY_V3_JSON)
                     .assertRequestStatusCode()
                     .getModelTypeForLimitServiceResponse();
             Assertions.assertThat(response.getSports().getLimitType(limitType).getRemaining()).isEqualTo(value);
