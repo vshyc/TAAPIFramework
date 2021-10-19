@@ -1,17 +1,19 @@
 package customer.stake.counters.tests;
 
+import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.enums.CounterTypeEnum;
 import customer.stake.enums.LabelEnums;
 import customer.stake.helpers.AddCounterHelper;
 import customer.stake.helpers.UserHelper;
-import customer.stake.pojo.counters.PostCountersResponse;
+import customer.stake.dto.counters.PostCountersResponse;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
@@ -39,6 +41,8 @@ public class PostCreateUserCountersTests extends BaseTest {
     @Description("Add Customer counters to CSS")
     @ParameterizedTest(name = "{index} -> Adding a counter for new created user with label = {0}  , " +
             "type = {1} and amount = {2} ")
+    @Tag("RegressionTests")
+    @TestCaseId(3472)
     @CsvFileSource(files = "src/test/resources/addCounterToCustomerStakeService.csv", numLinesToSkip = 1)
     public void addPayInCountersToCustomerStakeService(LabelEnums label, CounterTypeEnum type, double amount) {
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,

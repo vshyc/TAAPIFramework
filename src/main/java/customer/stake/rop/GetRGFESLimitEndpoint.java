@@ -1,14 +1,15 @@
 package customer.stake.rop;
 
 import customer.stake.helpers.HelpersConfig;
-import customer.stake.pojo.rgfes.RGFESGetLimitServiceLimitResponse;
-import customer.stake.pojo.rgfes.RGFESGetOptionServiceLimitResponse;
+import customer.stake.dto.rgfes.RGFESGetLimitServiceLimitResponse;
+import customer.stake.dto.rgfes.RGFESGetOptionServiceLimitResponse;
 import customer.stake.properties.EnvConfig;
-import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
 
+import static customer.stake.constants.MediaTypes.RGFS_LIMIT_SERVICE_V2_JSON;
+import static customer.stake.constants.RequestPaths.LIMITS_REQUEST_PATH;
 import static io.restassured.RestAssured.given;
 
 public class GetRGFESLimitEndpoint extends BaseEndpoint<GetRGFESLimitEndpoint, RGFESGetOptionServiceLimitResponse> {
@@ -31,10 +32,10 @@ public class GetRGFESLimitEndpoint extends BaseEndpoint<GetRGFESLimitEndpoint, R
 
     public GetRGFESLimitEndpoint sendRequest(String sessionId) {
         response = given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
-                .contentType("application/vnd.tipico.regulations.customer.limits-v2+json")
+                .contentType(RGFS_LIMIT_SERVICE_V2_JSON)
                 .header("Cookie", String.format("SESSION_ID=%s", sessionId))
-                .accept("application/vnd.tipico.regulations.customer.limits-v2+json")
-                .get("/customer/limits");
+                .accept(RGFS_LIMIT_SERVICE_V2_JSON)
+                .get(LIMITS_REQUEST_PATH);
         return this;
     }
 
@@ -43,7 +44,7 @@ public class GetRGFESLimitEndpoint extends BaseEndpoint<GetRGFESLimitEndpoint, R
                 .contentType(acceptAndContentTypeHeader)
                 .header("Cookie", String.format("SESSION_ID=%s", sessionId))
                 .accept(acceptAndContentTypeHeader)
-                .get("/customer/limits");
+                .get(LIMITS_REQUEST_PATH);
         return this;
     }
 }
