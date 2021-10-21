@@ -1,5 +1,6 @@
 package regulations.fes;
 
+import com.tipico.ta.reqtest.extension.ReqtestReporterExtension;
 import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.enums.IntervalEnum;
@@ -26,6 +27,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
 import static customer.stake.constants.MediaTypes.RGFS_LIMIT_HISTORY_V3_JSON;
 
 @DisplayName("RGFES Geting Limits Tests")
+@ExtendWith(ReqtestReporterExtension.class)
 public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
 
     private UserHelper userHelper;
