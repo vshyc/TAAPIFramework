@@ -1,5 +1,6 @@
 package customer.stake.counters.tests;
 
+import com.tipico.ta.reqtest.extension.ReqtestReporterExtension;
 import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.enums.CounterTypeEnum;
@@ -14,12 +15,14 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @DisplayName("POST Endpoint for Customer Stake Service Tests")
+@ExtendWith(ReqtestReporterExtension.class)
 public class PostCreateUserCountersTests extends BaseTest {
 
     private UserHelper userHelper;
