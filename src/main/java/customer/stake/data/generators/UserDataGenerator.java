@@ -48,7 +48,7 @@ public class UserDataGenerator extends TestDataGenerator {
             sex = "female";
         }
         return UserDataForWebTestAPI.builder().registrationIp("89.247.25.21")
-                .login(faker().name().firstName() + faker().number().numberBetween(1, 10000) + faker().name().lastName())
+                .login(faker().name().firstName() + faker().number().numberBetween(1, 10000) + faker().name().firstName())
                 .firstName("Tom")
                 .lastName(faker().name().lastName())
                 .password("Secret123!")
