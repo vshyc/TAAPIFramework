@@ -4,9 +4,9 @@ import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.dto.rgfes.RGFESGetLimitHistoryResponse;
 import customer.stake.dto.rgfes.RGFESGetLimitHistoryWithLCRResponse;
-import customer.stake.enums.IntervalEnum;
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.Interval;
+import customer.stake.enums.Label;
+import customer.stake.enums.LimitType;
 import customer.stake.helpers.LoginHelper;
 import customer.stake.helpers.TermsAndConditionsHelper;
 import customer.stake.helpers.UserHelper;
@@ -60,11 +60,11 @@ public class GetRGFESLimitHistoryTests extends BaseTest {
         RGFESGetLimitHistoryResponse response = new GetRGFESLimitHistoryEndpoint().sendRequest(sessionId)
                 .assertRequestStatusCode().getResponseModel();
         if (isStaging){
-        Assertions.assertThat(response.getHistory().get(0).getLimitType()).isEqualTo(LimitTypeEnum.DEPOSIT);
+        Assertions.assertThat(response.getHistory().get(0).getLimitType()).isEqualTo(LimitType.DEPOSIT);
         Assertions.assertThat(response.getHistory().get(0).getValue()).isEqualTo(1000d);
-        Assertions.assertThat(response.getHistory().get(0).getInterval()).isEqualTo(IntervalEnum.MONTH);
+        Assertions.assertThat(response.getHistory().get(0).getInterval()).isEqualTo(Interval.MONTH);
         Assertions.assertThat(response.getHistory().get(0).getProduct()).isEqualTo("SPORTS");
-        Assertions.assertThat(response.getHistory().get(0).getLabel()).isEqualTo(LabelEnums.TIPICO);
+        Assertions.assertThat(response.getHistory().get(0).getLabel()).isEqualTo(Label.TIPICO);
         }
     }
 
@@ -76,15 +76,15 @@ public class GetRGFESLimitHistoryTests extends BaseTest {
     @Tag("RegressionTests")
     @TestCaseId(3467)
     @CsvFileSource(files = "src/test/resources/getLimitHistoryWithLRC.csv", numLinesToSkip = 1)
-    public void getLimitHistoryWithLRC(String product, LabelEnums label, LimitTypeEnum type){
+    public void getLimitHistoryWithLRC(String product, Label label, LimitType type){
         RGFESGetLimitHistoryWithLCRResponse response = new GetRGFESLimitHistoryEndpoint()
                 .sendRequest(sessionId,product,label,type).assertRequestStatusCode()
                 .getModelTypeForLimitHistoryWithLRC();
-        if (type == LimitTypeEnum.DEPOSIT && isStaging) {
+        if (type == LimitType.DEPOSIT && isStaging) {
             Assertions.assertThat(response.getLimitHistoryProduct(product).getLimitHistoryType(type).get(0).getValue())
                     .isEqualTo(1000d);
             Assertions.assertThat(response.getLimitHistoryProduct(product).getLimitHistoryType(type).get(0).getInterval())
-                    .isEqualTo(IntervalEnum.MONTH);
+                    .isEqualTo(Interval.MONTH);
         }
     }
 }

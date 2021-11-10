@@ -1,6 +1,6 @@
 package customer.stake.dto.counters;
 
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.Label;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +15,10 @@ import java.util.List;
 public class PostCountersRequest {
 
     private Customer customer;
-    private LabelEnums label;
+    private Label label;
     private List<Attribute> attributes = null;
 
-    public PostCountersRequest(Customer customer, LabelEnums label, List<Attribute> attributes) {
+    public PostCountersRequest(Customer customer, Label label, List<Attribute> attributes) {
         this.customer = customer;
         this.label = label;
         this.attributes = attributes;

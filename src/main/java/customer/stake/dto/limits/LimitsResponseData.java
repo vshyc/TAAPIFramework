@@ -1,9 +1,9 @@
 package customer.stake.dto.limits;
 
 
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.OwnerEnum;
-import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.Label;
+import customer.stake.enums.Owner;
+import customer.stake.enums.LimitType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +16,9 @@ import lombok.Setter;
 public class LimitsResponseData {
 
     private String limitUUID;
-    private LimitTypeEnum type;
-    private OwnerEnum owner;
-    private LabelEnums label;
+    private LimitType type;
+    private Owner owner;
+    private Label label;
     private String product;
     private Double used;
     private Double remaining;
@@ -35,7 +35,7 @@ public class LimitsResponseData {
     private String updatedSource;
 
 
-    public LimitsResponseData(String limitUUID, LimitTypeEnum type, OwnerEnum owner, LabelEnums label, String product, Double used,
+    public LimitsResponseData(String limitUUID, LimitType type, Owner owner, Label label, String product, Double used,
                               Double remaining, Integer leftTime, Current current, Future future, String createdAt,
                               String createdBy, String createdByClient, String updatedAt, String updatedBy,
                               String updatedByClient, String createdSource, String updatedSource) {

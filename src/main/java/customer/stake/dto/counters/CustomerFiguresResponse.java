@@ -1,6 +1,6 @@
 package customer.stake.dto.counters;
 
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.Label;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +14,10 @@ import lombok.Setter;
 public class CustomerFiguresResponse {
 
     private Customer customer;
-    private LabelEnums label;
+    private Label label;
     private Attributes attributes;
 
-    public CustomerFiguresResponse(Customer customer, LabelEnums label, Attributes attributes) {
+    public CustomerFiguresResponse(Customer customer, Label label, Attributes attributes) {
         super();
         this.customer = customer;
         this.label = label;

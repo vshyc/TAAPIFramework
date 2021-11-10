@@ -1,6 +1,6 @@
 package customer.stake.dto.limits;
 
-import customer.stake.enums.IntervalEnum;
+import customer.stake.enums.Interval;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +13,9 @@ import lombok.Setter;
 public class LimitDetails {
 
     private Double value;
-    private IntervalEnum interval;
+    private Interval interval;
 
-    public LimitDetails(Double value, IntervalEnum interval) {
+    public LimitDetails(Double value, Interval interval) {
         this.value = value;
         this.interval = interval;
     }

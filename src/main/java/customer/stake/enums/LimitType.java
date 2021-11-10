@@ -3,7 +3,7 @@ package customer.stake.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 
-public enum LimitTypeEnum {
+public enum LimitType {
     DEPOSIT("deposit"),
     TURNOVER("turnover"),
     LOSS("loss");
@@ -11,7 +11,7 @@ public enum LimitTypeEnum {
 
     private String type;
 
-    LimitTypeEnum(String type) {
+    LimitType(String type) {
         this.type = type;
     }
 

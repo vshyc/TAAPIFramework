@@ -2,8 +2,8 @@ package customer.stake.rop;
 
 import customer.stake.dto.rgfes.RGFESGetLimitHistoryResponse;
 import customer.stake.dto.rgfes.RGFESGetLimitHistoryWithLCRResponse;
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.Label;
+import customer.stake.enums.LimitType;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.LRCHelper;
 import customer.stake.properties.EnvConfig;
@@ -45,7 +45,7 @@ public class GetRGFESLimitHistoryEndpoint extends BaseEndpoint<GetRGFESLimitHist
                 .get(LIMIT_HISTORY_REQUEST_PATH);
         return this;
     }
-    public GetRGFESLimitHistoryEndpoint sendRequest(String sessionId, String product , LabelEnums label, LimitTypeEnum type) {
+    public GetRGFESLimitHistoryEndpoint sendRequest(String sessionId, String product , Label label, LimitType type) {
         LRCHelper lrcHelper = new LRCHelper();
         String LicenceRegionContext = lrcHelper.createLRC(product,label);
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())

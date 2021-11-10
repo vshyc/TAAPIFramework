@@ -2,7 +2,7 @@ package customer.stake.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ValidatorResultEnum {
+public enum ValidatorResult {
     VALID_WITH_NO_VALIDATOR_DEFINED("VALID_WITH_NO_VALIDATOR_DEFINED"),
     LIMIT_EXCEED("LIMIT_EXCEED"),
     VALID("VALID"),
@@ -11,7 +11,7 @@ public enum ValidatorResultEnum {
 
     private String validatorResult;
 
-    ValidatorResultEnum(String validatorResult){
+    ValidatorResult(String validatorResult){
         this.validatorResult=validatorResult;
     }
 

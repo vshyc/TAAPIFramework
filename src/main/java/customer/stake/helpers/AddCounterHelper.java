@@ -1,7 +1,7 @@
 package customer.stake.helpers;
 
-import customer.stake.enums.CounterTypeEnum;
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.CounterType;
+import customer.stake.enums.Label;
 import customer.stake.dto.counters.Attribute;
 import customer.stake.dto.counters.Customer;
 import customer.stake.dto.counters.PostCountersRequest;
@@ -15,8 +15,8 @@ import java.util.List;
 
 public class AddCounterHelper {
 
-    public PostCountersResponse addSingleCounterToCustomerStakeService(String uuid, String id, LabelEnums label,
-                                                                       CounterTypeEnum type, double amount) {
+    public PostCountersResponse addSingleCounterToCustomerStakeService(String uuid, String id, Label label,
+                                                                       CounterType type, double amount) {
         Attribute attribute = new Attribute(type, amount);
 
         PostCountersRequest body = new PostCountersRequest(new Customer(uuid, id), label,
@@ -25,7 +25,7 @@ public class AddCounterHelper {
         return new PostCustomerFiguresEndpoint().sendRequest(body).assertRequestStatusCode()
                 .getResponseModel();
     }
-    public PostCountersResponse addMultipleBettingCounterToCustomerStakeService(String uuid, String id, LabelEnums label,
+    public PostCountersResponse addMultipleBettingCounterToCustomerStakeService(String uuid, String id, Label label,
                                                                          Double betAmount) {
 
         PostCountersRequest body = new PostCountersRequest(new Customer(uuid, id), label,
@@ -35,7 +35,7 @@ public class AddCounterHelper {
                 .getResponseModel();
     }
 
-    public PostCountersResponse addMultiplePayinCounterToCustomerStakeService(String uuid, String id, LabelEnums label,
+    public PostCountersResponse addMultiplePayinCounterToCustomerStakeService(String uuid, String id, Label label,
                                                                                 Double payinAmount) {
 
         PostCountersRequest body = new PostCountersRequest(new Customer(uuid, id), label,
@@ -47,17 +47,17 @@ public class AddCounterHelper {
 
     private @NotNull List<Attribute> createBetAttributeList(Double amount){
         List<Attribute> attributes = new ArrayList<>();
-        attributes.add(new Attribute(CounterTypeEnum.STAKE_BET,amount));
-        attributes.add(new Attribute(CounterTypeEnum.STAKE,amount));
-        attributes.add(new Attribute(CounterTypeEnum.LOSS_BET,amount));
-        attributes.add(new Attribute(CounterTypeEnum.LOSS_STAKE,amount));
+        attributes.add(new Attribute(CounterType.STAKE_BET,amount));
+        attributes.add(new Attribute(CounterType.STAKE,amount));
+        attributes.add(new Attribute(CounterType.LOSS_BET,amount));
+        attributes.add(new Attribute(CounterType.LOSS_STAKE,amount));
         return attributes;
     }
 
     private @NotNull List<Attribute> createPayinAttributeList(Double amount){
         List<Attribute> attributes = new ArrayList<>();
-        attributes.add(new Attribute(CounterTypeEnum.PAYIN,amount));
-        attributes.add(new Attribute(CounterTypeEnum.PAYIN_BET,amount));
+        attributes.add(new Attribute(CounterType.PAYIN,amount));
+        attributes.add(new Attribute(CounterType.PAYIN_BET,amount));
         return attributes;
     }
 }

@@ -2,7 +2,7 @@ package customer.stake.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum LabelEnums {
+public enum Label {
 
     ALL("ALL"),
     TIPICO("TIPICO"),
@@ -19,7 +19,7 @@ public enum LabelEnums {
 
     private String label;
 
-    LabelEnums(String label) {
+    Label(String label) {
         this.label = label;
     }
 

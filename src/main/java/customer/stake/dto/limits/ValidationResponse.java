@@ -1,6 +1,6 @@
 package customer.stake.dto.limits;
 
-import customer.stake.enums.CounterTypeEnum;
+import customer.stake.enums.CounterType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,20 +34,20 @@ public class ValidationResponse {
         this.stakeBet = stakeBet;
     }
 
-    public List<LimitValidator> getLimitForCounter(CounterTypeEnum type) {
-        if (type == CounterTypeEnum.PAYIN) {
+    public List<LimitValidator> getLimitForCounter(CounterType type) {
+        if (type == CounterType.PAYIN) {
             return payin;
-        } else if (type == CounterTypeEnum.PAYIN_BET) {
+        } else if (type == CounterType.PAYIN_BET) {
             return payinBet;
-        } else if (type == CounterTypeEnum.PAYIN_CASINO) {
+        } else if (type == CounterType.PAYIN_CASINO) {
             return payinCasino;
-        } else if (type == CounterTypeEnum.LOSS_BET) {
+        } else if (type == CounterType.LOSS_BET) {
             return lossBet;
-        } else if (type == CounterTypeEnum.LOSS_STAKE) {
+        } else if (type == CounterType.LOSS_STAKE) {
             return lossStake;
-        } else if (type == CounterTypeEnum.STAKE) {
+        } else if (type == CounterType.STAKE) {
             return stake;
-        } else if (type == CounterTypeEnum.STAKE_BET) {
+        } else if (type == CounterType.STAKE_BET) {
             return stakeBet;
         } else return null;
     }

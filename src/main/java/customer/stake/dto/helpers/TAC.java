@@ -1,6 +1,6 @@
 package customer.stake.dto.helpers;
 
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.Label;
 import customer.stake.enums.LicenceRegion;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,9 +15,9 @@ public class TAC {
     private String clientId;
     private Boolean isAffiliate;
     private LicenceRegion licenseRegion;
-    private LabelEnums label;
+    private Label label;
 
-    public TAC(String clientId, Boolean isAffiliate, LicenceRegion licenseRegion, LabelEnums label) {
+    public TAC(String clientId, Boolean isAffiliate, LicenceRegion licenseRegion, Label label) {
         this.clientId = clientId;
         this.isAffiliate = isAffiliate;
         this.licenseRegion = licenseRegion;

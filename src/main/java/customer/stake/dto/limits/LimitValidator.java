@@ -1,6 +1,6 @@
 package customer.stake.dto.limits;
 
-import customer.stake.enums.ValidatorResultEnum;
+import customer.stake.enums.ValidatorResult;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,10 +16,10 @@ public class LimitValidator {
     private Double usedAmount;
     private LimitDetails limitDetails;
     private String optionDefId;
-    private ValidatorResultEnum validationResult;
+    private ValidatorResult validationResult;
 
     public LimitValidator(Double allowedAmount, Double usedAmount, LimitDetails limitDetails, String optionDefId,
-                          ValidatorResultEnum validationResult) {
+                          ValidatorResult validationResult) {
         this.allowedAmount = allowedAmount;
         this.usedAmount = usedAmount;
         this.limitDetails = limitDetails;

@@ -3,8 +3,8 @@ package e2e.tests;
 import com.tipico.ta.reqtest.extension.ReqtestReporterExtension;
 import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
-import customer.stake.enums.CounterTypeEnum;
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.CounterType;
+import customer.stake.enums.Label;
 import customer.stake.exeptions.EbetGatewayException;
 import customer.stake.helpers.AddCounterHelper;
 import customer.stake.helpers.LoginHelper;
@@ -139,7 +139,7 @@ public class LimitsBlockingDepositTests extends BaseTest {
     @DisplayName("Check if 1k deposit Limit is blocking deposits lower then the limit with counters in CSS table")
     public void checkIf1kLimitIstBlockingDepositForKycedCustomersWithLowerHigherThen1kButWithCounters() throws EbetGatewayException {
         userHelper.getKYCVerifiedStatus(username, uuid);
-        addCounterHelper.addSingleCounterToCustomerStakeService(uuid, id, LabelEnums.tipico, CounterTypeEnum.PAYIN, 400);
+        addCounterHelper.addSingleCounterToCustomerStakeService(uuid, id, Label.tipico, CounterType.PAYIN, 400);
         Response paymentResponse = paymentHelper.payIn(sessionId, jsession, slaveId, "de",
                 900, "app-tipico-sports");
         Assertions.assertThat(paymentResponse.getStatusCode()).isEqualTo(500);

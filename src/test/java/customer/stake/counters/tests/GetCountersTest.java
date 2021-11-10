@@ -4,9 +4,9 @@ import com.tipico.ta.reqtest.extension.ReqtestReporterExtension;
 import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import configuration.SmokeRegressionTag;
-import customer.stake.enums.CounterTypeEnum;
-import customer.stake.enums.IntervalEnum;
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.CounterType;
+import customer.stake.enums.Interval;
+import customer.stake.enums.Label;
 import customer.stake.dto.counters.CustomerFiguresResponse;
 import customer.stake.rop.GetCustomersFiguresEndpoint;
 import io.qameta.allure.Description;
@@ -30,7 +30,7 @@ public class GetCountersTest extends BaseTest {
     @SmokeRegressionTag
     @TestCaseId(3469)
     @CsvFileSource(files = "src/test/resources/getCountersFromCustomerStakeService.csv", numLinesToSkip = 1)
-    public void getCustomerCountersTest(LabelEnums label, CounterTypeEnum counter, IntervalEnum interval) {
+    public void getCustomerCountersTest(Label label, CounterType counter, Interval interval) {
          new GetCustomersFiguresEndpoint().sendRequest(userId, counter, label, interval).assertNotFoundStatusCode();
     }
 
@@ -40,7 +40,7 @@ public class GetCountersTest extends BaseTest {
     @SmokeRegressionTag
     @TestCaseId(3470)
     @CsvFileSource(files = "src/test/resources/getCountersFromCustomerStakeService.csv", numLinesToSkip = 1)
-    public void getCustomerCountersWithUuidTest(LabelEnums label, CounterTypeEnum counter, IntervalEnum interval) {
+    public void getCustomerCountersWithUuidTest(Label label, CounterType counter, Interval interval) {
         CustomerFiguresResponse response = new GetCustomersFiguresEndpoint().sendRequestWithUuid(userUuid,
                         counter, label, interval)
                 .assertRequestStatusCode().getResponseModel();
@@ -55,7 +55,7 @@ public class GetCountersTest extends BaseTest {
     @SmokeRegressionTag
     @TestCaseId(3471)
     @CsvFileSource(files = "src/test/resources/getCountersFromCustomerStakeServiceWithDates.csv", numLinesToSkip = 1)
-    public void getCustomerCountersWithUuidTest(LabelEnums label, CounterTypeEnum counter, String dateFrom, String dateTo) {
+    public void getCustomerCountersWithUuidTest(Label label, CounterType counter, String dateFrom, String dateTo) {
         CustomerFiguresResponse response = new GetCustomersFiguresEndpoint().sendRequestWithUuidAndDate(userUuid,
                         counter, label, dateFrom, dateTo)
                 .assertRequestStatusCode().getResponseModel();

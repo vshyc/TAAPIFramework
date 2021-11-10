@@ -1,6 +1,6 @@
 package customer.stake.helpers;
 
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.Label;
 import customer.stake.enums.LicenceRegion;
 import customer.stake.dto.helpers.TAC;
 import customer.stake.properties.EnvConfig;
@@ -19,7 +19,7 @@ public class TermsAndConditionsHelper {
                 .contentType(ContentType.JSON).auth().preemptive()
                 .basic(user, password)
                 .body(TAC.builder().clientId("ebet").isAffiliate(false).licenseRegion(LicenceRegion.GERMANY)
-                        .label(LabelEnums.tipico).build())
+                        .label(Label.tipico).build())
                 .when()
                 .put("{customerUuid}/documents", uuid);
     }

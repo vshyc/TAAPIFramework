@@ -1,6 +1,6 @@
 package customer.stake.helpers;
 
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.Label;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -18,35 +18,35 @@ public class LRCHelper {
     private final String domain = "games.tipico.de";
     private final String accepanceChannelId = "119";
 
-    public String createLRC(String product, LabelEnums label) {
+    public String createLRC(String product, Label label) {
         String json = "{\"channel\":\"" + channel + "\",\"application\":\"" + application + "\",\"product\":\"" + product
                 + "\",\"location\":\"" + location + "\"," + "\"registrationLocation\":\"" + registrationLocation +
                 "\",\"label\":\"" + label.getLabel() + "\",\"domain\":\"" + domain + "\",\"acceptChannelId\":" + accepanceChannelId + "}";
         return new String(Base64.getUrlEncoder().encode(json.getBytes(StandardCharsets.UTF_8)), StandardCharsets.ISO_8859_1);
     }
 
-    public String createLRC(String product, LabelEnums label, String channel) {
+    public String createLRC(String product, Label label, String channel) {
         String json = "{\"channel\":\"" + channel + "\",\"application\":\"" + application + "\",\"product\":\"" + product
                 + "\",\"location\":\"" + location + "\"," + "\"registrationLocation\":\"" + registrationLocation +
                 "\",\"label\":\"" + label.getLabel() + "\",\"domain\":\"" + domain + "\",\"acceptChannelId\":" + accepanceChannelId + "}";
         return new String(Base64.getUrlEncoder().encode(json.getBytes(StandardCharsets.UTF_8)), StandardCharsets.ISO_8859_1);
     }
 
-    public String createLRC(String product, LabelEnums label, String channel, String application) {
+    public String createLRC(String product, Label label, String channel, String application) {
         String json = "{\"channel\":\"" + channel + "\",\"application\":\"" + application + "\",\"product\":\"" + product
                 + "\",\"location\":\"" + location + "\"," + "\"registrationLocation\":\"" + registrationLocation +
                 "\",\"label\":\"" + label.getLabel() + "\",\"domain\":\"" + domain + "\",\"acceptChannelId\":" + accepanceChannelId + "}";
         return new String(Base64.getUrlEncoder().encode(json.getBytes(StandardCharsets.UTF_8)), StandardCharsets.ISO_8859_1);
     }
 
-    public String createLRC(String product, LabelEnums label, String channel, String application, String location) {
+    public String createLRC(String product, Label label, String channel, String application, String location) {
         String json = "{\"channel\":\"" + channel + "\",\"application\":\"" + application + "\",\"product\":\"" + product
                 + "\",\"location\":\"" + location + "\"," + "\"registrationLocation\":\"" + registrationLocation +
                 "\",\"label\":\"" + label.getLabel() + "\",\"domain\":\"" + domain + "\",\"acceptChannelId\":" + accepanceChannelId + "}";
         return new String(Base64.getUrlEncoder().encode(json.getBytes(StandardCharsets.UTF_8)), StandardCharsets.ISO_8859_1);
     }
 
-    public String createLRC(String product, LabelEnums label, String channel, String application, String location,
+    public String createLRC(String product, Label label, String channel, String application, String location,
                             String registrationLocation) {
         String json = "{\"channel\":\"" + channel + "\",\"application\":\"" + application + "\",\"product\":\"" + product
                 + "\",\"location\":\"" + location + "\"," + "\"registrationLocation\":\"" + registrationLocation +
@@ -54,7 +54,7 @@ public class LRCHelper {
         return new String(Base64.getUrlEncoder().encode(json.getBytes(StandardCharsets.UTF_8)), StandardCharsets.ISO_8859_1);
     }
 
-    public String createLRC(String product, LabelEnums label, String channel, String application, String location,
+    public String createLRC(String product, Label label, String channel, String application, String location,
                             String registrationLocation, String domain) {
         String json = "{\"channel\":\"" + channel + "\",\"application\":\"" + application + "\",\"product\":\"" + product
                 + "\",\"location\":\"" + location + "\"," + "\"registrationLocation\":\"" + registrationLocation +
@@ -62,7 +62,7 @@ public class LRCHelper {
         return new String(Base64.getUrlEncoder().encode(json.getBytes(StandardCharsets.UTF_8)), StandardCharsets.ISO_8859_1);
     }
 
-    public String createLRC(String product, LabelEnums label, String channel, String application, String location,
+    public String createLRC(String product, Label label, String channel, String application, String location,
                             String registrationLocation, String domain, String accepanceChannelId) {
         String json = "{\"channel\":\"" + channel + "\",\"application\":\"" + application + "\",\"product\":\"" + product
                 + "\",\"location\":\"" + location + "\"," + "\"registrationLocation\":\"" + registrationLocation +

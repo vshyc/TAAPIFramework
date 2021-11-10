@@ -1,8 +1,8 @@
 package customer.stake.dto.rgfes;
 
-import customer.stake.enums.IntervalEnum;
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.Interval;
+import customer.stake.enums.Label;
+import customer.stake.enums.LimitType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +16,15 @@ import java.util.Date;
 @Builder
 public class RGFESLimitHistory {
 
-    private LimitTypeEnum limitType;
+    private LimitType limitType;
     private Boolean requested;
     private Double value;
-    private IntervalEnum interval;
+    private Interval interval;
     private Date updatedDate;
     private String product;
-    private LabelEnums label;
+    private Label label;
 
-    public RGFESLimitHistory(LimitTypeEnum limitType, Boolean requested, Double value, IntervalEnum interval, Date updatedDate, String product, LabelEnums label) {
+    public RGFESLimitHistory(LimitType limitType, Boolean requested, Double value, Interval interval, Date updatedDate, String product, Label label) {
         this.limitType = limitType;
         this.requested = requested;
         this.value = value;

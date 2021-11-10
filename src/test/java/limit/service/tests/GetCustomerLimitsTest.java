@@ -1,9 +1,9 @@
 package limit.service.tests;
 
 import configuration.BaseTest;
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.OwnerEnum;
-import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.Label;
+import customer.stake.enums.Owner;
+import customer.stake.enums.LimitType;
 import customer.stake.helpers.GetLimitsHelper;
 import customer.stake.helpers.UserHelper;
 import customer.stake.dto.limits.LimitsResponseData;
@@ -37,9 +37,9 @@ public class GetCustomerLimitsTest extends BaseTest {
 
         try {
             data = new GetLimitsHelper().checkIfLimitExistForUser(uuid,
-                    OwnerEnum.PERSONAL,
-                    LimitTypeEnum.TURNOVER,
-                    LabelEnums.tipico);
+                    Owner.PERSONAL,
+                    LimitType.TURNOVER,
+                    Label.tipico);
             Assertions.assertThat(data.getCurrent().getValue()).isEqualTo(1000f);
         } catch (NullPointerException e) {
             if (envConfig.env().equals("staging")) {

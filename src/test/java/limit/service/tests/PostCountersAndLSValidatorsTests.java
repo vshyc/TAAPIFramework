@@ -6,12 +6,12 @@ import configuration.BaseTest;
 import customer.stake.dto.counters.PostCountersResponse;
 import customer.stake.dto.limits.LimitCreationData;
 import customer.stake.dto.limits.LimitsResponseData;
-import customer.stake.enums.CounterTypeEnum;
-import customer.stake.enums.IntervalEnum;
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.LimitTypeEnum;
-import customer.stake.enums.OwnerEnum;
-import customer.stake.enums.ValidatorResultEnum;
+import customer.stake.enums.CounterType;
+import customer.stake.enums.Interval;
+import customer.stake.enums.Label;
+import customer.stake.enums.LimitType;
+import customer.stake.enums.Owner;
+import customer.stake.enums.ValidatorResult;
 import customer.stake.helpers.AddCounterHelper;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
@@ -52,18 +52,18 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
     @TestCaseId(3649)
     @Tag("RegressionTests")
     @CsvFileSource(files = "src/test/resources/addCounterToCustomerStakeService.csv", numLinesToSkip = 1)
-    public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounter(LabelEnums label, CounterTypeEnum type, double amount){
+    public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounter(Label label, CounterType type, double amount){
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
                 type, amount);
         Assertions.assertThat(response.getLabel()).isEqualTo(label);
         Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
                 .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
-        if ((!(envConfig.env().equals("staging")) && type == CounterTypeEnum.STAKE_BET))
+        if ((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))
             Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
-                    .isEqualTo(ValidatorResultEnum.VALID);
+                    .isEqualTo(ValidatorResult.VALID);
         else {
         Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
-                .isEqualTo(ValidatorResultEnum.VALID_WITH_NO_LIMIT_DEFINED);}
+                .isEqualTo(ValidatorResult.VALID_WITH_NO_LIMIT_DEFINED);}
     }
 
     @Feature("Updates counters with Validation on LS")
@@ -74,10 +74,10 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
     @TestCaseId(3652)
     @Tag("RegressionTests")
     @CsvFileSource(files = "src/test/resources/addCountersAndLimitsForValidationsData.csv", numLinesToSkip = 1)
-    public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithLimit (LabelEnums label, CounterTypeEnum type, double amount,
-                                                                                          LimitTypeEnum limitType, OwnerEnum owner,
-                                                                                          String product, double limitAmount, IntervalEnum interval){
-        if (!((!(envConfig.env().equals("staging")) && type == CounterTypeEnum.STAKE_BET))){
+    public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithLimit (Label label, CounterType type, double amount,
+                                                                                          LimitType limitType, Owner owner,
+                                                                                          String product, double limitAmount, Interval interval){
+        if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))){
         createLimit(limitType,owner,label,product,limitAmount,interval);}
 
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
@@ -86,7 +86,7 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
         Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
                 .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
         Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
-                    .isEqualTo(ValidatorResultEnum.VALID);
+                    .isEqualTo(ValidatorResult.VALID);
     }
 
     @Feature("Updates counters with Validation on LS")
@@ -98,10 +98,10 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
     @Tag("RegressionTests")
     @CsvFileSource(files = "src/test/resources/addCountersAndLimitsWithTheSameValueForValidationData.csv", numLinesToSkip = 1)
     public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithTheSameValueAsLimit
-            (LabelEnums label, CounterTypeEnum type, double amount,
-             LimitTypeEnum limitType, OwnerEnum owner,
-             String product, double limitAmount, IntervalEnum interval){
-        if (!((!(envConfig.env().equals("staging")) && type == CounterTypeEnum.STAKE_BET))){
+            (Label label, CounterType type, double amount,
+             LimitType limitType, Owner owner,
+             String product, double limitAmount, Interval interval){
+        if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))){
             createLimit(limitType,owner,label,product,limitAmount,interval);}
 
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
@@ -109,12 +109,12 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
         Assertions.assertThat(response.getLabel()).isEqualTo(label);
         Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
                 .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
-        if ((!(envConfig.env().equals("staging")) && type == CounterTypeEnum.STAKE_BET)){
+        if ((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET)){
             Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
-                .isEqualTo(ValidatorResultEnum.VALID);}
+                .isEqualTo(ValidatorResult.VALID);}
         else {
             Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
-                    .isEqualTo(ValidatorResultEnum.LIMIT_EXACTLY_MATCHED);}
+                    .isEqualTo(ValidatorResult.LIMIT_EXACTLY_MATCHED);}
     }
 
     @Feature("Updates counters with Validation on LS")
@@ -126,10 +126,10 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
     @Tag("RegressionTests")
     @CsvFileSource(files = "src/test/resources/addCountersAndLimitsWithTheValueHigherThenLimitForValidationData.csv", numLinesToSkip = 1)
     public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithTheHigherValueThenLimit
-            (LabelEnums label, CounterTypeEnum type, double amount,
-             LimitTypeEnum limitType, OwnerEnum owner,
-             String product, double limitAmount, IntervalEnum interval){
-        if (!((!(envConfig.env().equals("staging")) && type == CounterTypeEnum.STAKE_BET))){
+            (Label label, CounterType type, double amount,
+             LimitType limitType, Owner owner,
+             String product, double limitAmount, Interval interval){
+        if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))){
             createLimit(limitType,owner,label,product,limitAmount,interval);}
 
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
@@ -139,15 +139,15 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
                 .describedAs("Check if sum off all counters for new user is equal to 0 after the attempt " +
                         "of incrementation but exceeding the limit").isEqualTo(0d);
         Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
-                .isEqualTo(ValidatorResultEnum.LIMIT_EXCEED);
+                .isEqualTo(ValidatorResult.LIMIT_EXCEED);
     }
 
 
 
     @Step("Sending a call to Limit Service to create Limit")
-    private LimitsResponseData createLimit(LimitTypeEnum type, OwnerEnum owner,
-                                           LabelEnums label, String product,
-                                           Double value, IntervalEnum interval) {
+    private LimitsResponseData createLimit(LimitType type, Owner owner,
+                                           Label label, String product,
+                                           Double value, Interval interval) {
         LimitCreationData body = LimitCreationData.builder().
                 type(type)
                 .owner(owner)
