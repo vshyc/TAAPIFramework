@@ -7,6 +7,7 @@ import customer.stake.enums.LimitTypeEnum;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.LRCHelper;
 import customer.stake.properties.EnvConfig;
+import customer.stake.request.configuration.RequestConfigurationBuilder;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
@@ -36,7 +37,8 @@ public class GetRGFESLimitHistoryEndpoint extends BaseEndpoint<GetRGFESLimitHist
     }
 
     public GetRGFESLimitHistoryEndpoint sendRequest(String sessionId) {
-        response = given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
                 .contentType(RGFS_LIMIT_SERVICE_V2_JSON)
                 .header("Cookie", String.format("SESSION_ID=%s", sessionId))
                 .accept(RGFS_LIMIT_SERVICE_V2_JSON)
@@ -46,7 +48,8 @@ public class GetRGFESLimitHistoryEndpoint extends BaseEndpoint<GetRGFESLimitHist
     public GetRGFESLimitHistoryEndpoint sendRequest(String sessionId, String product , LabelEnums label, LimitTypeEnum type) {
         LRCHelper lrcHelper = new LRCHelper();
         String LicenceRegionContext = lrcHelper.createLRC(product,label);
-        response = given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
                 .contentType(RGFS_LIMIT_HISTORY_V2_JSON)
                 .header("Cookie", String.format("SESSION_ID=%s", sessionId))
                 .header("tipico-license-region-context",LicenceRegionContext)

@@ -3,6 +3,7 @@ package customer.stake.rop;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.properties.EnvConfig;
+import customer.stake.request.configuration.RequestConfigurationBuilder;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
@@ -25,14 +26,16 @@ public class PostLimitEndpoint extends BaseEndpoint<PostLimitEndpoint, Response>
     }
 
     public PostLimitEndpoint sendRequest(String uuid) {
-        response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
                 .auth().oauth2(new OauthHelper().getApplicationToken())
                 .post("/customers/{customerUuid}/limits", uuid);
         return this;
     }
 
     public PostLimitEndpoint sendRequestWithNoAuth(String uuid) {
-        response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
                 .post("/customers/{customerUuid}/limits", uuid);
         return this;
     }
