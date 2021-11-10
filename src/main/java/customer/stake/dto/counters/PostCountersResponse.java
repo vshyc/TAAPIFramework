@@ -1,6 +1,7 @@
 package customer.stake.dto.counters;
 
-import customer.stake.enums.LabelEnums;
+import customer.stake.dto.limits.ValidationResponse;
+import customer.stake.enums.Label;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PostCountersResponse {
 
     private Customer customer;
-    private LabelEnums label;
+    private Label label;
     private Attributes attributes;
+    private ValidationResponse validationResponse;
 
-    public PostCountersResponse(Customer customer, LabelEnums label, Attributes attributes) {
+    public PostCountersResponse(Customer customer, Label label, Attributes attributes) {
         this.customer = customer;
         this.label = label;
         this.attributes = attributes;
+    }
+
+    public PostCountersResponse(Customer customer, Label label, Attributes attributes, ValidationResponse validationResponse) {
+        this.customer = customer;
+        this.label = label;
+        this.attributes = attributes;
+        this.validationResponse = validationResponse;
     }
 }

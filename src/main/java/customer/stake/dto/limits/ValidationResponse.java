@@ -1,4 +1,4 @@
-package customer.stake.dto.counters;
+package customer.stake.dto.limits;
 
 import customer.stake.enums.CounterType;
 import lombok.Builder;
@@ -6,36 +6,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 import java.util.List;
-
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Builder
-public class Attributes {
+public class ValidationResponse {
 
-    private List<Double> payin = null;
-    private List<Double> payinBet = null;
-    private List<Double> payinCasino = null;
-    private List<Double> lossBet = null;
-    private List<Double> lossStake = null;
-    private List<Double> stake = null;
-    private List<Double> stakeBet = null;
+    private List<LimitValidator> payin = null;
+    private List<LimitValidator> payinBet = null;
+    private List<LimitValidator> payinCasino = null;
+    private List<LimitValidator> lossBet = null;
+    private List<LimitValidator> lossStake = null;
+    private List<LimitValidator> stake = null;
+    private List<LimitValidator> stakeBet = null;
 
-    public Attributes(List<Double> payin, List<Double> payinCasino) {
-        super();
-        this.payin = payin;
-        this.payinCasino = payinCasino;
-    }
-
-    public Attributes(List<Double> payin) {
-        this.payin = payin;
-    }
-
-    public Attributes(List<Double> payin, List<Double> payinBet, List<Double> payinCasino, List<Double> lossBet,
-                      List<Double> lossStake, List<Double> stake, List<Double> stakeBet) {
+    public ValidationResponse(List<LimitValidator> payin, List<LimitValidator> payinBet,
+                              List<LimitValidator> payinCasino, List<LimitValidator> lossBet,
+                              List<LimitValidator> lossStake, List<LimitValidator> stake, List<LimitValidator> stakeBet) {
         this.payin = payin;
         this.payinBet = payinBet;
         this.payinCasino = payinCasino;
@@ -45,7 +34,7 @@ public class Attributes {
         this.stakeBet = stakeBet;
     }
 
-    public List<Double> getAtribute(CounterType type) {
+    public List<LimitValidator> getLimitForCounter(CounterType type) {
         if (type == CounterType.PAYIN) {
             return payin;
         } else if (type == CounterType.PAYIN_BET) {

@@ -1,9 +1,9 @@
 package customer.stake.dto.limits;
 
-import customer.stake.enums.IntervalEnum;
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.OwnerEnum;
-import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.Interval;
+import customer.stake.enums.Label;
+import customer.stake.enums.Owner;
+import customer.stake.enums.LimitType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,14 +15,14 @@ import lombok.Setter;
 @Builder
 public class LimitCreationData {
 
-    private LimitTypeEnum type;
-    private OwnerEnum owner;
-    private LabelEnums label;
+    private LimitType type;
+    private Owner owner;
+    private Label label;
     private String product;
     private Double value;
-    private IntervalEnum interval;
+    private Interval interval;
 
-    public LimitCreationData(LimitTypeEnum type, OwnerEnum owner, LabelEnums label, String product, Double value, IntervalEnum interval) {
+    public LimitCreationData(LimitType type, Owner owner, Label label, String product, Double value, Interval interval) {
         this.type = type;
         this.owner = owner;
         this.label = label;

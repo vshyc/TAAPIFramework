@@ -3,10 +3,10 @@ package regulations.fes;
 import com.tipico.ta.reqtest.extension.ReqtestReporterExtension;
 import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
-import customer.stake.enums.IntervalEnum;
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.LimitTypeEnum;
-import customer.stake.enums.OwnerEnum;
+import customer.stake.enums.Interval;
+import customer.stake.enums.Label;
+import customer.stake.enums.LimitType;
+import customer.stake.enums.Owner;
 import customer.stake.helpers.LoginHelper;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.TermsAndConditionsHelper;
@@ -88,7 +88,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
         if (!isStaging) {
             Assertions.assertThat(response.getSports().getTurnover().getRemaining()).isEqualTo(1000.0);
             Assertions.assertThat(response.getSports().getTurnover().getCurrent().getValue()).isEqualTo(1000.0);
-            Assertions.assertThat(response.getSports().getTurnover().getCurrent().getInterval()).isEqualTo(IntervalEnum.MONTH);
+            Assertions.assertThat(response.getSports().getTurnover().getCurrent().getInterval()).isEqualTo(Interval.MONTH);
         }
     }
 
@@ -100,9 +100,9 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @CsvFileSource(files = "src/test/resources/getNewCreatedLimit.csv", numLinesToSkip = 1)
     @Tag("RegressionTests")
     @TestCaseId(3460)
-    public void getNewCreatedLimitForOverviewFromLimitService(LimitTypeEnum limitType, OwnerEnum owner, LabelEnums label,
-                                                              String product, Double value, IntervalEnum interval) {
-        if (!isStaging && limitType == LimitTypeEnum.TURNOVER) {
+    public void getNewCreatedLimitForOverviewFromLimitService(LimitType limitType, Owner owner, Label label,
+                                                              String product, Double value, Interval interval) {
+        if (!isStaging && limitType == LimitType.TURNOVER) {
             Assertions.assertThat(true).as("The turnover limit exist on registration so " +
                     "creating it by RGFES is not posible");
         } else {
@@ -127,9 +127,9 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     }
 
     @Step("Sending a call to Limit Service with Application Token to create Limit")
-    private LimitsResponseData createLimitWithApplicationToken(LimitTypeEnum type, OwnerEnum owner,
-                                                               LabelEnums label, String product,
-                                                               Double value, IntervalEnum interval) {
+    private LimitsResponseData createLimitWithApplicationToken(LimitType type, Owner owner,
+                                                               Label label, String product,
+                                                               Double value, Interval interval) {
         LimitCreationData body = LimitCreationData.builder().
                 type(type)
                 .owner(owner)

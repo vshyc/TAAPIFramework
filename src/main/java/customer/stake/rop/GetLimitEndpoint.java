@@ -4,6 +4,7 @@ import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.dto.limits.GetLimitsResponseData;
 import customer.stake.properties.EnvConfig;
+import customer.stake.request.configuration.RequestConfigurationBuilder;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
@@ -25,14 +26,16 @@ public class GetLimitEndpoint extends BaseEndpoint<GetLimitEndpoint, GetLimitsRe
     }
 
     public GetLimitEndpoint sendRequest(String uuid) {
-        response = given().auth().oauth2(new OauthHelper().getApplicationToken())
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .auth().oauth2(new OauthHelper().getApplicationToken())
                 .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
                 .when().get("customers/{customerUuid}/limits/", uuid);
         return this;
     }
 
     public GetLimitEndpoint sendRequestWithNoAuth(String uuid) {
-        response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
                 .when().get("customers/{customerUuid}/limits/", uuid);
         return this;
     }

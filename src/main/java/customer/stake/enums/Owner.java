@@ -2,14 +2,14 @@ package customer.stake.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum OwnerEnum {
+public enum Owner {
     AML("AML"),
     PERSONAL("PERSONAL"),
     IMPOSED("IMPOSED");
 
     private String owner;
 
-    OwnerEnum(String owner) {
+    Owner(String owner) {
         this.owner = owner;
     }
 

@@ -1,11 +1,11 @@
 package limit.service.tests;
 
 import configuration.BaseTest;
-import customer.stake.enums.CounterTypeEnum;
-import customer.stake.enums.IntervalEnum;
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.OwnerEnum;
-import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.CounterType;
+import customer.stake.enums.Interval;
+import customer.stake.enums.Label;
+import customer.stake.enums.Owner;
+import customer.stake.enums.LimitType;
 import customer.stake.helpers.AddCounterHelper;
 import customer.stake.helpers.GetLimitsHelper;
 import customer.stake.dto.counters.PostCountersResponse;
@@ -53,9 +53,9 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with application token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/test/resources/createLimitTestData.csv", numLinesToSkip = 1)
-    public void createLimitsTestWithApplicationTokenTest(LimitTypeEnum type, OwnerEnum owner,
-                                                         LabelEnums label, String product,
-                                                         Double value, IntervalEnum interval) {
+    public void createLimitsTestWithApplicationTokenTest(LimitType type, Owner owner,
+                                                         Label label, String product,
+                                                         Double value, Interval interval) {
         try {
             limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid, owner, type, label).getLimitUUID();
         } catch (NullPointerException e) {
@@ -80,9 +80,9 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/test/resources/createLimitTestData.csv", numLinesToSkip = 1)
-    public void createLimitsTestWithUserTokenTest(LimitTypeEnum type, OwnerEnum owner,
-                                                  LabelEnums label, String product,
-                                                  Double value, IntervalEnum interval) {
+    public void createLimitsTestWithUserTokenTest(LimitType type, Owner owner,
+                                                  Label label, String product,
+                                                  Double value, Interval interval) {
 
         try {
             limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid, owner, type, label).getLimitUUID();
@@ -106,9 +106,9 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
     @CsvFileSource(files = "src/test/resources/updateLimitTestData.csv", numLinesToSkip = 1)
-    public void createAndUpdateLimitToLowerValueTest(LimitTypeEnum type, OwnerEnum owner,
-                                                     LabelEnums label, String product,
-                                                     Double value, IntervalEnum interval, Double updatedValue) {
+    public void createAndUpdateLimitToLowerValueTest(LimitType type, Owner owner,
+                                                     Label label, String product,
+                                                     Double value, Interval interval, Double updatedValue) {
         LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
         Assertions.assertThat(response.getLabel()).isEqualTo(label);
         Assertions.assertThat(response.getOwner()).isEqualTo(owner);
@@ -128,9 +128,9 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
     @CsvFileSource(files = "src/test/resources/updateLimitToHigherValueTestData.csv", numLinesToSkip = 1)
-    public void createAndUpdateLimitToHigherValueTest(LimitTypeEnum type, OwnerEnum owner,
-                                                      LabelEnums label, String product,
-                                                      Double value, IntervalEnum interval, Double updatedValue) {
+    public void createAndUpdateLimitToHigherValueTest(LimitType type, Owner owner,
+                                                      Label label, String product,
+                                                      Double value, Interval interval, Double updatedValue) {
         LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
 
         Assertions.assertThat(response.getLabel()).isEqualTo(label);
@@ -154,9 +154,9 @@ public class PutCreateLimitTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
     @CsvFileSource(files = "src/test/resources/updateAMLLimitToHigherValueTestData.csv", numLinesToSkip = 1)
-    public void createAndUpdateAMLLimitToHigherValueTest(LimitTypeEnum type, OwnerEnum owner,
-                                                         LabelEnums label, String product,
-                                                         Double value, IntervalEnum interval, Double updatedValue) {
+    public void createAndUpdateAMLLimitToHigherValueTest(LimitType type, Owner owner,
+                                                         Label label, String product,
+                                                         Double value, Interval interval, Double updatedValue) {
         LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
 
         Assertions.assertThat(response.getLabel()).isEqualTo(label);
@@ -176,12 +176,12 @@ public class PutCreateLimitTests extends BaseTest {
     @Test
     public void createLimitWithNoAuthTest() {
         LimitCreationData body = LimitCreationData.builder().
-                type(LimitTypeEnum.DEPOSIT)
-                .owner(OwnerEnum.PERSONAL)
-                .label(LabelEnums.TIPICO)
+                type(LimitType.DEPOSIT)
+                .owner(Owner.PERSONAL)
+                .label(Label.TIPICO)
                 .product("sports")
                 .value(200d)
-                .interval(IntervalEnum.MONTH)
+                .interval(Interval.MONTH)
                 .build();
         new PutLimitEndpoint().sendRequestToCreateNewLimitWithNoAuth(body, uuid).assertNoAuthRequestStatusCode();
     }
@@ -197,11 +197,11 @@ public class PutCreateLimitTests extends BaseTest {
             "label={2}, product={3}, value={4} , interval={5} adding a counter with value = {6} and checking if " +
             "remaining value is calculated correctly ")
     @CsvFileSource(files = "src/test/resources/limitsWithCountersData.csv", numLinesToSkip = 1)
-    public void checkIfRemainingValueIsCalculatedCorrectlyTest(LimitTypeEnum limitType, OwnerEnum owner,
-                                                               LabelEnums label, String product,
-                                                               Double value, IntervalEnum interval,
-                                                               Double counterValue, CounterTypeEnum counterType) {
-        if (!(envConfig.env().equals("staging")) && limitType == LimitTypeEnum.TURNOVER) {
+    public void checkIfRemainingValueIsCalculatedCorrectlyTest(LimitType limitType, Owner owner,
+                                                               Label label, String product,
+                                                               Double value, Interval interval,
+                                                               Double counterValue, CounterType counterType) {
+        if (!(envConfig.env().equals("staging")) && limitType == LimitType.TURNOVER) {
             Assertions.assertThat(true).as("The turnover limit exist on registration so " +
                     "creating it by RGFES is not posible");
         } else {
@@ -215,9 +215,9 @@ public class PutCreateLimitTests extends BaseTest {
 
 
     @Step("Sending a call to Limit Service with User Token to create Limit")
-    private LimitsResponseData createLimitWithUserToken(LimitTypeEnum type, OwnerEnum owner,
-                                                        LabelEnums label, String product,
-                                                        Double value, IntervalEnum interval) {
+    private LimitsResponseData createLimitWithUserToken(LimitType type, Owner owner,
+                                                        Label label, String product,
+                                                        Double value, Interval interval) {
         LimitCreationData body = LimitCreationData.builder().
                 type(type)
                 .owner(owner)
@@ -232,9 +232,9 @@ public class PutCreateLimitTests extends BaseTest {
     }
 
     @Step("Sending a call to Limit Service with Application Token to create Limit")
-    private LimitsResponseData createLimitWithApplicationToken(LimitTypeEnum type, OwnerEnum owner,
-                                                               LabelEnums label, String product,
-                                                               Double value, IntervalEnum interval) {
+    private LimitsResponseData createLimitWithApplicationToken(LimitType type, Owner owner,
+                                                               Label label, String product,
+                                                               Double value, Interval interval) {
         LimitCreationData body = LimitCreationData.builder().
                 type(type)
                 .owner(owner)
@@ -248,9 +248,9 @@ public class PutCreateLimitTests extends BaseTest {
     }
 
     @Step("Sending a call to Limit Service with User Token to update Limit")
-    private LimitsResponseData updateLimit(LimitTypeEnum type, OwnerEnum owner,
-                                           LabelEnums label, String product,
-                                           Double value, IntervalEnum interval) {
+    private LimitsResponseData updateLimit(LimitType type, Owner owner,
+                                           Label label, String product,
+                                           Double value, Interval interval) {
         LimitCreationData updatedBody = LimitCreationData.builder().
                 type(type)
                 .owner(owner)
@@ -266,13 +266,13 @@ public class PutCreateLimitTests extends BaseTest {
     }
 
     @Step("Add counter for limit")
-    private PostCountersResponse addCounterForLimit(String uuid, String id, LabelEnums label, CounterTypeEnum type, Double amount) {
+    private PostCountersResponse addCounterForLimit(String uuid, String id, Label label, CounterType type, Double amount) {
         return new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
                 type, amount);
     }
 
     @Step("Send request to Get limit")
-    private LimitsResponseData getLimit(String uuid, OwnerEnum owner, LimitTypeEnum type, LabelEnums label) {
+    private LimitsResponseData getLimit(String uuid, Owner owner, LimitType type, Label label) {
         return new GetLimitsHelper().checkIfLimitExistForUser(uuid, owner, type, label);
     }
 

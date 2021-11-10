@@ -1,8 +1,8 @@
 package customer.stake.helpers;
 
-import customer.stake.enums.LabelEnums;
-import customer.stake.enums.OwnerEnum;
-import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.Label;
+import customer.stake.enums.Owner;
+import customer.stake.enums.LimitType;
 import customer.stake.dto.limits.LimitsResponseData;
 import customer.stake.rop.GetLimitEndpoint;
 import io.qameta.allure.Step;
@@ -11,7 +11,7 @@ import io.qameta.allure.Step;
 public class GetLimitsHelper {
 
     @Step("Check if limit exists in LimitService")
-    public LimitsResponseData checkIfLimitExistForUser(String uuid, OwnerEnum limitOwner, LimitTypeEnum limitType, LabelEnums label) {
+    public LimitsResponseData checkIfLimitExistForUser(String uuid, Owner limitOwner, LimitType limitType, Label label) {
 
         GetLimitEndpoint responseData = new GetLimitEndpoint().sendRequest(uuid);
         LimitsResponseData data;

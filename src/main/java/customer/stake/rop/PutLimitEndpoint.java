@@ -7,6 +7,7 @@ import customer.stake.dto.limits.GetLimitsResponseData;
 import customer.stake.dto.limits.LimitCreationData;
 import customer.stake.dto.limits.LimitsResponseData;
 import customer.stake.properties.EnvConfig;
+import customer.stake.request.configuration.RequestConfigurationBuilder;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 
@@ -25,7 +26,8 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
 
     public PutLimitEndpoint sendRequestToCreateNewLimit(LimitCreationData body, String oauthToken, String uuid) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
-        response = given().baseUri(envConfig.baseUri()).basePath(location)
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.baseUri()).basePath(location)
                 .contentType(ContentType.JSON)
                 .auth().oauth2(oauthToken)
                 .body(body).when().put();
@@ -34,7 +36,8 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
 
     public PutLimitEndpoint sendRequestWithNoBodyToCreateNewLimit(String oauthToken, String uuid) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
-        response = given().baseUri(envConfig.baseUri()).basePath(location)
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.baseUri()).basePath(location)
                 .contentType(ContentType.JSON)
                 .auth().oauth2(oauthToken).when().put();
         return this;
@@ -42,7 +45,8 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
 
     public PutLimitEndpoint sendRequestToCreateNewLimitWithNoAuth(LimitCreationData body, String uuid) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
-        response = given().baseUri(envConfig.baseUri()).basePath(location)
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.baseUri()).basePath(location)
                 .contentType(ContentType.JSON)
                 .body(body).when().put();
         return this;
@@ -52,7 +56,8 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
                                                                          String oauthToken,
                                                                          String uuid) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
-        response = given().baseUri(envConfig.baseUri()).basePath(location)
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.baseUri()).basePath(location)
                 .auth().oauth2(oauthToken)
                 .body(body).when().put();
         return this;
@@ -60,7 +65,8 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
 
     public PutLimitEndpoint sendRequestToUpdateLimit(LimitCreationData body, String oauthToken, String uuid) {
 
-        response = given().baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
                 .contentType(ContentType.JSON)
                 .auth().oauth2(oauthToken)
                 .body(body).when().put("customers/{customerUuid}/limits/{limitUuid}", uuid,

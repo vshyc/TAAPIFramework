@@ -3,8 +3,8 @@ package customer.stake.counters.tests;
 import com.tipico.ta.reqtest.extension.ReqtestReporterExtension;
 import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
-import customer.stake.enums.CounterTypeEnum;
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.CounterType;
+import customer.stake.enums.Label;
 import customer.stake.helpers.AddCounterHelper;
 import customer.stake.helpers.UserHelper;
 import customer.stake.dto.counters.PostCountersResponse;
@@ -47,7 +47,7 @@ public class PostCreateUserCountersTests extends BaseTest {
     @Tag("RegressionTests")
     @TestCaseId(3472)
     @CsvFileSource(files = "src/test/resources/addCounterToCustomerStakeService.csv", numLinesToSkip = 1)
-    public void addPayInCountersToCustomerStakeService(LabelEnums label, CounterTypeEnum type, double amount) {
+    public void addPayInCountersToCustomerStakeService(Label label, CounterType type, double amount) {
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
                 type, amount);
 

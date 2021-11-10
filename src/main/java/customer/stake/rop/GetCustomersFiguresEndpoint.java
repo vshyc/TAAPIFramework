@@ -1,8 +1,8 @@
 package customer.stake.rop;
 
-import customer.stake.enums.CounterTypeEnum;
-import customer.stake.enums.IntervalEnum;
-import customer.stake.enums.LabelEnums;
+import customer.stake.enums.CounterType;
+import customer.stake.enums.Interval;
+import customer.stake.enums.Label;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.dto.counters.CustomerFiguresResponse;
 import customer.stake.properties.EnvConfig;
@@ -25,28 +25,28 @@ public class GetCustomersFiguresEndpoint extends BaseEndpoint<GetCustomersFigure
     }
 
 
-    public GetCustomersFiguresEndpoint sendRequest(String id, CounterTypeEnum type, LabelEnums label) {
+    public GetCustomersFiguresEndpoint sendRequest(String id, CounterType type, Label label) {
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
                 .auth().basic(user, password).when().get("/risks/{id}/{type}?label={label}", id, type.getType(),
                         label.getLabel());
         return this;
     }
 
-    public GetCustomersFiguresEndpoint sendRequest(String id, CounterTypeEnum type, LabelEnums label, IntervalEnum interval) {
+    public GetCustomersFiguresEndpoint sendRequest(String id, CounterType type, Label label, Interval interval) {
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
                 .auth().basic(user, password).when().get("/risks/{id}/{type}?label={label}&interval={interval}", id, type.getType(),
                         label.getLabel(), interval.getInterval());
         return this;
     }
 
-    public GetCustomersFiguresEndpoint sendRequestWithUuid(String uuid, CounterTypeEnum type, LabelEnums label, IntervalEnum interval) {
+    public GetCustomersFiguresEndpoint sendRequestWithUuid(String uuid, CounterType type, Label label, Interval interval) {
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
                 .auth().basic(user, password).when().get("/risks/uuid/{uuid}/{type}?label={label}&interval={interval}", uuid, type.getType(),
                         label.getLabel(), interval.getInterval());
         return this;
     }
 
-    public GetCustomersFiguresEndpoint sendRequestWithUuidAndDate(String uuid, CounterTypeEnum type, LabelEnums label,
+    public GetCustomersFiguresEndpoint sendRequestWithUuidAndDate(String uuid, CounterType type, Label label,
                                                                   String dateFrom, String dateTo) {
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
                 .auth().basic(user, password).when().get("/risks/uuid/{uuid}/{type}?label={label}" +

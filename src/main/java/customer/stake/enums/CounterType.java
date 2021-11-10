@@ -2,7 +2,7 @@ package customer.stake.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum CounterTypeEnum {
+public enum CounterType {
 
     PAYIN("payin"),
     PAYIN_BET("payinBet"),
@@ -14,7 +14,7 @@ public enum CounterTypeEnum {
 
     private String type;
 
-    CounterTypeEnum(String type) {
+    CounterType(String type) {
         this.type = type;
     }
 

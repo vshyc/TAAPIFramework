@@ -10,12 +10,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Builder
-public class Current {
+public class LimitDetails {
 
     private Double value;
     private Interval interval;
 
-    public Current(Double value, Interval interval) {
+    public LimitDetails(Double value, Interval interval) {
         this.value = value;
         this.interval = interval;
     }

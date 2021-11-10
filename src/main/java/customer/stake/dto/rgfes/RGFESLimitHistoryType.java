@@ -1,6 +1,6 @@
 package customer.stake.dto.rgfes;
 
-import customer.stake.enums.IntervalEnum;
+import customer.stake.enums.Interval;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,10 +16,10 @@ public class RGFESLimitHistoryType {
 
     private Boolean requested;
     private Double value;
-    private IntervalEnum interval;
+    private Interval interval;
     private Date updatedDate;
 
-    public RGFESLimitHistoryType(Boolean requested, Double value, IntervalEnum interval, Date updatedDate) {
+    public RGFESLimitHistoryType(Boolean requested, Double value, Interval interval, Date updatedDate) {
         this.requested = requested;
         this.value = value;
         this.interval = interval;

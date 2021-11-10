@@ -1,6 +1,6 @@
 package customer.stake.dto.rgfes;
 
-import customer.stake.enums.LimitTypeEnum;
+import customer.stake.enums.LimitType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +22,12 @@ public class RGFESLimitsFromLimitService {
         this.loss = loss;
     }
 
-    public RGFESLimitFromLimitService getLimitType(LimitTypeEnum limitType) {
-        if (limitType == LimitTypeEnum.DEPOSIT) {
+    public RGFESLimitFromLimitService getLimitType(LimitType limitType) {
+        if (limitType == LimitType.DEPOSIT) {
             return deposit;
-        } else if (limitType == LimitTypeEnum.TURNOVER) {
+        } else if (limitType == LimitType.TURNOVER) {
             return turnover;
-        } else if (limitType == LimitTypeEnum.LOSS) {
+        } else if (limitType == LimitType.LOSS) {
             return loss;
         } else return null;
     }
