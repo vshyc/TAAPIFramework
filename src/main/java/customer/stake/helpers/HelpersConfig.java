@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HelpersConfig {
-    private static EnvConfig envConfig;
+    static EnvConfig envConfig;
 
     public static EnvConfig createConfiguration() {
         if (!System.getenv("env").equals("staging")) {
