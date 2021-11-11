@@ -1,7 +1,6 @@
 package customer.stake.rop;
 
 import static customer.stake.constants.RequestPaths.PANIC_BUTTON_REQUEST_PATH;
-import static io.restassured.RestAssured.basePath;
 import static io.restassured.RestAssured.given;
 
 import customer.stake.dto.rgfes.RGFESCreateLimitResponse;
@@ -37,5 +36,4 @@ public class PostRGFESPanicBtnEndPoint extends BaseEndpoint<PostRGFESPanicBtnEnd
                 .post(PANIC_BUTTON_REQUEST_PATH+"app-mysino-games");
         return this;
     }
-
 }

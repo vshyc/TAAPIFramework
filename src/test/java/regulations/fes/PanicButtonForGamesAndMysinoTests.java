@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @DisplayName("Validate panic button end point for Games and Mysino")
-public class ValidatePanicButtonForGamesAndMysino extends BaseTest {
+class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
     private UserHelper userHelper;
     private TermsAndConditionsHelper tacHelper;
@@ -29,14 +29,13 @@ public class ValidatePanicButtonForGamesAndMysino extends BaseTest {
     private Response tacResponse;
     private String sessionId;
     private JsonPath createdUser;
-    protected final Logger log = LoggerFactory.getLogger(getClass());
     private boolean isStaging;
     private String uuid;
     private String username;
 
     @BeforeEach
     @Step("Create and login user for test ")
-    public void setUp() throws EbetGatewayException {
+    void setUp() throws EbetGatewayException {
         loginHelper = new LoginHelper();
         userHelper = new UserHelper();
         createdUser = userHelper.createGermanUserInWebTestApi();
@@ -54,7 +53,7 @@ public class ValidatePanicButtonForGamesAndMysino extends BaseTest {
     @Description("Validate panic button for games")
     @Test
     @Tag("RegressionTests")
-    public void validatePanicButtonForGames() throws EbetGatewayException {
+    void validatePanicButtonForGames() throws EbetGatewayException {
 
         Response response = new PostRGFESPanicBtnEndPoint().sendRequestGames(sessionId)
                 .assertRequestStatusCode().getResponse();
@@ -73,7 +72,7 @@ public class ValidatePanicButtonForGamesAndMysino extends BaseTest {
     @Description("Validate panic button for Mysino")
     @Test
     @Tag("RegressionTests")
-    public void validatePanicButtonForMysino() throws EbetGatewayException {
+    void validatePanicButtonForMysino() throws EbetGatewayException {
 
         Response response = new PostRGFESPanicBtnEndPoint().sendRequestMysino(sessionId)
                 .assertRequestStatusCode().getResponse();
