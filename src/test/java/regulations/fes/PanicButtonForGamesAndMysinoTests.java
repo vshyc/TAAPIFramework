@@ -24,28 +24,21 @@ import org.slf4j.LoggerFactory;
 class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
     private UserHelper userHelper;
-    private TermsAndConditionsHelper tacHelper;
-    private LoginHelper loginHelper;
-    private Response tacResponse;
     private String sessionId;
-    private JsonPath createdUser;
-    private boolean isStaging;
     private String uuid;
-    private String username;
 
     @BeforeEach
     @Step("Create and login user for test ")
     void setUp() throws EbetGatewayException {
-        loginHelper = new LoginHelper();
+        LoginHelper loginHelper = new LoginHelper();
         userHelper = new UserHelper();
-        createdUser = userHelper.createGermanUserInWebTestApi();
+        JsonPath createdUser = userHelper.createGermanUserInWebTestApi();
         uuid = userHelper.getUuid(createdUser);
-        username = userHelper.getLogin(createdUser);
+        String username = userHelper.getLogin(createdUser);
         userHelper.getKYCVerifiedStatus(username, uuid);
-        tacHelper = new TermsAndConditionsHelper();
-        tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
+        TermsAndConditionsHelper tacHelper = new TermsAndConditionsHelper();
+        Response tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
         sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
-        isStaging = envConfig.env().equals("staging");
 
     }
 
@@ -83,7 +76,9 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
                 () -> assertThat(responseCas.getActive())
                         .as("Status is not correct.").isTrue(),
                 () -> assertThat(responseCas.getDeactivationReason())
-                        .as("Activation reason is not correct.").isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED")
+                        .as("Activation reason is not correct.").isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED"),
+                () -> assertThat(responseCas.getMinimalDeactivationDuration())
+                        .as("Deactivation duration is different than 24 hours").isEqualTo("PT24H")
         );
     }
 }
