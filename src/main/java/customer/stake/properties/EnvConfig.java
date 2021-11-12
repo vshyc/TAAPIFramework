@@ -106,4 +106,10 @@ public interface EnvConfig extends Config {
     @Key("MYSINO_BASE_URL")
     String mysinobaseUrl();
 
+    @Key("OASIS_DB_SCHEMA")
+    String oasisDbSchema();
+
+    @Key("OASIS_DB_HOST")
+    String oasisDbHost();
+
 }
