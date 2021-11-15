@@ -11,6 +11,7 @@ import customer.stake.dto.counters.CustomerFiguresResponse;
 import customer.stake.rop.GetCustomersFiguresEndpoint;
 import io.qameta.allure.Description;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -44,8 +45,10 @@ public class GetCountersTest extends BaseTest {
         CustomerFiguresResponse response = new GetCustomersFiguresEndpoint().sendRequestWithUuid(userUuid,
                         counter, label, interval)
                 .assertRequestStatusCode().getResponseModel();
-        Assertions.assertThat(response.getCustomer().getUuid()).isEqualTo(userUuid);
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
+        SoftAssertions.assertSoftly(softly->{
+            softly.assertThat(response.getCustomer().getUuid()).isEqualTo(userUuid);
+            softly.assertThat(response.getLabel()).isEqualTo(label);
+        });
     }
 
     @ParameterizedTest(name = "{index} -> Get customers limits with label = {0},counter type = {1}, interval = {2}" +
@@ -59,8 +62,10 @@ public class GetCountersTest extends BaseTest {
         CustomerFiguresResponse response = new GetCustomersFiguresEndpoint().sendRequestWithUuidAndDate(userUuid,
                         counter, label, dateFrom, dateTo)
                 .assertRequestStatusCode().getResponseModel();
-        Assertions.assertThat(response.getCustomer().getUuid()).isEqualTo(userUuid);
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
+        SoftAssertions.assertSoftly(softly-> {
+                softly.assertThat(response.getCustomer().getUuid()).isEqualTo(userUuid);
+                softly.assertThat(response.getLabel()).isEqualTo(label);
+        });
     }
 
 

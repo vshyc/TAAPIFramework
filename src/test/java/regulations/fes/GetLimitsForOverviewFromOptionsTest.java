@@ -23,6 +23,7 @@ import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -86,9 +87,11 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
                 .assertRequestStatusCode()
                 .getModelTypeForLimitServiceResponse();
         if (!isStaging) {
-            Assertions.assertThat(response.getSports().getTurnover().getRemaining()).isEqualTo(1000.0);
-            Assertions.assertThat(response.getSports().getTurnover().getCurrent().getValue()).isEqualTo(1000.0);
-            Assertions.assertThat(response.getSports().getTurnover().getCurrent().getInterval()).isEqualTo(Interval.MONTH);
+            SoftAssertions.assertSoftly(softly-> {
+                softly.assertThat(response.getSports().getTurnover().getRemaining()).isEqualTo(1000.0);
+                softly.assertThat(response.getSports().getTurnover().getCurrent().getValue()).isEqualTo(1000.0);
+                softly.assertThat(response.getSports().getTurnover().getCurrent().getInterval()).isEqualTo(Interval.MONTH);
+            });
         }
     }
 
@@ -110,9 +113,11 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
             RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, RGFS_LIMIT_HISTORY_V3_JSON)
                     .assertRequestStatusCode()
                     .getModelTypeForLimitServiceResponse();
-            Assertions.assertThat(response.getSports().getLimitType(limitType).getRemaining()).isEqualTo(value);
-            Assertions.assertThat(response.getSports().getLimitType(limitType).getCurrent().getValue()).isEqualTo(value);
-            Assertions.assertThat(response.getSports().getLimitType(limitType).getCurrent().getInterval()).isEqualTo(interval);
+            SoftAssertions.assertSoftly(softly-> {
+                softly.assertThat(response.getSports().getLimitType(limitType).getRemaining()).isEqualTo(value);
+                softly.assertThat(response.getSports().getLimitType(limitType).getCurrent().getValue()).isEqualTo(value);
+                softly.assertThat(response.getSports().getLimitType(limitType).getCurrent().getInterval()).isEqualTo(interval);
+            });
         }
     }
 

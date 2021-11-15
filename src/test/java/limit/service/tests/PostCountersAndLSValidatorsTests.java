@@ -20,6 +20,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -106,9 +107,11 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
 
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
                 type, amount);
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
-        Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
-                .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
+        SoftAssertions.assertSoftly(softly-> {
+            softly.assertThat(response.getLabel()).isEqualTo(label);
+            softly.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
+                    .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
+        });
         if ((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET)){
             Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
                 .isEqualTo(ValidatorResult.VALID);}
@@ -134,12 +137,14 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
 
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
                 type, amount);
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
-        Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
+        SoftAssertions.assertSoftly(softly-> {
+            softly.assertThat(response.getLabel()).isEqualTo(label);
+            softly.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
                 .describedAs("Check if sum off all counters for new user is equal to 0 after the attempt " +
                         "of incrementation but exceeding the limit").isEqualTo(0d);
-        Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
+            softly.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
                 .isEqualTo(ValidatorResult.LIMIT_EXCEED);
+        });
     }
 
 

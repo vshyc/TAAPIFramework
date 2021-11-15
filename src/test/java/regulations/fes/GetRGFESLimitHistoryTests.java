@@ -17,6 +17,7 @@ import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -60,11 +61,13 @@ public class GetRGFESLimitHistoryTests extends BaseTest {
         RGFESGetLimitHistoryResponse response = new GetRGFESLimitHistoryEndpoint().sendRequest(sessionId)
                 .assertRequestStatusCode().getResponseModel();
         if (isStaging){
-        Assertions.assertThat(response.getHistory().get(0).getLimitType()).isEqualTo(LimitType.DEPOSIT);
-        Assertions.assertThat(response.getHistory().get(0).getValue()).isEqualTo(1000d);
-        Assertions.assertThat(response.getHistory().get(0).getInterval()).isEqualTo(Interval.MONTH);
-        Assertions.assertThat(response.getHistory().get(0).getProduct()).isEqualTo("SPORTS");
-        Assertions.assertThat(response.getHistory().get(0).getLabel()).isEqualTo(Label.TIPICO);
+            SoftAssertions.assertSoftly(softly-> {
+                softly.assertThat(response.getHistory().get(0).getLimitType()).isEqualTo(LimitType.DEPOSIT);
+                softly.assertThat(response.getHistory().get(0).getValue()).isEqualTo(1000d);
+                softly.assertThat(response.getHistory().get(0).getInterval()).isEqualTo(Interval.MONTH);
+                softly.assertThat(response.getHistory().get(0).getProduct()).isEqualTo("SPORTS");
+                softly.assertThat(response.getHistory().get(0).getLabel()).isEqualTo(Label.TIPICO);
+            });
         }
     }
 
@@ -81,10 +84,12 @@ public class GetRGFESLimitHistoryTests extends BaseTest {
                 .sendRequest(sessionId,product,label,type).assertRequestStatusCode()
                 .getModelTypeForLimitHistoryWithLRC();
         if (type == LimitType.DEPOSIT && isStaging) {
-            Assertions.assertThat(response.getLimitHistoryProduct(product).getLimitHistoryType(type).get(0).getValue())
-                    .isEqualTo(1000d);
-            Assertions.assertThat(response.getLimitHistoryProduct(product).getLimitHistoryType(type).get(0).getInterval())
-                    .isEqualTo(Interval.MONTH);
+            SoftAssertions.assertSoftly(softly -> {
+                softly.assertThat(response.getLimitHistoryProduct(product).getLimitHistoryType(type).get(0).getValue())
+                        .isEqualTo(1000d);
+                softly.assertThat(response.getLimitHistoryProduct(product).getLimitHistoryType(type).get(0).getInterval())
+                        .isEqualTo(Interval.MONTH);
+            });
         }
     }
 }

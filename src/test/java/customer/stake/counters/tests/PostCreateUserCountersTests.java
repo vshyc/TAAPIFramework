@@ -12,6 +12,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -51,8 +52,10 @@ public class PostCreateUserCountersTests extends BaseTest {
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
                 type, amount);
 
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
-        Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
-                .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
+        SoftAssertions.assertSoftly(softly-> {
+            softly.assertThat(response.getLabel()).isEqualTo(label);
+            softly.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
+                    .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
+        });
     }
 }
