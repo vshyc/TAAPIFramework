@@ -3,7 +3,6 @@ package regulations.fes;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import configuration.BaseTest;
-import customer.stake.db.CSSDBConnector;
 import customer.stake.db.OASISDBConnector;
 import customer.stake.dto.models.AccountStatusResponseCAS;
 import customer.stake.exeptions.EbetGatewayException;
@@ -21,8 +20,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @DisplayName("Validate panic button end point for Games and Mysino")
 class PanicButtonForGamesAndMysinoTests extends BaseTest {
@@ -57,39 +54,32 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        org.junit.jupiter.api.Assertions.assertAll(
-                () -> assertThat(responseCas.getActive())
-                        .as("Status is not correct.").isTrue(),
-                () -> assertThat(responseCas.getDeactivationReason())
-                        .as("Activation reason is not correct.").isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED")
-        );
+        assertThat(responseCas.getActive()).isTrue();
+        assertThat(responseCas.getDeactivationReason()).isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
+        assertThat(responseCas.getMinimalDeactivationDuration()).isEqualTo("PT24H");
+
     }
 
     @DisplayName("Validate panic button for Mysino")
     @Description("Validate panic button for Mysino")
     @Test
     @Tag("RegressionTests")
-    void validatePanicButtonForMysino() throws EbetGatewayException, SQLException {
+    void validatePanicButtonForMysino() throws EbetGatewayException {
 
         Response response = new PostRGFESPanicBtnEndPoint().sendRequestMysino(sessionId)
                 .assertRequestStatusCode().getResponse();
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        OASISDBConnector dbverification = new OASISDBConnector();
+        /*OASISDBConnector dbverification = new OASISDBConnector();
         ResultSet finalUser = dbverification.executeDmlStatement(
                 String.format("Select * from oasis_customer_data_written where customerUuid='%s'", uuid));
-        boolean recordPresentedInTheDB = finalUser.next();
+        boolean recordPresentedInTheDB = finalUser.next();*/
 
-        org.junit.jupiter.api.Assertions.assertAll(
-                () -> assertThat(responseCas.getActive())
-                        .as("Status is not correct.").isTrue(),
-                () -> assertThat(responseCas.getDeactivationReason())
-                        .as("Activation reason is not correct.").isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED"),
-                () -> assertThat(responseCas.getMinimalDeactivationDuration())
-                        .as("Deactivation duration is different than 24 hours").isEqualTo("PT24H"),
-                () -> assertThat(recordPresentedInTheDB)
-                        .as("Account is written to Oasis").isTrue()
-        );
+        assertThat(responseCas.getActive()).isTrue();
+        assertThat(responseCas.getDeactivationReason()).isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
+        assertThat(responseCas.getMinimalDeactivationDuration()).isEqualTo("PT24H");
+        //assertThat(recordPresentedInTheDB).isTrue();
+
     }
 }

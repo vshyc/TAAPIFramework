@@ -91,20 +91,14 @@ public interface EnvConfig extends Config {
     @Key("EBET_GATEWAY_CUSTOMERS_STATUS_ENDPOINT")
     String ebetGatewayCustomerStatusEndpoint();
 
-    @Key("PANIC_BUTTON_GAMES_PATH")
-    String panicBtnGames();
-
-    @Key("PANIC_BUTTON_MYSINO_PATH")
-    String panicBtnMysino();
-
     @Key("CAS_BASE_URL")
-    String casbaseUri();
+    String casBaseUri();
 
     @Key("CAS_BASE_PATH")
     String caseBasePath();
 
     @Key("MYSINO_BASE_URL")
-    String mysinobaseUrl();
+    String mysinoBaseUrl();
 
     @Key("OASIS_DB_SCHEMA")
     String oasisDbSchema();

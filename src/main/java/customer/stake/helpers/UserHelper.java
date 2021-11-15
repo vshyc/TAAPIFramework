@@ -90,19 +90,19 @@ public class UserHelper {
     }
 
     public AccountStatusResponseCAS getAccountStatusFromCus(String uuid) throws EbetGatewayException {{
-            String selfExclusionErrorMessage = "User not found!";
-            Response response = given().baseUri(envConfig.casbaseUri())
-                    .basePath(envConfig.caseBasePath())
-                    .auth().preemptive().basic("admin", "geheim")
-                    .accept(CAS_CONTENT_TYPE)
-                    .pathParam("uuid", uuid)
-                    .log().all()
-                    .get();
-            if (response.statusCode() != HttpStatus.SC_OK) {
-                throw new EbetGatewayException(selfExclusionErrorMessage);
-            }
-            return response.body().as(customer.stake.dto.models.AccountStatusResponseCAS.class);
+        String selfExclusionErrorMessage = "User not found!";
+        Response response = given().baseUri(envConfig.casBaseUri())
+                .basePath(envConfig.caseBasePath())
+                .auth().preemptive().basic("admin", "geheim")
+                .accept(CAS_CONTENT_TYPE)
+                .pathParam("uuid", uuid)
+                .log().all()
+                .get();
+        if (response.statusCode() != HttpStatus.SC_OK) {
+            throw new EbetGatewayException(selfExclusionErrorMessage);
         }
+        return response.body().as(customer.stake.dto.models.AccountStatusResponseCAS.class);
+    }
 
     }
 

@@ -15,19 +15,20 @@ public class OASISDBConnector {
     public OASISDBConnector() {
         jdbcConnectionPool = new JDBCConnectionPool(
                 "com.mysql.cj.jdbc.Driver", "jdbc:mysql://" + envConfig.oasisDbHost() + "/" +
-                envConfig.oasisDbSchema(),
+                envConfig.oasisDbSchema() + "?serverTimezone=UTC",
                 envConfig.CSSDbClient(), envConfig.CSSDbPassword());
     }
 
     public ResultSet executeDmlStatement(String query) {
-        Connection connection = jdbcConnectionPool.takeOut();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.execute();
+        PreparedStatement preparedStatement;
+        ResultSet resultSet = null;
+
+        try (JDBCConnectionHandler handler = new JDBCConnectionHandler(jdbcConnectionPool)) {
+            preparedStatement = handler.getConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        jdbcConnectionPool.takeIn(connection);
-        return null;
+        return resultSet;
     }
 }
