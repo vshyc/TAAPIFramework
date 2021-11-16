@@ -57,6 +57,7 @@ public class UserDataGenerator extends TestDataGenerator {
                 .phone("+44555666777")
                 .email(faker().name().username() + faker().number().numberBetween(1, 10000) + "@springfield.gov")
                 .language("en")
+                .birthCity("Hannover")
                 .address(Address.builder().street("BRIGITTEWEG 10")
                         .postcode("10115")
                         .city(faker().address().cityName())

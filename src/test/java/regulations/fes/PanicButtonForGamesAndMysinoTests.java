@@ -47,16 +47,22 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     @Description("Validate panic button for games")
     @Test
     @Tag("RegressionTests")
-    void validatePanicButtonForGames() throws EbetGatewayException {
+    void validatePanicButtonForGames() throws EbetGatewayException, SQLException {
 
         Response response = new PostRGFESPanicBtnEndPoint().sendRequestGames(sessionId)
                 .assertRequestStatusCode().getResponse();
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
+        OASISDBConnector dbverification = new OASISDBConnector();
+        ResultSet finalUser = dbverification.executeDmlStatement(
+                String.format("Select * from oasis_customer_data_written where customerUuid='%s'", uuid));
+        boolean recordPresentedInTheDB = finalUser.next();
+
         assertThat(responseCas.getActive()).isTrue();
         assertThat(responseCas.getDeactivationReason()).isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
         assertThat(responseCas.getMinimalDeactivationDuration()).isEqualTo("PT24H");
+        assertThat(recordPresentedInTheDB).isTrue();
 
     }
 
@@ -71,15 +77,14 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        /*OASISDBConnector dbverification = new OASISDBConnector();
+        OASISDBConnector dbverification = new OASISDBConnector();
         ResultSet finalUser = dbverification.executeDmlStatement(
                 String.format("Select * from oasis_customer_data_written where customerUuid='%s'", uuid));
-        boolean recordPresentedInTheDB = finalUser.next();*/
+        boolean recordPresentedInTheDB = finalUser.next();
 
         assertThat(responseCas.getActive()).isTrue();
         assertThat(responseCas.getDeactivationReason()).isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
         assertThat(responseCas.getMinimalDeactivationDuration()).isEqualTo("PT24H");
-        //assertThat(recordPresentedInTheDB).isTrue();
-
+        assertThat(recordPresentedInTheDB).isTrue();
     }
 }

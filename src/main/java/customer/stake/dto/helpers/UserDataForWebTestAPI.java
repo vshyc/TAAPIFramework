@@ -24,9 +24,10 @@ public class UserDataForWebTestAPI {
     private String email;
     private String language;
     private Address address;
+    private String birthCity;
 
     public UserDataForWebTestAPI(String registrationIp, String login, String firstName, String lastName, String password
-            , String salutation, Date dateOfBirth, String phone, String email, String language, Address address) {
+            , String salutation, Date dateOfBirth, String phone, String email, String language, Address address, String birthCity) {
         this.registrationIp = registrationIp;
         this.login = login;
         this.firstName = firstName;
@@ -38,5 +39,6 @@ public class UserDataForWebTestAPI {
         this.email = email;
         this.language = language;
         this.address = address;
+        this.birthCity = birthCity;
     }
 }
