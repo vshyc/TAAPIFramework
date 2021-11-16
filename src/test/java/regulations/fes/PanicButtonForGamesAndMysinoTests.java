@@ -64,7 +64,7 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     @Description("Validate panic button for Mysino")
     @Test
     @Tag("RegressionTests")
-    void validatePanicButtonForMysino() throws EbetGatewayException {
+    void validatePanicButtonForMysino() throws EbetGatewayException, SQLException {
 
         Response response = new PostRGFESPanicBtnEndPoint().sendRequestMysino(sessionId)
                 .assertRequestStatusCode().getResponse();
