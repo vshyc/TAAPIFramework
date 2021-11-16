@@ -13,7 +13,7 @@ public class LoginHelper {
         String body = String.format("username=%s&password=Secret123!", username);
         return given().baseUri(envConfig.accountDeUrl()).basePath(envConfig.cafesPath())
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
-                .header("X-Forwarded-For", "3.120.0.1").body(body).post();
+                .header("X-Forwarded-For", "10.10.9.254").body(body).post();
     }
 
     public String getSessionId(Response response) {

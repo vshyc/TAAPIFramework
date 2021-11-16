@@ -1,4 +1,4 @@
-package customer.stake.dto.models;
+package customer.stake.dto.cus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

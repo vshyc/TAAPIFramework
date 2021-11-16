@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import configuration.BaseTest;
 import customer.stake.db.OASISDBConnector;
-import customer.stake.dto.models.AccountStatusResponseCAS;
+import customer.stake.dto.cus.AccountStatusResponseCAS;
 import customer.stake.exeptions.EbetGatewayException;
 import customer.stake.helpers.LoginHelper;
 import customer.stake.helpers.TermsAndConditionsHelper;
@@ -40,8 +40,9 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
         TermsAndConditionsHelper tacHelper = new TermsAndConditionsHelper();
         Response tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
         sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
-
     }
+
+
 
     @DisplayName("Validate panic button for games")
     @Description("Validate panic button for games")
@@ -54,8 +55,8 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        OASISDBConnector dbverification = new OASISDBConnector();
-        ResultSet finalUser = dbverification.executeDmlStatement(
+        OASISDBConnector dbVerification = new OASISDBConnector();
+        ResultSet finalUser = dbVerification.executeDmlStatement(
                 String.format("Select * from oasis_customer_data_written where customerUuid='%s'", uuid));
         boolean recordPresentedInTheDB = finalUser.next();
 
@@ -77,8 +78,8 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        OASISDBConnector dbverification = new OASISDBConnector();
-        ResultSet finalUser = dbverification.executeDmlStatement(
+        OASISDBConnector dbVerification = new OASISDBConnector();
+        ResultSet finalUser = dbVerification.executeDmlStatement(
                 String.format("Select * from oasis_customer_data_written where customerUuid='%s'", uuid));
         boolean recordPresentedInTheDB = finalUser.next();
 

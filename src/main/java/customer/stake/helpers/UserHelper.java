@@ -1,7 +1,7 @@
 package customer.stake.helpers;
 
 import com.google.gson.JsonObject;
-import customer.stake.dto.models.AccountStatusResponseCAS;
+import customer.stake.dto.cus.AccountStatusResponseCAS;
 import customer.stake.exeptions.EbetGatewayException;
 import customer.stake.data.generators.UserDataGenerator;
 import customer.stake.dto.helpers.UserDataForCRFES;
@@ -101,7 +101,7 @@ public class UserHelper {
         if (response.statusCode() != HttpStatus.SC_OK) {
             throw new EbetGatewayException(selfExclusionErrorMessage);
         }
-        return response.body().as(customer.stake.dto.models.AccountStatusResponseCAS.class);
+        return response.body().as(AccountStatusResponseCAS.class);
     }
 
     }

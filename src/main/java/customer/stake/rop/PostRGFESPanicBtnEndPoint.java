@@ -6,17 +6,18 @@ import static io.restassured.RestAssured.given;
 
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.properties.EnvConfig;
+import io.restassured.response.Response;
 import java.lang.reflect.Type;
 import org.apache.http.HttpStatus;
 
 
-public class PostRGFESPanicBtnEndPoint extends BaseEndpoint<PostRGFESPanicBtnEndPoint, PostRGFESPanicBtnEndPoint> {
+public class PostRGFESPanicBtnEndPoint extends BaseEndpoint<PostRGFESPanicBtnEndPoint, Response> {
 
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
     protected Type getModelType() {
-        return PostRGFESPanicBtnEndPoint.class;
+        return null;
     }
 
     @Override
