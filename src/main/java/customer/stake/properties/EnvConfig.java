@@ -73,10 +73,10 @@ public interface EnvConfig extends Config {
     @Key("CSS_DB_HOST")
     String CSSDbHost();
 
-    @Key("CSS_DB_CLIENT")
+    @Key("SERVICE_DB_CLIENT")
     String CSSDbClient();
 
-    @Key("CSS_DB_PASSWORD")
+    @Key("SERVICE_DB_PASSWORD")
     String CSSDbPassword();
 
     @Key("CSS_DB_SCHEMA")

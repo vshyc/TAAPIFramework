@@ -27,19 +27,29 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     private UserHelper userHelper;
     private String sessionId;
     private String uuid;
+    JsonPath createdUser;
+    LoginHelper loginHelper;
+    String username;
+    TermsAndConditionsHelper tacHelper;
+    Response tacResponse;
+    Response response;
+    OASISDBConnector dbVerification;
+    boolean recordPresentedInTheDB;
+    ResultSet finalUser;
 
     @BeforeEach
     @Step("Create and login user for test ")
     void setUp() throws EbetGatewayException {
-        LoginHelper loginHelper = new LoginHelper();
+        loginHelper = new LoginHelper();
         userHelper = new UserHelper();
-        JsonPath createdUser = userHelper.createGermanUserInWebTestApi();
+        createdUser = userHelper.createGermanUserInWebTestApi();
         uuid = userHelper.getUuid(createdUser);
-        String username = userHelper.getLogin(createdUser);
+        username = userHelper.getLogin(createdUser);
         userHelper.getKYCVerifiedStatus(username, uuid);
-        TermsAndConditionsHelper tacHelper = new TermsAndConditionsHelper();
-        Response tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
+        tacHelper = new TermsAndConditionsHelper();
+        tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
         sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
+        dbVerification = new OASISDBConnector();
     }
 
 
@@ -50,15 +60,14 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     @Tag("RegressionTests")
     void validatePanicButtonForGames() throws EbetGatewayException, SQLException {
 
-        Response response = new PostRGFESPanicBtnEndPoint().sendRequestGames(sessionId)
+        response = new PostRGFESPanicBtnEndPoint().sendRequestGames(sessionId)
                 .assertRequestStatusCode().getResponse();
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        OASISDBConnector dbVerification = new OASISDBConnector();
-        ResultSet finalUser = dbVerification.executeDmlStatement(
+        finalUser = dbVerification.executeDmlStatement(
                 String.format("Select * from oasis_customer_data_written where customerUuid='%s'", uuid));
-        boolean recordPresentedInTheDB = finalUser.next();
+        recordPresentedInTheDB = finalUser.next();
 
         assertThat(responseCas.getActive()).isTrue();
         assertThat(responseCas.getDeactivationReason()).isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
@@ -73,15 +82,14 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     @Tag("RegressionTests")
     void validatePanicButtonForMysino() throws EbetGatewayException, SQLException {
 
-        Response response = new PostRGFESPanicBtnEndPoint().sendRequestMysino(sessionId)
+        response = new PostRGFESPanicBtnEndPoint().sendRequestMysino(sessionId)
                 .assertRequestStatusCode().getResponse();
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        OASISDBConnector dbVerification = new OASISDBConnector();
-        ResultSet finalUser = dbVerification.executeDmlStatement(
+        finalUser = dbVerification.executeDmlStatement(
                 String.format("Select * from oasis_customer_data_written where customerUuid='%s'", uuid));
-        boolean recordPresentedInTheDB = finalUser.next();
+        recordPresentedInTheDB = finalUser.next();
 
         assertThat(responseCas.getActive()).isTrue();
         assertThat(responseCas.getDeactivationReason()).isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
