@@ -1,7 +1,5 @@
 package regulations.fes;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import configuration.BaseTest;
 import customer.stake.db.OASISDBConnector;
 import customer.stake.dto.cus.AccountStatusResponseCAS;
@@ -12,7 +10,9 @@ import customer.stake.helpers.UserHelper;
 import customer.stake.rop.PostRGFESPanicBtnEndPoint;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
+import io.restassured.path.json.JsonPath;
 import java.sql.SQLException;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -25,18 +25,20 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     private String uuid;
     private OASISDBConnector dbVerification;
     private UserHelper userHelper;
+    private SoftAssertions sa;
 
     @BeforeEach
     @Step("Create and login user for test ")
     void setUp() throws EbetGatewayException {
         userHelper = new UserHelper();
-        var createdUser = userHelper.createGermanUserInWebTestApi();
+        JsonPath createdUser = userHelper.createGermanUserInWebTestApi();
         uuid = userHelper.getUuid(createdUser);
         userHelper.getKYCVerifiedStatus(userHelper.getLogin(createdUser), uuid);
         new TermsAndConditionsHelper().acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
-        var loginHelper = new LoginHelper();
+        LoginHelper loginHelper = new LoginHelper();
         sessionId = loginHelper.getSessionId(loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName()));
         dbVerification = new OASISDBConnector();
+        sa = new SoftAssertions();
     }
 
     @DisplayName("Validate panic button for games")
@@ -49,11 +51,12 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        assertThat(responseCas.getActive()).isTrue();
-        assertThat(responseCas.getDeactivationReason()).isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
-        assertThat(responseCas.getMinimalDeactivationDuration()).isEqualTo("PT24H");
-        assertThat(isUserWrittenToOasis()).isTrue();
-
+        sa.assertThat(responseCas.getActive()).as("Account is not acctive").isTrue();
+        sa.assertThat(responseCas.getDeactivationReason()).as("Deactivation reason is not correct")
+                .isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
+        sa.assertThat(responseCas.getMinimalDeactivationDuration()).as("Deactivation period is not correct").isEqualTo("PT24H");
+        sa.assertThat(isUserWrittenToOasis()).as("User is not saved in Oasis db").isTrue();
+        sa.assertAll();
     }
 
     @DisplayName("Validate panic button for Mysino")
@@ -66,10 +69,12 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        assertThat(responseCas.getActive()).isTrue();
-        assertThat(responseCas.getDeactivationReason()).isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
-        assertThat(responseCas.getMinimalDeactivationDuration()).isEqualTo("PT24H");
-        assertThat(isUserWrittenToOasis()).isTrue();
+        sa.assertThat(responseCas.getActive()).as("Account is not acctive").isTrue();
+        sa.assertThat(responseCas.getDeactivationReason()).as("Deactivation reason is not correct")
+                .isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
+        sa.assertThat(responseCas.getMinimalDeactivationDuration()).as("Deactivation period is not correct").isEqualTo("PT24H");
+        sa.assertThat(isUserWrittenToOasis()).as("User is not saved in Oasis db").isTrue();
+        sa.assertAll();
     }
 
     private boolean isUserWrittenToOasis() throws SQLException {

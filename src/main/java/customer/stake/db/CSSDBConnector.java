@@ -16,7 +16,7 @@ public class CSSDBConnector {
         jdbcConnectionPool = new JDBCConnectionPool(
                 "com.mysql.cj.jdbc.Driver", "jdbc:mysql://" + envConfig.CSSDbHost() + "/" +
                 envConfig.CSSDbSchema() + "?serverTimezone=UTC",
-                envConfig.CSSDbClient(), envConfig.CSSDbPassword());
+                envConfig.serviceDbClient(), envConfig.serviceDbPassword());
     }
 
     public ResultSet executeDmlStatement(String query) {

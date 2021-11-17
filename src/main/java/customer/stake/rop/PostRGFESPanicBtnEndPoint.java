@@ -4,20 +4,20 @@ import static customer.stake.constants.RequestPaths.PANIC_BUTTON_GAMES_PATH;
 import static customer.stake.constants.RequestPaths.PANIC_BUTTON_MYSINO_PATH;
 import static io.restassured.RestAssured.given;
 
+import customer.stake.dto.cus.AccountStatusResponseCAS;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.properties.EnvConfig;
-import io.restassured.response.Response;
 import java.lang.reflect.Type;
 import org.apache.http.HttpStatus;
 
 
-public class PostRGFESPanicBtnEndPoint extends BaseEndpoint<PostRGFESPanicBtnEndPoint, Response> {
+public class PostRGFESPanicBtnEndPoint extends BaseEndpoint<PostRGFESPanicBtnEndPoint, AccountStatusResponseCAS> {
 
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
     protected Type getModelType() {
-        return null;
+        return AccountStatusResponseCAS.class;
     }
 
     @Override

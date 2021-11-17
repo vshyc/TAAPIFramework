@@ -2,7 +2,6 @@ package customer.stake.db;
 
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.properties.EnvConfig;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +15,7 @@ public class OASISDBConnector {
         jdbcConnectionPool = new JDBCConnectionPool(
                 "com.mysql.cj.jdbc.Driver", "jdbc:mysql://" + envConfig.oasisDbHost() + "/" +
                 envConfig.oasisDbSchema() + "?serverTimezone=UTC",
-                envConfig.CSSDbClient(), envConfig.CSSDbPassword());
+                envConfig.serviceDbClient(), envConfig.serviceDbPassword());
     }
 
     public ResultSet executeDmlStatement(String query) {
