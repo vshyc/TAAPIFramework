@@ -46,6 +46,7 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     @Description("Validate panic button for games")
     @Test
     @Tag("RegressionTests")
+    @Tag("PanicButton")
     @TestCaseId(3687)
     void validatePanicButtonForGames() throws EbetGatewayException, SQLException {
 
@@ -65,6 +66,7 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     @Description("Validate panic button for Mysino")
     @Test
     @Tag("RegressionTests")
+    @Tag("PanicButton")
     @TestCaseId(3688)
     void validatePanicButtonForMysino() throws EbetGatewayException, SQLException {
 

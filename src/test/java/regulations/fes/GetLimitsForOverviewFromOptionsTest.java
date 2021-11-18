@@ -67,7 +67,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Description("Getting Limits by RGFES from Option Service")
     @Test
     @Tag("RegressionTests")
-    @Tag("Panic button")
     @TestCaseId(3458)
     public void getLimitsForOverview() {
         RGFESGetOptionServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId).assertRequestStatusCode()
@@ -81,7 +80,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Description("Getting Limits by RGFES from Limit Service")
     @Test
     @Tag("RegressionTests")
-    @Tag("Panic button")
     @TestCaseId(3459)
     public void getLimitsForOverviewFromLimitService() {
         RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, RGFS_LIMIT_HISTORY_V3_JSON)
