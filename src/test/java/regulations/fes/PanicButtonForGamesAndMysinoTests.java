@@ -1,5 +1,6 @@
 package regulations.fes;
 
+import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.db.OASISDBConnector;
 import customer.stake.dto.cus.AccountStatusResponseCAS;
@@ -45,13 +46,14 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     @Description("Validate panic button for games")
     @Test
     @Tag("RegressionTests")
+    @TestCaseId(3687)
     void validatePanicButtonForGames() throws EbetGatewayException, SQLException {
 
         new PostRGFESPanicBtnEndPoint().sendRequestGames(sessionId).assertRequestStatusCode();
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        sa.assertThat(responseCas.getActive()).as("Account is not acctive").isTrue();
+        sa.assertThat(responseCas.getActive()).as("Account is not active").isTrue();
         sa.assertThat(responseCas.getDeactivationReason()).as("Deactivation reason is not correct")
                 .isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
         sa.assertThat(responseCas.getMinimalDeactivationDuration()).as("Deactivation period is not correct").isEqualTo("PT24H");
@@ -63,13 +65,14 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
     @Description("Validate panic button for Mysino")
     @Test
     @Tag("RegressionTests")
+    @TestCaseId(3688)
     void validatePanicButtonForMysino() throws EbetGatewayException, SQLException {
 
         new PostRGFESPanicBtnEndPoint().sendRequestMysino(sessionId).assertRequestStatusCode();
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        sa.assertThat(responseCas.getActive()).as("Account is not acctive").isTrue();
+        sa.assertThat(responseCas.getActive()).as("Account is not active").isTrue();
         sa.assertThat(responseCas.getDeactivationReason()).as("Deactivation reason is not correct")
                 .isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
         sa.assertThat(responseCas.getMinimalDeactivationDuration()).as("Deactivation period is not correct").isEqualTo("PT24H");
