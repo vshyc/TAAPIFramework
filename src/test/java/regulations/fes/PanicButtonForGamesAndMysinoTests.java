@@ -54,11 +54,12 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        sa.assertThat(responseCas.getActive()).as("Account is not active").isTrue();
-        sa.assertThat(responseCas.getDeactivationReason()).as("Deactivation reason is not correct")
+        sa.assertThat(responseCas.getCustomerId()).as("Validate that the response is for the currect customer").isEqualTo(uuid);
+        sa.assertThat(responseCas.getActive()).as("Validate account status is active.").isTrue();
+        sa.assertThat(responseCas.getDeactivationReason()).as("Validate deactivation reason is Panic button.")
                 .isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
-        sa.assertThat(responseCas.getMinimalDeactivationDuration()).as("Deactivation period is not correct").isEqualTo("PT24H");
-        sa.assertThat(isUserWrittenToOasis()).as("User is not saved in Oasis db").isTrue();
+        sa.assertThat(responseCas.getMinimalDeactivationDuration()).as("Validate deactivation period is 24 hours").isEqualTo("PT24H");
+        sa.assertThat(isUserWrittenToOasis()).as("Validate user is written in Oasis db").isTrue();
         sa.assertAll();
     }
 
@@ -74,11 +75,12 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
         AccountStatusResponseCAS responseCas = userHelper.getAccountStatusFromCus(uuid);
 
-        sa.assertThat(responseCas.getActive()).as("Account is not active").isTrue();
-        sa.assertThat(responseCas.getDeactivationReason()).as("Deactivation reason is not correct")
+        sa.assertThat(responseCas.getCustomerId()).as("Validate that the response is for the currect customer").isEqualTo(uuid);
+        sa.assertThat(responseCas.getActive()).as("Validate account status is active.").isTrue();
+        sa.assertThat(responseCas.getDeactivationReason()).as("Validate deactivation reason is Panic button.")
                 .isEqualTo("DEACTIVATION_PANIC_BUTTON_SELF_EXCLUDED");
-        sa.assertThat(responseCas.getMinimalDeactivationDuration()).as("Deactivation period is not correct").isEqualTo("PT24H");
-        sa.assertThat(isUserWrittenToOasis()).as("User is not saved in Oasis db").isTrue();
+        sa.assertThat(responseCas.getMinimalDeactivationDuration()).as("Validate deactivation period is 24 hours").isEqualTo("PT24H");
+        sa.assertThat(isUserWrittenToOasis()).as("Validate user is written in Oasis db").isTrue();
         sa.assertAll();
     }
 
