@@ -7,4 +7,5 @@ public class MediaTypes {
     public static final String RGFS_LIMIT_SERVICE_V2_JSON = "application/vnd.tipico.regulations.customer.limits-v2+json";
     public static final String RGFS_LIMIT_HISTORY_V2_JSON = "application/vnd.tipico.regulations.customer.limits.history-v2+json";
     public static final String RGFS_LIMIT_HISTORY_V3_JSON ="application/vnd.tipico.regulations.customer.limits-v3+json";
+    public static final String CAS_CONTENT_TYPE = "application/vnd.tipico.customers.context-v1+json";
 }

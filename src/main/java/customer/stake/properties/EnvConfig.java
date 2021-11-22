@@ -73,11 +73,11 @@ public interface EnvConfig extends Config {
     @Key("CSS_DB_HOST")
     String CSSDbHost();
 
-    @Key("CSS_DB_CLIENT")
-    String CSSDbClient();
+    @Key("SERVICE_DB_CLIENT")
+    String serviceDbClient();
 
-    @Key("CSS_DB_PASSWORD")
-    String CSSDbPassword();
+    @Key("SERVICE_DB_PASSWORD")
+    String serviceDbPassword();
 
     @Key("CSS_DB_SCHEMA")
     String CSSDbSchema();
@@ -90,5 +90,20 @@ public interface EnvConfig extends Config {
 
     @Key("EBET_GATEWAY_CUSTOMERS_STATUS_ENDPOINT")
     String ebetGatewayCustomerStatusEndpoint();
+
+    @Key("CAS_BASE_URL")
+    String casBaseUri();
+
+    @Key("CAS_BASE_PATH")
+    String caseBasePath();
+
+    @Key("MYSINO_BASE_URL")
+    String mysinoBaseUrl();
+
+    @Key("OASIS_DB_SCHEMA")
+    String oasisDbSchema();
+
+    @Key("OASIS_DB_HOST")
+    String oasisDbHost();
 
 }

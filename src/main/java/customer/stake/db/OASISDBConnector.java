@@ -2,32 +2,34 @@ package customer.stake.db;
 
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.properties.EnvConfig;
-
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CSSDBConnector {
+public class OASISDBConnector {
+
     private JDBCConnectionPool jdbcConnectionPool;
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
-    public CSSDBConnector() {
+    public OASISDBConnector() {
         jdbcConnectionPool = new JDBCConnectionPool(
-                "com.mysql.cj.jdbc.Driver", "jdbc:mysql://" + envConfig.CSSDbHost() + "/" +
-                envConfig.CSSDbSchema() + "?serverTimezone=UTC",
+                "com.mysql.cj.jdbc.Driver", "jdbc:mysql://" + envConfig.oasisDbHost() + "/" +
+                envConfig.oasisDbSchema() + "?serverTimezone=UTC",
                 envConfig.serviceDbClient(), envConfig.serviceDbPassword());
     }
 
     public ResultSet executeDmlStatement(String query) {
-        Connection connection = jdbcConnectionPool.takeOut();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.execute();
+        PreparedStatement preparedStatement;
+        ResultSet resultSet = null;
+
+        try (JDBCConnectionHandler handler = new JDBCConnectionHandler(jdbcConnectionPool)) {
+            preparedStatement = handler.getConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        jdbcConnectionPool.takeIn(connection);
-        return null;
+        return resultSet;
     }
+
+
 }

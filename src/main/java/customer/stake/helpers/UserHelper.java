@@ -1,6 +1,7 @@
 package customer.stake.helpers;
 
 import com.google.gson.JsonObject;
+import customer.stake.dto.cus.AccountStatusResponseCAS;
 import customer.stake.exeptions.EbetGatewayException;
 import customer.stake.data.generators.UserDataGenerator;
 import customer.stake.dto.helpers.UserDataForCRFES;
@@ -9,8 +10,10 @@ import customer.stake.properties.EnvConfig;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
+import static customer.stake.constants.MediaTypes.CAS_CONTENT_TYPE;
 import static customer.stake.constants.MediaTypes.EBET_GATEWAY_CUSTOMER_DOCUMENT_REQUEST_JSON;
 import static customer.stake.constants.MediaTypes.EBET_GATEWAY_CUSTOMER_DOCUMENT_STATUS_JSON;
 import static io.restassured.RestAssured.given;
@@ -84,6 +87,23 @@ public class UserHelper {
         if (statusCode != HttpStatus.SC_NO_CONTENT) {
             throw new EbetGatewayException(kycStatusExceptionMessage);
         }
+    }
+
+    public AccountStatusResponseCAS getAccountStatusFromCus(String uuid) throws EbetGatewayException {{
+        String selfExclusionErrorMessage = "User not found!";
+        Response response = given().baseUri(envConfig.casBaseUri())
+                .basePath(envConfig.caseBasePath())
+                .auth().preemptive().basic("admin", "geheim")
+                .accept(CAS_CONTENT_TYPE)
+                .pathParam("uuid", uuid)
+                .log().all()
+                .get();
+        if (response.statusCode() != HttpStatus.SC_OK) {
+            throw new EbetGatewayException(selfExclusionErrorMessage);
+        }
+        return response.body().as(AccountStatusResponseCAS.class);
+    }
+
     }
 
     public void getKYCVerifiedStatus(final String username, String uuid) throws EbetGatewayException {

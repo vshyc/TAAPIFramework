@@ -97,18 +97,28 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
+            <groupId>org.jetbrains</groupId>
             <version>16.0.1</version>
         </dependency>
         <dependency>
-            <groupId>com.tipico.ta</groupId>
             <artifactId>reqtest-junit-5-extension</artifactId>
-            <version>1.0.2</version>
+            <groupId>com.tipico.ta</groupId>
             <scope>test</scope>
+            <version>1.0.2</version>
         </dependency>
+        <dependency>
+            <artifactId>mysql-connector-java</artifactId>
+            <groupId>mysql</groupId>
+            <version>8.0.26</version>
+        </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.11.3</version>
+        <scope>compile</scope>
+      </dependency>
     </dependencies>
-
     <properties>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
