@@ -23,17 +23,14 @@ parameters{
                         }
                     }
                     stage('Generate allure report') {
-                                steps {
-                                    script {
                                         allure([
-                                                includeProperties: true,
-                                                jdk              : 'JDK 12 LATEST',
+                                                includeProperties: false,
+                                                jdk              : '',
                                                 properties       : [],
                                                 reportBuildPolicy: 'ALWAYS',
-                                                results          : [[path: 'target/allure-results']]
+                                                results          : [[path: 'output']]
                                         ])
-                                    }
-                                }
+
                             }
          }}}}
 
