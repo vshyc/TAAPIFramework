@@ -18,7 +18,7 @@ parameters{
                     stage('Execute test') {
                         withCredentials([string(credentialsId: 'reqtest-pat', variable: 'PAT')]) {
                                withMaven(jdk: 'JDK 12 LATEST', maven: 'Maven 3.6.3', options: [artifactsPublisher(disabled: true), openTasksPublisher(disabled: true), junitPublisher(disabled: true)]) {
-                                     sh "mvn test -Dtest.plan.id=${testPlanId} -Dreqtest.PAT='${PAT} -Denv=${env} -Dgroups=${filter} -Dreqtest.runtype=${runType} -Dtest.run.id=${testRunId} '"
+                                     sh "mvn test -Dtest.plan.id=${testPlanId} -Dreqtest.PAT='${PAT} -Denv=${env} -Dgroups=${filter} -Dreqtest.runtype=${runType} '"
                                 }
                         }
                     }
