@@ -28,9 +28,8 @@ parameters{
                                                 jdk              : '',
                                                 properties       : [],
                                                 reportBuildPolicy: 'ALWAYS',
-                                                results          : [[path: 'output']]
+                                                results          : [[path: 'target/allure-results']]
                                         ])
-
                             }
          }}}}
 
