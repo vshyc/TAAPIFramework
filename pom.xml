@@ -120,8 +120,8 @@
       </dependency>
     </dependencies>
     <properties>
-        <maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>
+        <maven.compiler.source>12</maven.compiler.source>
+        <maven.compiler.target>12</maven.compiler.target>
     </properties>
 
     <build>
@@ -153,8 +153,8 @@
                 <version>3.8.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>14</source>
-                    <target>14</target>
+                    <source>12</source>
+                    <target>12</target>
                 </configuration>
             </plugin>
             <plugin>

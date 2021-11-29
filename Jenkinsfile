@@ -1,25 +1,20 @@
 @Library(['jenkins-kubernetes-library']) _
 import com.tipico.config.ChartConfig
-    JDK_INSTANCE = env.JDK_INSTANCE ?: 'JDK 8 AUTO'
-    MAVEN_INSTANCE = env.MAVEN_INSTANCE ?: 'Maven 3.6.2'
 
 pipeline {
     agent any
     stages {
         stage('Build test code') {
-            steps {
-            withSimpleMaven(jdk: JDK_INSTANCE, maven: MAVEN_INSTANCE){
+            withMaven(jdk: 'JDK 12 LATEST', maven: 'Maven 3.6.3', options: [artifactsPublisher(disabled: true), openTasksPublisher(disabled: true), junitPublisher(disabled: true)]){
                 sh 'mvn clean install -DskipTests'
                 }
-            }
         }
         stage('Execute test') {
-            steps {
-            withSimpleMaven(jdk: JDK_INSTANCE, maven: MAVEN_INSTANCE){
-                sh 'mvn test'
+            withCredentials([string(credentialsId: 'reqtest-pat', variable: 'PAT')]) {
+                   withMaven(jdk: 'JDK 12 LATEST', maven: 'Maven 3.6.3', options: [artifactsPublisher(disabled: true), openTasksPublisher(disabled: true), junitPublisher(disabled: true)]) {
+                         sh "mvn test -Dtest.plan.id=${testPlanId} -Dreqtest.PAT='${PAT} -Denv=${env} -Dgroups=${filter} -Dreqtest.runtype=${runType} -Dtest.run.id=${testRunId} '"
+                    }
             }
-            }
-        }
         stage('Generate allure report') {
                     steps {
                         script {
