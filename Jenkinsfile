@@ -14,6 +14,7 @@ pipeline {
                          sh "mvn test -Dtest.plan.id=${testPlanId} -Dreqtest.PAT='${PAT} -Denv=${env} -Dgroups=${filter} -Dreqtest.runtype=${runType} -Dtest.run.id=${testRunId} '"
                     }
             }
+        }
         stage('Generate allure report') {
                     steps {
                         script {
