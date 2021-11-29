@@ -1,7 +1,6 @@
 @Library(['jenkins-kubernetes-library']) _
 import com.tipico.config.ChartConfig
 
-pipeline {
 parameters{
         string(name: 'featureBranch', defaultValue : "master",  description : 'branch')
         string(name: 'testPlanId')
@@ -37,4 +36,4 @@ parameters{
                                 }
                             }
          }
-    }
+
