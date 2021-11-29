@@ -2,7 +2,7 @@ parameters{
         string(name: 'featureBranch', defaultValue : "master",  description : 'branch')
         string(name: 'testPlanId')
     }
-    agent any
+
     node('qa_uitest||uitest') {
         timeout(10) {
             ansiColor('xterm') {
