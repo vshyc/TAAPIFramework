@@ -4,7 +4,7 @@ parameters{
     }
 
     node('qa_uitest||uitest') {
-        timeout(10) {
+        timeout(40) {
             ansiColor('xterm') {
                 timestamps {
                     stage('Checkout') {
@@ -26,8 +26,8 @@ parameters{
                                 steps {
                                     script {
                                         allure([
-                                                includeProperties: false,
-                                                jdk              : '',
+                                                includeProperties: true,
+                                                jdk              : 'JDK 12 LATEST',
                                                 properties       : [],
                                                 reportBuildPolicy: 'ALWAYS',
                                                 results          : [[path: 'target/allure-results']]
