@@ -8,6 +8,7 @@ pipeline {
             withMaven(jdk: 'JDK 12 LATEST', maven: 'Maven 3.6.3', options: [artifactsPublisher(disabled: true), openTasksPublisher(disabled: true), junitPublisher(disabled: true)]){
                 sh 'mvn clean install -DskipTests'
                 }
+            }
         stage('Execute test') {
             withCredentials([string(credentialsId: 'reqtest-pat', variable: 'PAT')]) {
                    withMaven(jdk: 'JDK 12 LATEST', maven: 'Maven 3.6.3', options: [artifactsPublisher(disabled: true), openTasksPublisher(disabled: true), junitPublisher(disabled: true)]) {
