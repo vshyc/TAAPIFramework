@@ -1,12 +1,12 @@
-@Library(['jenkins-kubernetes-library']) _
-import com.tipico.config.ChartConfig
-
 parameters{
         string(name: 'featureBranch', defaultValue : "master",  description : 'branch')
         string(name: 'testPlanId')
     }
     agent any
     node('qa_uitest||uitest') {
+        timeout(10) {
+            ansiColor('xterm') {
+                timestamps {
                     stage('Checkout') {
                        checkout([$class: 'GitSCM', branches: [[name: params.featureBranch]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', depth: 0, noTags: true, reference: '', shallow: true, timeout: 5]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GIT_KEY', url: 'ssh://git@bitbucket.booxdev.com:7999/ta/ta-limit-service.git']]])
                     }
@@ -35,5 +35,5 @@ parameters{
                                     }
                                 }
                             }
-         }
+         }}}}
 
