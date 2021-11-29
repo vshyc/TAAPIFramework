@@ -20,6 +20,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,7 @@ public class PutCreateLimitTests extends BaseTest {
     private String uuid;
     private String id;
     private JsonPath createdUser;
+    private String headerUUID;
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @BeforeEach
@@ -45,6 +47,7 @@ public class PutCreateLimitTests extends BaseTest {
         createdUser = userHelper.createGermanUserInWebTestApi();
         uuid = userHelper.getUuid(createdUser);
         id = userHelper.getId(createdUser);
+        headerUUID = "070c1ad0-d2d0-4aa9-bfb7-4bc3e08b13f0";
     }
 
     @Feature("Create Limits in Limit service with application token")
@@ -63,10 +66,12 @@ public class PutCreateLimitTests extends BaseTest {
         }
         if (limitUuid == null) {
             LimitsResponseData response = createLimitWithApplicationToken(type, owner, label, product, value, interval);
-            Assertions.assertThat(response.getLabel()).isEqualTo(label);
-            Assertions.assertThat(response.getOwner()).isEqualTo(owner);
-            Assertions.assertThat(response.getProduct()).isEqualTo(product);
-            Assertions.assertThat(response.getCreatedBy()).isEmpty();
+            SoftAssertions.assertSoftly(softly-> {
+                softly.assertThat(response.getLabel()).isEqualTo(label);
+                softly.assertThat(response.getOwner()).isEqualTo(owner);
+                softly.assertThat(response.getProduct()).isEqualTo(product);
+                softly.assertThat(response.getCreatedBy()).isEmpty();
+            });
         } else {
             log.info("Limit exist, skip creating new one");
         }
@@ -91,10 +96,12 @@ public class PutCreateLimitTests extends BaseTest {
         }
         if (limitUuid == null) {
             LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
-            Assertions.assertThat(response.getLabel()).isEqualTo(label);
-            Assertions.assertThat(response.getOwner()).isEqualTo(owner);
-            Assertions.assertThat(response.getProduct()).isEqualTo(product);
-            Assertions.assertThat(response.getCreatedBy()).isEqualTo(uuid);
+            SoftAssertions.assertSoftly(softly-> {
+                softly.assertThat(response.getLabel()).isEqualTo(label);
+                softly.assertThat(response.getOwner()).isEqualTo(owner);
+                softly.assertThat(response.getProduct()).isEqualTo(product);
+                softly.assertThat(response.getCreatedBy()).isEqualTo(uuid);
+            });
         } else {
             log.info("Limit exist, skip creating new one");
         }
@@ -110,10 +117,12 @@ public class PutCreateLimitTests extends BaseTest {
                                                      Label label, String product,
                                                      Double value, Interval interval, Double updatedValue) {
         LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
-        Assertions.assertThat(response.getOwner()).isEqualTo(owner);
-        Assertions.assertThat(response.getProduct()).isEqualTo(product);
-        Assertions.assertThat(response.getCreatedBy()).isEqualTo(uuid);
+        SoftAssertions.assertSoftly(softly-> {
+            softly.assertThat(response.getLabel()).isEqualTo(label);
+            softly.assertThat(response.getOwner()).isEqualTo(owner);
+            softly.assertThat(response.getProduct()).isEqualTo(product);
+            softly.assertThat(response.getCreatedBy()).isEqualTo(uuid);
+        });
 
         LimitsResponseData responseData = updateLimit(type, owner, label, product, updatedValue, interval);
         Assertions.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
@@ -132,20 +141,22 @@ public class PutCreateLimitTests extends BaseTest {
                                                       Label label, String product,
                                                       Double value, Interval interval, Double updatedValue) {
         LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
-
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
-        Assertions.assertThat(response.getOwner()).isEqualTo(owner);
-        Assertions.assertThat(response.getProduct()).isEqualTo(product);
-        Assertions.assertThat(response.getCreatedBy()).isEqualTo(uuid);
-
+        SoftAssertions.assertSoftly(softly-> {
+            softly.assertThat(response.getLabel()).isEqualTo(label);
+            softly.assertThat(response.getOwner()).isEqualTo(owner);
+            softly.assertThat(response.getProduct()).isEqualTo(product);
+            softly.assertThat(response.getCreatedBy()).isEqualTo(uuid);
+        });
         LimitsResponseData responseData = updateLimit(type, owner, label, product, updatedValue, interval);
 
-        Assertions.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
-                "value of the limit is not updated to higher value").isEqualTo(value);
-        Assertions.assertThat(responseData.getFuture().getValue().doubleValue()).describedAs("check if " +
-                "value of the limit is not updated to higher value").isEqualTo(updatedValue);
-        Assertions.assertThat(responseData.getCurrent().getInterval()).isEqualTo(interval);
-        Assertions.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
+        SoftAssertions.assertSoftly(softly-> {
+            softly.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
+                    "value of the limit is not updated to higher value").isEqualTo(value);
+            softly.assertThat(responseData.getFuture().getValue().doubleValue()).describedAs("check if " +
+                    "value of the limit is not updated to higher value").isEqualTo(updatedValue);
+            softly.assertThat(responseData.getCurrent().getInterval()).isEqualTo(interval);
+            softly.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
+        });
     }
 
     @Feature("Create and update AML Limit to higher value")
@@ -159,17 +170,21 @@ public class PutCreateLimitTests extends BaseTest {
                                                          Double value, Interval interval, Double updatedValue) {
         LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
 
-        Assertions.assertThat(response.getLabel()).isEqualTo(label);
-        Assertions.assertThat(response.getOwner()).isEqualTo(owner);
-        Assertions.assertThat(response.getProduct()).isEqualTo(product);
-        Assertions.assertThat(response.getCreatedBy()).isEqualTo(uuid);
+        SoftAssertions.assertSoftly(softly-> {
+            softly.assertThat(response.getLabel()).isEqualTo(label);
+            softly.assertThat(response.getOwner()).isEqualTo(owner);
+            softly.assertThat(response.getProduct()).isEqualTo(product);
+            softly.assertThat(response.getCreatedBy()).isEqualTo(uuid);
+        });
 
         LimitsResponseData responseData = updateLimit(type, owner, label, product, updatedValue, interval);
 
-        Assertions.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
-                "value of the limit is updated to higher value").isEqualTo(updatedValue);
-        Assertions.assertThat(responseData.getCurrent().getInterval()).isEqualTo(interval);
-        Assertions.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
+        SoftAssertions.assertSoftly(softly-> {
+            softly.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
+                    "value of the limit is updated to higher value").isEqualTo(updatedValue);
+            softly.assertThat(responseData.getCurrent().getInterval()).isEqualTo(interval);
+            softly.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
+        });
     }
 
     @DisplayName("Check if PUT call to Limit Service with no auth will respond with 401 Error code")
@@ -193,6 +208,9 @@ public class PutCreateLimitTests extends BaseTest {
                 .assertBadRequestStatusCode();
     }
 
+    @DisplayName("Create Limits in Limit service with User token")
+    @Description("Creating New Limit's in Limit Service if not exist add counter to Customer-stake-service and check if " +
+            "limit remaining value is calculated properly")
     @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
             "label={2}, product={3}, value={4} , interval={5} adding a counter with value = {6} and checking if " +
             "remaining value is calculated correctly ")
@@ -210,7 +228,32 @@ public class PutCreateLimitTests extends BaseTest {
             LimitsResponseData response = getLimit(uuid, owner, limitType, label);
             Assertions.assertThat(response.getRemaining()).isEqualTo(value - counterValue);
         }
+    }
 
+    @DisplayName("Check if UUID header is readed properly ")
+    @ParameterizedTest(name = "{index} -> Creating a limit with application token and with type={0} , owner={1}, " +
+            "label={2}, product={3}, value={4} and interval={5}")
+    @CsvFileSource(files = "src/test/resources/createLimitTestData.csv", numLinesToSkip = 1)
+    public void checkIfCreatedByIsGetFromUUIDHeader(LimitType type, Owner owner,
+                                                    Label label, String product,
+                                                    Double value, Interval interval){
+        try {
+            limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid, owner, type, label).getLimitUUID();
+        } catch (NullPointerException e) {
+            log.info("Limit don't exist, creating new one");
+        }
+        if (limitUuid == null) {
+            LimitsResponseData response = createLimitWithApplicationTokenAndUUIDHeader(type, owner, label, product,
+                    value, interval, headerUUID);
+            SoftAssertions.assertSoftly(softly-> {
+                softly.assertThat(response.getLabel()).isEqualTo(label);
+                softly.assertThat(response.getOwner()).isEqualTo(owner);
+                softly.assertThat(response.getProduct()).isEqualTo(product);
+                softly.assertThat(response.getCreatedBy()).isEqualTo(headerUUID);
+            });
+        } else {
+            log.info("Limit exist, skip creating new one");
+        }
     }
 
 
@@ -244,6 +287,23 @@ public class PutCreateLimitTests extends BaseTest {
                 .interval(interval)
                 .build();
         return new PutLimitEndpoint().sendRequestToCreateNewLimit(body, new OauthHelper().getApplicationToken(), uuid)
+                .assertRequestStatusCode().getResponseModel();
+    }
+
+    @Step("Sending a call to Limit Service with Application Token to create Limit")
+    private LimitsResponseData createLimitWithApplicationTokenAndUUIDHeader(LimitType type, Owner owner,
+                                                               Label label, String product,
+                                                               Double value, Interval interval,String headerUUID) {
+        LimitCreationData body = LimitCreationData.builder().
+                type(type)
+                .owner(owner)
+                .label(label)
+                .product(product)
+                .value(value)
+                .interval(interval)
+                .build();
+        return new PutLimitEndpoint().sendRequestToCreateNewLimitWithUUIDHeader(body,
+                        new OauthHelper().getApplicationToken(), uuid,headerUUID)
                 .assertRequestStatusCode().getResponseModel();
     }
 
