@@ -34,7 +34,7 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
         return this;
     }
 
-    public PutLimitEndpoint sendRequestToCreateNewLimitWithUUIDHeader(LimitCreationData body, String oauthToken,
+    public PutLimitEndpoint sendRequestToCreateNewLimit(LimitCreationData body, String oauthToken,
                                                                       String uuid, String headerUUID) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())

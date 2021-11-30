@@ -243,7 +243,7 @@ public class PutCreateLimitTests extends BaseTest {
             log.info("Limit don't exist, creating new one");
         }
         if (limitUuid == null) {
-            LimitsResponseData response = createLimitWithApplicationTokenAndUUIDHeader(type, owner, label, product,
+            LimitsResponseData response = createLimitWithApplicationToken(type, owner, label, product,
                     value, interval, headerUUID);
             SoftAssertions.assertSoftly(softly-> {
                 softly.assertThat(response.getLabel()).isEqualTo(label);
@@ -291,7 +291,7 @@ public class PutCreateLimitTests extends BaseTest {
     }
 
     @Step("Sending a call to Limit Service with Application Token to create Limit")
-    private LimitsResponseData createLimitWithApplicationTokenAndUUIDHeader(LimitType type, Owner owner,
+    private LimitsResponseData createLimitWithApplicationToken(LimitType type, Owner owner,
                                                                Label label, String product,
                                                                Double value, Interval interval,String headerUUID) {
         LimitCreationData body = LimitCreationData.builder().
@@ -302,7 +302,7 @@ public class PutCreateLimitTests extends BaseTest {
                 .value(value)
                 .interval(interval)
                 .build();
-        return new PutLimitEndpoint().sendRequestToCreateNewLimitWithUUIDHeader(body,
+        return new PutLimitEndpoint().sendRequestToCreateNewLimit(body,
                         new OauthHelper().getApplicationToken(), uuid,headerUUID)
                 .assertRequestStatusCode().getResponseModel();
     }
