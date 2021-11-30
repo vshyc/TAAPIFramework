@@ -90,7 +90,7 @@ public class PutCreateLimitTests extends BaseTest {
                                                   Double value, Interval interval) {
 
         try {
-            limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid, owner, type, label).getLimitUUID();
+            limitUuid = getLimit(uuid,owner,type,label).getLimitUUID();
         } catch (NullPointerException e) {
             log.info("Limit don't exist, creating new one");
         }
@@ -125,10 +125,12 @@ public class PutCreateLimitTests extends BaseTest {
         });
 
         LimitsResponseData responseData = updateLimit(type, owner, label, product, updatedValue, interval);
-        Assertions.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
-                "value of the limit is updated to lower value").isEqualTo(updatedValue);
-        Assertions.assertThat(responseData.getCurrent().getInterval()).isEqualTo(interval);
-        Assertions.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
+        SoftAssertions.assertSoftly(softly-> {
+            softly.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
+                    "value of the limit is updated to lower value").isEqualTo(updatedValue);
+            softly.assertThat(responseData.getCurrent().getInterval()).isEqualTo(interval);
+            softly.assertThat(response.getOwner()).isEqualTo(responseData.getOwner());
+        });
     }
 
     @Feature("Create and update Limit to higher value")
@@ -238,7 +240,7 @@ public class PutCreateLimitTests extends BaseTest {
                                                     Label label, String product,
                                                     Double value, Interval interval){
         try {
-            limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid, owner, type, label).getLimitUUID();
+            limitUuid = getLimit(uuid, owner, type, label).getLimitUUID();
         } catch (NullPointerException e) {
             log.info("Limit don't exist, creating new one");
         }
