@@ -2,13 +2,10 @@ package customer.stake.db;
 
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.properties.EnvConfig;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-public class OASISDBConnector {
+public class OASISDBConnector extends DBConnector{
 
-    private JDBCConnectionPool jdbcConnectionPool;
+    private static JDBCConnectionPool jdbcConnectionPool;
     private EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     public OASISDBConnector() {
@@ -18,18 +15,7 @@ public class OASISDBConnector {
                 envConfig.serviceDbClient(), envConfig.serviceDbPassword());
     }
 
-    public ResultSet executeDmlStatement(String query) {
-        PreparedStatement preparedStatement;
-        ResultSet resultSet = null;
-
-        try (JDBCConnectionHandler handler = new JDBCConnectionHandler(jdbcConnectionPool)) {
-            preparedStatement = handler.getConnection().prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resultSet;
+    public static JDBCConnectionPool getJdbcConnectionPool() {
+        return jdbcConnectionPool;
     }
-
-
 }

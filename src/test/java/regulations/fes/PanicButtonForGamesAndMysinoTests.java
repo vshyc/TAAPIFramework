@@ -86,7 +86,7 @@ class PanicButtonForGamesAndMysinoTests extends BaseTest {
 
     private boolean isUserWrittenToOasis() throws SQLException {
         return dbVerification.executeDmlStatement(
-                String.format("Select * from oasis_customer_data_written where customerUuid='%s'", uuid)).next();
-
+                String.format("Select * from oasis_customer_data_written where customerUuid='%s'", uuid),
+                OASISDBConnector.getJdbcConnectionPool()).next();
     }
 }

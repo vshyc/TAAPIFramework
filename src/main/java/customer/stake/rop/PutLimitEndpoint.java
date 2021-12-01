@@ -34,6 +34,18 @@ public class PutLimitEndpoint extends BaseEndpoint<PutLimitEndpoint, LimitsRespo
         return this;
     }
 
+    public PutLimitEndpoint sendRequestToCreateNewLimit(LimitCreationData body, String oauthToken,
+                                                                      String uuid, String headerUUID) {
+        String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .baseUri(envConfig.baseUri()).basePath(location)
+                .contentType(ContentType.JSON)
+                .auth().oauth2(oauthToken)
+                .body(body)
+                .header("Logged-In-User-UUID",headerUUID).when().put();
+        return this;
+    }
+
     public PutLimitEndpoint sendRequestWithNoBodyToCreateNewLimit(String oauthToken, String uuid) {
         String location = new LocationHeaderHelper().getLocationHeaderForNewLimit(uuid);
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
