@@ -14,9 +14,16 @@ public class Current {
 
     private Double value;
     private Interval interval;
+    private String from;
 
     public Current(Double value, Interval interval) {
         this.value = value;
         this.interval = interval;
+    }
+
+    public Current(Double value, Interval interval, String from) {
+        this.value = value;
+        this.interval = interval;
+        this.from = from;
     }
 }

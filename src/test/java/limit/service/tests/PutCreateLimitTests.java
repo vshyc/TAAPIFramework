@@ -11,6 +11,7 @@ import customer.stake.helpers.GetLimitsHelper;
 import customer.stake.dto.counters.PostCountersResponse;
 import customer.stake.dto.limits.LimitCreationData;
 import customer.stake.dto.limits.LimitsResponseData;
+import customer.stake.helpers.LimitCreateUpdateHelper;
 import customer.stake.rop.PutLimitEndpoint;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
@@ -38,6 +39,7 @@ public class PutCreateLimitTests extends BaseTest {
     private String id;
     private JsonPath createdUser;
     private String headerUUID;
+    private LimitCreateUpdateHelper limitHelper;
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @BeforeEach
@@ -48,6 +50,7 @@ public class PutCreateLimitTests extends BaseTest {
         uuid = userHelper.getUuid(createdUser);
         id = userHelper.getId(createdUser);
         headerUUID = "070c1ad0-d2d0-4aa9-bfb7-4bc3e08b13f0";
+        limitHelper = new LimitCreateUpdateHelper();
     }
 
     @Feature("Create Limits in Limit service with application token")
@@ -65,7 +68,7 @@ public class PutCreateLimitTests extends BaseTest {
             log.info("Limit don't exist, creating new one");
         }
         if (limitUuid == null) {
-            LimitsResponseData response = createLimitWithApplicationToken(type, owner, label, product, value, interval);
+            LimitsResponseData response = limitHelper.createLimitWithApplicationToken(uuid ,type, owner, label, product, value, interval);
             SoftAssertions.assertSoftly(softly-> {
                 softly.assertThat(response.getLabel()).isEqualTo(label);
                 softly.assertThat(response.getOwner()).isEqualTo(owner);
@@ -90,12 +93,13 @@ public class PutCreateLimitTests extends BaseTest {
                                                   Double value, Interval interval) {
 
         try {
-            limitUuid = getLimit(uuid,owner,type,label).getLimitUUID();
+            limitUuid = limitHelper.getLimit(uuid,owner,type,label).getLimitUUID();
         } catch (NullPointerException e) {
             log.info("Limit don't exist, creating new one");
         }
         if (limitUuid == null) {
-            LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
+            LimitsResponseData response = limitHelper.createLimitWithUserToken(userHelper,uuid,type, owner, label,
+                    product, value, interval);
             SoftAssertions.assertSoftly(softly-> {
                 softly.assertThat(response.getLabel()).isEqualTo(label);
                 softly.assertThat(response.getOwner()).isEqualTo(owner);
@@ -116,7 +120,8 @@ public class PutCreateLimitTests extends BaseTest {
     public void createAndUpdateLimitToLowerValueTest(LimitType type, Owner owner,
                                                      Label label, String product,
                                                      Double value, Interval interval, Double updatedValue) {
-        LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
+        LimitsResponseData response = limitHelper.createLimitWithUserToken(userHelper,uuid,type, owner, label,
+                product, value, interval);
         SoftAssertions.assertSoftly(softly-> {
             softly.assertThat(response.getLabel()).isEqualTo(label);
             softly.assertThat(response.getOwner()).isEqualTo(owner);
@@ -124,7 +129,8 @@ public class PutCreateLimitTests extends BaseTest {
             softly.assertThat(response.getCreatedBy()).isEqualTo(uuid);
         });
 
-        LimitsResponseData responseData = updateLimit(type, owner, label, product, updatedValue, interval);
+        LimitsResponseData responseData = limitHelper.updateLimit(userHelper,uuid,type, owner, label, product,
+                updatedValue, interval);
         SoftAssertions.assertSoftly(softly-> {
             softly.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
                     "value of the limit is updated to lower value").isEqualTo(updatedValue);
@@ -142,14 +148,16 @@ public class PutCreateLimitTests extends BaseTest {
     public void createAndUpdateLimitToHigherValueTest(LimitType type, Owner owner,
                                                       Label label, String product,
                                                       Double value, Interval interval, Double updatedValue) {
-        LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
+        LimitsResponseData response = limitHelper.createLimitWithUserToken(userHelper,uuid, type, owner, label,
+                product, value, interval);
         SoftAssertions.assertSoftly(softly-> {
             softly.assertThat(response.getLabel()).isEqualTo(label);
             softly.assertThat(response.getOwner()).isEqualTo(owner);
             softly.assertThat(response.getProduct()).isEqualTo(product);
             softly.assertThat(response.getCreatedBy()).isEqualTo(uuid);
         });
-        LimitsResponseData responseData = updateLimit(type, owner, label, product, updatedValue, interval);
+        LimitsResponseData responseData = limitHelper.updateLimit(userHelper ,uuid ,type, owner, label,
+                product, updatedValue, interval);
 
         SoftAssertions.assertSoftly(softly-> {
             softly.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
@@ -170,7 +178,8 @@ public class PutCreateLimitTests extends BaseTest {
     public void createAndUpdateAMLLimitToHigherValueTest(LimitType type, Owner owner,
                                                          Label label, String product,
                                                          Double value, Interval interval, Double updatedValue) {
-        LimitsResponseData response = createLimitWithUserToken(type, owner, label, product, value, interval);
+        LimitsResponseData response = limitHelper.createLimitWithUserToken(userHelper, uuid, type, owner, label,
+                product, value, interval);
 
         SoftAssertions.assertSoftly(softly-> {
             softly.assertThat(response.getLabel()).isEqualTo(label);
@@ -179,7 +188,8 @@ public class PutCreateLimitTests extends BaseTest {
             softly.assertThat(response.getCreatedBy()).isEqualTo(uuid);
         });
 
-        LimitsResponseData responseData = updateLimit(type, owner, label, product, updatedValue, interval);
+        LimitsResponseData responseData = limitHelper.updateLimit(userHelper, uuid, type, owner, label, product,
+                updatedValue, interval);
 
         SoftAssertions.assertSoftly(softly-> {
             softly.assertThat(responseData.getCurrent().getValue().doubleValue()).describedAs("check if " +
@@ -225,9 +235,9 @@ public class PutCreateLimitTests extends BaseTest {
             Assertions.assertThat(true).as("The turnover limit exist on registration so " +
                     "creating it by RGFES is not posible");
         } else {
-            createLimitWithApplicationToken(limitType, owner, label, product, value, interval);
-            addCounterForLimit(uuid, id, label, counterType, counterValue);
-            LimitsResponseData response = getLimit(uuid, owner, limitType, label);
+            limitHelper.createLimitWithApplicationToken(uuid,limitType, owner, label, product, value, interval);
+            limitHelper.addCounterForLimit(uuid, id, label, counterType, counterValue);
+            LimitsResponseData response = limitHelper.getLimit(uuid, owner, limitType, label);
             Assertions.assertThat(response.getRemaining()).isEqualTo(value - counterValue);
         }
     }
@@ -240,12 +250,12 @@ public class PutCreateLimitTests extends BaseTest {
                                                     Label label, String product,
                                                     Double value, Interval interval){
         try {
-            limitUuid = getLimit(uuid, owner, type, label).getLimitUUID();
+            limitUuid = limitHelper.getLimit(uuid, owner, type, label).getLimitUUID();
         } catch (NullPointerException e) {
             log.info("Limit don't exist, creating new one");
         }
         if (limitUuid == null) {
-            LimitsResponseData response = createLimitWithApplicationToken(type, owner, label, product,
+            LimitsResponseData response = limitHelper.createLimitWithApplicationToken(uuid, type, owner, label, product,
                     value, interval, headerUUID);
             SoftAssertions.assertSoftly(softly-> {
                 softly.assertThat(response.getLabel()).isEqualTo(label);
@@ -259,84 +269,6 @@ public class PutCreateLimitTests extends BaseTest {
     }
 
 
-    @Step("Sending a call to Limit Service with User Token to create Limit")
-    private LimitsResponseData createLimitWithUserToken(LimitType type, Owner owner,
-                                                        Label label, String product,
-                                                        Double value, Interval interval) {
-        LimitCreationData body = LimitCreationData.builder().
-                type(type)
-                .owner(owner)
-                .label(label)
-                .product(product)
-                .value(value)
-                .interval(interval)
-                .build();
-        return new PutLimitEndpoint().sendRequestToCreateNewLimit(body, new OauthHelper()
-                        .getUserToken(userHelper.getGermanUserName(), userHelper.getGermanUserPassword()), uuid)
-                .assertRequestStatusCode().getResponseModel();
-    }
-
-    @Step("Sending a call to Limit Service with Application Token to create Limit")
-    private LimitsResponseData createLimitWithApplicationToken(LimitType type, Owner owner,
-                                                               Label label, String product,
-                                                               Double value, Interval interval) {
-        LimitCreationData body = LimitCreationData.builder().
-                type(type)
-                .owner(owner)
-                .label(label)
-                .product(product)
-                .value(value)
-                .interval(interval)
-                .build();
-        return new PutLimitEndpoint().sendRequestToCreateNewLimit(body, new OauthHelper().getApplicationToken(), uuid)
-                .assertRequestStatusCode().getResponseModel();
-    }
-
-    @Step("Sending a call to Limit Service with Application Token to create Limit")
-    private LimitsResponseData createLimitWithApplicationToken(LimitType type, Owner owner,
-                                                               Label label, String product,
-                                                               Double value, Interval interval,String headerUUID) {
-        LimitCreationData body = LimitCreationData.builder().
-                type(type)
-                .owner(owner)
-                .label(label)
-                .product(product)
-                .value(value)
-                .interval(interval)
-                .build();
-        return new PutLimitEndpoint().sendRequestToCreateNewLimit(body,
-                        new OauthHelper().getApplicationToken(), uuid,headerUUID)
-                .assertRequestStatusCode().getResponseModel();
-    }
-
-    @Step("Sending a call to Limit Service with User Token to update Limit")
-    private LimitsResponseData updateLimit(LimitType type, Owner owner,
-                                           Label label, String product,
-                                           Double value, Interval interval) {
-        LimitCreationData updatedBody = LimitCreationData.builder().
-                type(type)
-                .owner(owner)
-                .label(label)
-                .product(product)
-                .value(value)
-                .interval(interval)
-                .build();
-        return new PutLimitEndpoint().sendRequestToUpdateLimit(updatedBody, new OauthHelper()
-                        .getUserToken(userHelper.getGermanUserName(), userHelper.getGermanUserPassword()), uuid)
-                .assertRequestStatusCode().getResponseModel();
-
-    }
-
-    @Step("Add counter for limit")
-    private PostCountersResponse addCounterForLimit(String uuid, String id, Label label, CounterType type, Double amount) {
-        return new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
-                type, amount);
-    }
-
-    @Step("Send request to Get limit")
-    private LimitsResponseData getLimit(String uuid, Owner owner, LimitType type, Label label) {
-        return new GetLimitsHelper().checkIfLimitExistForUser(uuid, owner, type, label);
-    }
 
 
 }

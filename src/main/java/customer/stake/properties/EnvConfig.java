@@ -106,4 +106,11 @@ public interface EnvConfig extends Config {
     @Key("OASIS_DB_HOST")
     String oasisDbHost();
 
+    @Key("TMC_AUTH_USER")
+    String tmcAuthUser();
+
+    @Key("TMC_AUTH_PASSWORD")
+    String tmcAuthPassword();
+
+
 }

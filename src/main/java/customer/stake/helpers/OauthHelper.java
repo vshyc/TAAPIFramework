@@ -21,6 +21,15 @@ public class OauthHelper {
         return response.getString("access_token");
     }
 
+    @Step("Calling authflow-service to get TMC application token")
+    public String getTMCApplicationToken() {
+        JsonPath response = given().baseUri(envConfig.authBaseUri()).basePath(envConfig.authBasePath()).
+                auth().preemptive().basic(envConfig.tmcAuthUser(), envConfig.tmcAuthPassword())
+                .when().post("/token?grant_type={grantType}", "client_credentials")
+                .then().statusCode(HttpStatus.SC_OK).extract().jsonPath();
+        return response.getString("access_token");
+    }
+
     @Step("Calling authflow-service to get user token for user {0}")
     public String getUserToken(String username, String userPassword) {
         JsonPath response = given().baseUri(envConfig.authBaseUri()).basePath(envConfig.authBasePath()).
