@@ -4,6 +4,7 @@ import customer.stake.dto.rgfes.RGFESGetLimitHistoryResponse;
 import customer.stake.dto.rgfes.RGFESGetLimitHistoryWithLCRResponse;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
+import customer.stake.enums.Product;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.LRCHelper;
 import customer.stake.properties.EnvConfig;
@@ -20,7 +21,7 @@ import static io.restassured.RestAssured.given;
 
 public class GetRGFESLimitHistoryEndpoint extends BaseEndpoint<GetRGFESLimitHistoryEndpoint, RGFESGetLimitHistoryResponse>{
 
-    private EnvConfig envConfig = HelpersConfig.createConfiguration();
+    private final EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
     protected Type getModelType() {
@@ -45,7 +46,7 @@ public class GetRGFESLimitHistoryEndpoint extends BaseEndpoint<GetRGFESLimitHist
                 .get(LIMIT_HISTORY_REQUEST_PATH);
         return this;
     }
-    public GetRGFESLimitHistoryEndpoint sendRequest(String sessionId, String product , Label label, LimitType type) {
+    public GetRGFESLimitHistoryEndpoint sendRequest(String sessionId, Product product , Label label, LimitType type) {
         LRCHelper lrcHelper = new LRCHelper();
         String LicenceRegionContext = lrcHelper.createLRC(product,label);
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())

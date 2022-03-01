@@ -2,7 +2,6 @@ package limit.service.tests;
 
 import configuration.BaseTest;
 import customer.stake.dto.limits.history.GetLimitsHistoryResponseData;
-import customer.stake.dto.limits.history.LimitsHistory;
 import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
@@ -19,9 +18,12 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@DisplayName("GET Endpoint for Limit History Tests")
 public class GetLimitHistoryTests extends BaseTest {
     private String uuid;
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -42,9 +44,17 @@ public class GetLimitHistoryTests extends BaseTest {
     @Description("Send Get for limit history in Limit Service for new created user with no history")
     @Test
     public void getLimitHistoryForNewUser(){
-        new GetRGLSLimitHistoryEndpoint().sendRequest(uuid).assertNoContentStatusCode();
+        GetRGLSLimitHistoryEndpoint data =  new GetRGLSLimitHistoryEndpoint().sendRequest(uuid);
+        if (envConfig.env().equals("staging")) {
+            data.assertNoContentStatusCode();
+        }else {
+            data.assertRequestStatusCode();
+        }
     }
 
+    @DisplayName("Send Get for limit history in Limit Service")
+    @Story("Send Get for limit history in Limit Service")
+    @Description("Send Get for limit history in Limit Service for new created user with created Limit")
     @Test
     public void getLimitHistory(){
         limitHelper.createLimitWithUserToken(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico, Product.SPORTS,
@@ -53,35 +63,45 @@ public class GetLimitHistoryTests extends BaseTest {
         Assertions.assertThat(data.getLimitsHistory().get(0).getCustomerUUID()).isEqualTo(uuid);
     }
 
+    @DisplayName("Send Get for limit history in Limit Service")
+    @Story("Send Get for limit history in Limit Service")
+    @Description("Send Get for limit history in Limit Service for new created user with limit, Filtering on non existing Limit")
     @Test
     public void getLimitHistoryWithFiltering(){
-        new GetRGLSLimitHistoryEndpoint().sendRequest(uuid,"sports",
+        limitHelper.createLimitWithUserToken(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico, Product.GAMES,
+                800d, Interval.MONTH);
+        new GetRGLSLimitHistoryEndpoint().sendRequest(uuid,Product.SPORTS,
                 Label.tipico, LimitType.DEPOSIT).assertNoContentStatusCode();
     }
 
-    @Test
-    public void getLimitHistoryForUserThatEditedLimit(){
-        limitHelper.createLimitWithUserToken(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico,Product.SPORTS,
-                800d, Interval.MONTH);
-        limitHelper.updateLimit(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico,Product.SPORTS,
-                700d, Interval.MONTH);
+    @DisplayName("Send Get for limit history in Limit Service")
+    @Story("Send Get for limit history in Limit Service")
+    @Description("Create and update Limit to lower value and check if both are visible in Limit History on RGLS endpoint")
+    @ParameterizedTest(name = "{index} -> Creating a limit with User token and with type={0} , owner={1}, " +
+            "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
+    @CsvFileSource(files = "src/test/resources/updateLimitTestData.csv", numLinesToSkip = 1)
+    public void getLimitHistoryForUserThatEditedLimit(LimitType type, Owner owner,
+            Label label, Product product,
+            Double value, Interval interval, Double updatedValue){
+        limitHelper.createLimitWithUserToken(userHelper,uuid,type, owner,label,product, value, interval);
+        limitHelper.updateLimit(userHelper,uuid,type, owner,label,product, updatedValue, interval);
         data = new GetRGLSLimitHistoryEndpoint().sendRequest(uuid).getResponseModel();
         SoftAssertions.assertSoftly(softly-> {
             softly.assertThat(data.getLimitsHistory().stream()
                 .filter(response -> uuid.equals(response.getCustomerUUID()))
-                .filter(response -> Owner.PERSONAL.equals(response.getOwner()))
-                .filter(response -> LimitType.DEPOSIT.equals(response.getType()))
-                .filter(response -> Label.tipico.equals(response.getLabel()))
-                .filter(response -> Product.SPORTS.equals(response.getProduct()))
-                .filter(response -> Double.valueOf(700d).equals(response.getCurrent().getValue()))
+                .filter(response -> owner.equals(response.getOwner()))
+                .filter(response -> type.equals(response.getType()))
+                .filter(response -> label.equals(response.getLabel()))
+                .filter(response -> product.equals(response.getProduct()))
+                .filter(response -> value.equals(response.getCurrent().getValue()))
                 .findAny()).isNotEmpty();
         softly.assertThat(data.getLimitsHistory().stream()
                 .filter(response -> uuid.equals(response.getCustomerUUID()))
-                .filter(response -> Owner.PERSONAL.equals(response.getOwner()))
-                .filter(response -> LimitType.DEPOSIT.equals(response.getType()))
-                .filter(response -> Label.tipico.equals(response.getLabel()))
-                .filter(response -> Product.SPORTS.equals(response.getProduct()))
-                .filter(response -> Double.valueOf(800d).equals(response.getCurrent().getValue()))
+                .filter(response -> owner.equals(response.getOwner()))
+                .filter(response -> type.equals(response.getType()))
+                .filter(response -> label.equals(response.getLabel()))
+                .filter(response -> product.equals(response.getProduct()))
+                .filter(response -> updatedValue.equals(response.getCurrent().getValue()))
                 .findAny()).isNotEmpty();
         });
     }

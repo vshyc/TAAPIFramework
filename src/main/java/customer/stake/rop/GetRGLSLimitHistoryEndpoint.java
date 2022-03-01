@@ -3,6 +3,7 @@ package customer.stake.rop;
 import customer.stake.dto.limits.history.GetLimitsHistoryResponseData;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
+import customer.stake.enums.Product;
 import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.properties.EnvConfig;
@@ -38,7 +39,7 @@ public class GetRGLSLimitHistoryEndpoint extends BaseEndpoint<GetRGLSLimitHistor
         return this;
     }
 
-    public GetRGLSLimitHistoryEndpoint sendRequest(String uuid, String product) {
+    public GetRGLSLimitHistoryEndpoint sendRequest(String uuid, Product product) {
         HashMap<String, Object> pathParams = new HashMap<>();
         pathParams.put("customerUuid",uuid);
         pathParams.put("products", product);
@@ -52,7 +53,7 @@ public class GetRGLSLimitHistoryEndpoint extends BaseEndpoint<GetRGLSLimitHistor
         return this;
     }
 
-    public GetRGLSLimitHistoryEndpoint sendRequest(String uuid, String product, Label label) {
+    public GetRGLSLimitHistoryEndpoint sendRequest(String uuid, Product product, Label label) {
         HashMap<String, Object> pathParams = new HashMap<>();
         pathParams.put("customerUuid",uuid);
         pathParams.put("products", product);
@@ -66,7 +67,7 @@ public class GetRGLSLimitHistoryEndpoint extends BaseEndpoint<GetRGLSLimitHistor
         return this;
     }
 
-    public GetRGLSLimitHistoryEndpoint sendRequest(String uuid, String product, Label label, LimitType limitType) {
+    public GetRGLSLimitHistoryEndpoint sendRequest(String uuid, Product product, Label label, LimitType limitType) {
         HashMap<String, Object> pathParams = new HashMap<>();
         pathParams.put("customerUuid",uuid);
         pathParams.put("products", product);
