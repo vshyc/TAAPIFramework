@@ -7,6 +7,7 @@ import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
 import customer.stake.enums.Owner;
+import customer.stake.enums.Product;
 import customer.stake.helpers.LimitsHelper;
 import customer.stake.helpers.UserHelper;
 import customer.stake.rop.GetRGLSLimitHistoryEndpoint;
@@ -46,7 +47,7 @@ public class GetLimitHistoryTests extends BaseTest {
 
     @Test
     public void getLimitHistory(){
-        limitHelper.createLimitWithUserToken(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico,"sports",
+        limitHelper.createLimitWithUserToken(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico, Product.SPORTS,
                 800d, Interval.MONTH);
         data = new GetRGLSLimitHistoryEndpoint().sendRequest(uuid).getResponseModel();
         Assertions.assertThat(data.getLimitsHistory().get(0).getCustomerUUID()).isEqualTo(uuid);
@@ -60,9 +61,9 @@ public class GetLimitHistoryTests extends BaseTest {
 
     @Test
     public void getLimitHistoryForUserThatEditedLimit(){
-        limitHelper.createLimitWithUserToken(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico,"sports",
+        limitHelper.createLimitWithUserToken(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico,Product.SPORTS,
                 800d, Interval.MONTH);
-        limitHelper.updateLimit(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico,"sports",
+        limitHelper.updateLimit(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico,Product.SPORTS,
                 700d, Interval.MONTH);
         data = new GetRGLSLimitHistoryEndpoint().sendRequest(uuid).getResponseModel();
         SoftAssertions.assertSoftly(softly-> {
@@ -71,7 +72,7 @@ public class GetLimitHistoryTests extends BaseTest {
                 .filter(response -> Owner.PERSONAL.equals(response.getOwner()))
                 .filter(response -> LimitType.DEPOSIT.equals(response.getType()))
                 .filter(response -> Label.tipico.equals(response.getLabel()))
-                .filter(response -> "sports".equals(response.getProduct()))
+                .filter(response -> Product.SPORTS.equals(response.getProduct()))
                 .filter(response -> Double.valueOf(700d).equals(response.getCurrent().getValue()))
                 .findAny()).isNotEmpty();
         softly.assertThat(data.getLimitsHistory().stream()
@@ -79,7 +80,7 @@ public class GetLimitHistoryTests extends BaseTest {
                 .filter(response -> Owner.PERSONAL.equals(response.getOwner()))
                 .filter(response -> LimitType.DEPOSIT.equals(response.getType()))
                 .filter(response -> Label.tipico.equals(response.getLabel()))
-                .filter(response -> "sports".equals(response.getProduct()))
+                .filter(response -> Product.SPORTS.equals(response.getProduct()))
                 .filter(response -> Double.valueOf(800d).equals(response.getCurrent().getValue()))
                 .findAny()).isNotEmpty();
         });

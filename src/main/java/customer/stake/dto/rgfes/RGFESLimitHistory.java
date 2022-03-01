@@ -3,6 +3,7 @@ package customer.stake.dto.rgfes;
 import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
+import customer.stake.enums.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,10 @@ public class RGFESLimitHistory {
     private Double value;
     private Interval interval;
     private Date updatedDate;
-    private String product;
+    private Product product;
     private Label label;
 
-    public RGFESLimitHistory(LimitType limitType, Boolean requested, Double value, Interval interval, Date updatedDate, String product, Label label) {
+    public RGFESLimitHistory(LimitType limitType, Boolean requested, Double value, Interval interval, Date updatedDate, Product product, Label label) {
         this.limitType = limitType;
         this.requested = requested;
         this.value = value;

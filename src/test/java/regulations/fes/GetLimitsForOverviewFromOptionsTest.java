@@ -7,6 +7,7 @@ import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
 import customer.stake.enums.Owner;
+import customer.stake.enums.Product;
 import customer.stake.helpers.LoginHelper;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.TermsAndConditionsHelper;
@@ -104,7 +105,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Tag("RegressionTests")
     @TestCaseId(3460)
     public void getNewCreatedLimitForOverviewFromLimitService(LimitType limitType, Owner owner, Label label,
-                                                              String product, Double value, Interval interval) {
+            Product product, Double value, Interval interval) {
         if (!isStaging && limitType == LimitType.TURNOVER) {
             Assertions.assertThat(true).as("The turnover limit exist on registration so " +
                     "creating it by RGFES is not posible");
@@ -133,7 +134,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
 
     @Step("Sending a call to Limit Service with Application Token to create Limit")
     private LimitsResponseData createLimitWithApplicationToken(LimitType type, Owner owner,
-                                                               Label label, String product,
+                                                               Label label, Product product,
                                                                Double value, Interval interval) {
         LimitCreationData body = LimitCreationData.builder().
                 type(type)

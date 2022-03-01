@@ -5,6 +5,7 @@ import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
 import customer.stake.enums.Owner;
+import customer.stake.enums.Product;
 import customer.stake.helpers.LoginHelper;
 import customer.stake.helpers.TermsAndConditionsHelper;
 import customer.stake.helpers.UserHelper;
@@ -53,7 +54,7 @@ public class PostRGFESCreateLimitTests extends BaseTest {
             "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/test/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitWithRGFESTest(LimitType type, Owner owner,
-                                         Label label, String product,
+                                         Label label, Product product,
                                          Double value, Interval interval) {
         if (!(envConfig.env().equals("staging")) && type == LimitType.TURNOVER) {
             Assertions.assertThat(true).as("The turnover limit exist on registration so " +

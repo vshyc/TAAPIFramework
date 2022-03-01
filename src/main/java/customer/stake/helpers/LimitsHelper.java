@@ -9,6 +9,7 @@ import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
 import customer.stake.enums.Owner;
+import customer.stake.enums.Product;
 import customer.stake.rop.GetRGLSLimitHistoryEndpoint;
 import customer.stake.rop.PutLimitEndpoint;
 import io.qameta.allure.Step;
@@ -18,7 +19,7 @@ public class LimitsHelper {
 
     @Step("Sending a call to Limit Service with User Token to create Limit")
     public LimitsResponseData createLimitWithUserToken(UserHelper userHelper,String uuid,LimitType type, Owner owner,
-                                                        Label label, String product,
+                                                        Label label, Product product,
                                                         Double value, Interval interval) {
         LimitCreationData body = LimitCreationData.builder().
                 type(type)
@@ -35,7 +36,7 @@ public class LimitsHelper {
 
     @Step("Sending a call to Limit Service with Application Token to create Limit")
     public LimitsResponseData createLimitWithApplicationToken(String uuid,LimitType type, Owner owner,
-                                                               Label label, String product,
+                                                               Label label, Product product,
                                                                Double value, Interval interval) {
         LimitCreationData body = LimitCreationData.builder().
                 type(type)
@@ -51,7 +52,7 @@ public class LimitsHelper {
 
     @Step("Sending a call to Limit Service with Application Token to create Limit")
     public LimitsResponseData createLimitWithApplicationToken(String uuid,LimitType type, Owner owner,
-                                                               Label label, String product,
+                                                               Label label, Product product,
                                                                Double value, Interval interval,String headerUUID) {
         LimitCreationData body = LimitCreationData.builder().
                 type(type)
@@ -68,7 +69,7 @@ public class LimitsHelper {
 
     @Step("Sending a call to Limit Service with User Token to update Limit")
     public LimitsResponseData updateLimit(UserHelper userHelper,String uuid,LimitType type, Owner owner,
-                                           Label label, String product,
+                                           Label label, Product product,
                                            Double value, Interval interval) {
         LimitCreationData updatedBody = LimitCreationData.builder().
                 type(type)

@@ -6,6 +6,7 @@ import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.Owner;
 import customer.stake.enums.LimitType;
+import customer.stake.enums.Product;
 import customer.stake.helpers.GetLimitsHelper;
 import customer.stake.dto.limits.LimitCreationData;
 import customer.stake.dto.limits.LimitsResponseData;
@@ -57,7 +58,7 @@ public class PutCreateLimitTests extends BaseTest {
             "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/test/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitsTestWithApplicationTokenTest(LimitType type, Owner owner,
-                                                         Label label, String product,
+                                                         Label label, Product product,
                                                          Double value, Interval interval) {
         try {
             limitUuid = new GetLimitsHelper().checkIfLimitExistForUser(uuid, owner, type, label).getLimitUUID();
@@ -86,7 +87,7 @@ public class PutCreateLimitTests extends BaseTest {
             "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/test/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void createLimitsTestWithUserTokenTest(LimitType type, Owner owner,
-                                                  Label label, String product,
+                                                  Label label, Product product,
                                                   Double value, Interval interval) {
 
         try {
@@ -115,7 +116,7 @@ public class PutCreateLimitTests extends BaseTest {
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
     @CsvFileSource(files = "src/test/resources/updateLimitTestData.csv", numLinesToSkip = 1)
     public void createAndUpdateLimitToLowerValueTest(LimitType type, Owner owner,
-                                                     Label label, String product,
+                                                     Label label, Product product,
                                                      Double value, Interval interval, Double updatedValue) {
         LimitsResponseData response = limitHelper.createLimitWithUserToken(userHelper,uuid,type, owner, label,
                 product, value, interval);
@@ -143,7 +144,7 @@ public class PutCreateLimitTests extends BaseTest {
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
     @CsvFileSource(files = "src/test/resources/updateLimitToHigherValueTestData.csv", numLinesToSkip = 1)
     public void createAndUpdateLimitToHigherValueTest(LimitType type, Owner owner,
-                                                      Label label, String product,
+                                                      Label label, Product product,
                                                       Double value, Interval interval, Double updatedValue) {
         LimitsResponseData response = limitHelper.createLimitWithUserToken(userHelper,uuid, type, owner, label,
                 product, value, interval);
@@ -173,7 +174,7 @@ public class PutCreateLimitTests extends BaseTest {
             "label={2}, product={3}, value={4} , interval={5} and updated value = {6}")
     @CsvFileSource(files = "src/test/resources/updateAMLLimitToHigherValueTestData.csv", numLinesToSkip = 1)
     public void createAndUpdateAMLLimitToHigherValueTest(LimitType type, Owner owner,
-                                                         Label label, String product,
+                                                         Label label, Product product,
                                                          Double value, Interval interval, Double updatedValue) {
         LimitsResponseData response = limitHelper.createLimitWithUserToken(userHelper, uuid, type, owner, label,
                 product, value, interval);
@@ -203,7 +204,7 @@ public class PutCreateLimitTests extends BaseTest {
                 type(LimitType.DEPOSIT)
                 .owner(Owner.PERSONAL)
                 .label(Label.TIPICO)
-                .product("sports")
+                .product(Product.SPORTS)
                 .value(200d)
                 .interval(Interval.MONTH)
                 .build();
@@ -225,7 +226,7 @@ public class PutCreateLimitTests extends BaseTest {
             "remaining value is calculated correctly ")
     @CsvFileSource(files = "src/test/resources/limitsWithCountersData.csv", numLinesToSkip = 1)
     public void checkIfRemainingValueIsCalculatedCorrectlyTest(LimitType limitType, Owner owner,
-                                                               Label label, String product,
+                                                               Label label, Product product,
                                                                Double value, Interval interval,
                                                                Double counterValue, CounterType counterType) {
         if (!(envConfig.env().equals("staging")) && limitType == LimitType.TURNOVER) {
@@ -244,7 +245,7 @@ public class PutCreateLimitTests extends BaseTest {
             "label={2}, product={3}, value={4} and interval={5}")
     @CsvFileSource(files = "src/test/resources/createLimitTestData.csv", numLinesToSkip = 1)
     public void checkIfCreatedByIsGetFromUUIDHeader(LimitType type, Owner owner,
-                                                    Label label, String product,
+                                                    Label label, Product product,
                                                     Double value, Interval interval){
         try {
             limitUuid = limitHelper.getLimit(uuid, owner, type, label).getLimitUUID();
