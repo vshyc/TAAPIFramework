@@ -125,7 +125,7 @@ public class LimitsBlockingDepositTests extends BaseTest {
                 1500, "app-tipico-sports");
         Assertions.assertThat(paymentResponse.getStatusCode()).isEqualTo(500);
         if (envConfig.env().equals("staging")) {
-            Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("metadata.message"))
+            Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("message"))
                     .isEqualTo("Deposit Alert Confirmation Required");
         } else {
             Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("message"))
