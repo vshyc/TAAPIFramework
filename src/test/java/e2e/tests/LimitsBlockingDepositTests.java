@@ -28,16 +28,16 @@ import org.slf4j.LoggerFactory;
 @ExtendWith(ReqtestReporterExtension.class)
 public class LimitsBlockingDepositTests extends BaseTest {
 
-    private String amlErrorMsg = "Jetzt Konto verifizieren! Damit du einzahlen kannst, musst du dein " +
+    private final String amlErrorMsg = "Jetzt Konto verifizieren! Damit du einzahlen kannst, musst du dein " +
             "<a style=\"color:#004a67\" href=\"/#account/verification/options\" target=\"_self\">Konto verifizieren</a>.";
-    private String aml150ErrorMsg = "Jetzt Konto verifizieren! Damit du insgesamt mehr als 150,00 € einzahlen kannst, " +
+    private final String aml150ErrorMsg = "Jetzt Konto verifizieren! Damit du insgesamt mehr als 150,00 € einzahlen kannst, " +
             "musst du dein <a style=\"color:#004a67\" href=\"/#account/verification/options\" target=\"_self\">Konto " +
             "verifizieren</a>. Alternativ kannst du deinen Einzahlungsbetrag verringern.";
-    private String aml100ErrorMsg = "Verify your account now! In order to deposit more than 100.00€ in total, you need" +
+    private final String aml100ErrorMsg = "Verify your account now! In order to deposit more than 100.00€ in total, you need" +
             " to <a style=\"color:#004a67\" href=\"/#account/verification/options\" target=\"_self\">verify your " +
             "account</a>. Alternatively, you can decrease your deposit amount.";
-    private String sddErrorMsg = "Simple EDD Confirmation Required";
-    private String over1kLimitErrorMsg = "Sie haben Ihr Einzahlungslimit von 1.000,00 € pro Monat erreicht. Bitte ändern" +
+    private final String sddErrorMsg = "Simple EDD Confirmation Required";
+    private final String over1kLimitErrorMsg = "Sie haben Ihr Einzahlungslimit von 1.000,00 € pro Monat erreicht. Bitte ändern" +
             " Sie Ihren Einzahlungsbetrag auf 1.000,00 € oder <a href=\"/#account/depositlimit?" +
             "fromRegistration=0\">passen Sie Ihr Limit</a> entsprechend an.";
 
@@ -125,8 +125,8 @@ public class LimitsBlockingDepositTests extends BaseTest {
                 1500, "app-tipico-sports");
         Assertions.assertThat(paymentResponse.getStatusCode()).isEqualTo(500);
         if (envConfig.env().equals("staging")) {
-            Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("metadata.globalMessage.message"))
-                    .isEqualTo(over1kLimitErrorMsg);
+            Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("metadata.message"))
+                    .isEqualTo("Deposit Alert Confirmation Required");
         } else {
             Assertions.assertThat(paymentResponse.getBody().jsonPath().getString("message"))
                     .isEqualTo(sddErrorMsg);
