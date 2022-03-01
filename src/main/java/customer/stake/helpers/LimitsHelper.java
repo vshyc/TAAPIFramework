@@ -3,15 +3,17 @@ package customer.stake.helpers;
 import customer.stake.dto.counters.PostCountersResponse;
 import customer.stake.dto.limits.LimitCreationData;
 import customer.stake.dto.limits.LimitsResponseData;
+import customer.stake.dto.limits.history.LimitsHistory;
 import customer.stake.enums.CounterType;
 import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
 import customer.stake.enums.Owner;
+import customer.stake.rop.GetRGLSLimitHistoryEndpoint;
 import customer.stake.rop.PutLimitEndpoint;
 import io.qameta.allure.Step;
 
-public class LimitCreateUpdateHelper {
+public class LimitsHelper {
 
 
     @Step("Sending a call to Limit Service with User Token to create Limit")
@@ -91,5 +93,22 @@ public class LimitCreateUpdateHelper {
     @Step("Send request to Get limit")
     public LimitsResponseData getLimit(String uuid, Owner owner, LimitType type, Label label) {
         return new GetLimitsHelper().checkIfLimitExistForUser(uuid, owner, type, label);
+    }
+
+    @Step("Check if limit exists in history response")
+    private LimitsHistory checkIfLimitExistForUser(String uuid, Owner limitOwner, LimitType limitType, Label label) {
+
+        GetRGLSLimitHistoryEndpoint responseData = new GetRGLSLimitHistoryEndpoint().sendRequest(uuid);
+        LimitsHistory data;
+
+        data = (responseData.getResponse().getStatusCode() == 200) ?
+                responseData.getResponseModel().getLimitsHistory().stream()
+                        .filter(response -> uuid.equals(response.getCustomerUUID()))
+                        .filter(response -> limitOwner.equals(response.getOwner()))
+                        .filter(response -> limitType.equals(response.getType()))
+                        .filter(response -> label.equals(response.getLabel()))
+                        .findAny()
+                        .orElse(null) : null;
+        return data;
     }
 }

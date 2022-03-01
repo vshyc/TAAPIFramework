@@ -6,12 +6,10 @@ import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.Owner;
 import customer.stake.enums.LimitType;
-import customer.stake.helpers.AddCounterHelper;
 import customer.stake.helpers.GetLimitsHelper;
-import customer.stake.dto.counters.PostCountersResponse;
 import customer.stake.dto.limits.LimitCreationData;
 import customer.stake.dto.limits.LimitsResponseData;
-import customer.stake.helpers.LimitCreateUpdateHelper;
+import customer.stake.helpers.LimitsHelper;
 import customer.stake.rop.PutLimitEndpoint;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
@@ -37,20 +35,19 @@ public class PutCreateLimitTests extends BaseTest {
     private UserHelper userHelper;
     private String uuid;
     private String id;
-    private JsonPath createdUser;
     private String headerUUID;
-    private LimitCreateUpdateHelper limitHelper;
+    private LimitsHelper limitHelper;
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @BeforeEach
     @Step("Create a user for test ")
     public void setUp() {
         userHelper = new UserHelper();
-        createdUser = userHelper.createGermanUserInWebTestApi();
+        JsonPath createdUser = userHelper.createGermanUserInWebTestApi();
         uuid = userHelper.getUuid(createdUser);
         id = userHelper.getId(createdUser);
         headerUUID = "070c1ad0-d2d0-4aa9-bfb7-4bc3e08b13f0";
-        limitHelper = new LimitCreateUpdateHelper();
+        limitHelper = new LimitsHelper();
     }
 
     @Feature("Create Limits in Limit service with application token")

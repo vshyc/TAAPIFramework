@@ -7,6 +7,7 @@ import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.OauthHelper;
 import customer.stake.properties.EnvConfig;
 import customer.stake.request.configuration.RequestConfigurationBuilder;
+import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
@@ -16,7 +17,7 @@ import static io.restassured.RestAssured.given;
 
 public class GetRGLSLimitHistoryEndpoint extends BaseEndpoint<GetRGLSLimitHistoryEndpoint, GetLimitsHistoryResponseData> {
 
-    private EnvConfig envConfig = HelpersConfig.createConfiguration();
+    private final EnvConfig envConfig = HelpersConfig.createConfiguration();
 
     @Override
     protected Type getModelType() {
@@ -32,6 +33,7 @@ public class GetRGLSLimitHistoryEndpoint extends BaseEndpoint<GetRGLSLimitHistor
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
                 .auth().oauth2(new OauthHelper().getTMCApplicationToken())
                 .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+                .contentType(ContentType.JSON)
                 .when().get("customers/{customerUuid}/limits/history", uuid);
         return this;
     }
@@ -43,6 +45,8 @@ public class GetRGLSLimitHistoryEndpoint extends BaseEndpoint<GetRGLSLimitHistor
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
                 .auth().oauth2(new OauthHelper().getTMCApplicationToken())
                 .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .pathParams(pathParams)
                 .when().get("customers/{customerUuid}/limits/history?products={products}");
         return this;
@@ -56,6 +60,7 @@ public class GetRGLSLimitHistoryEndpoint extends BaseEndpoint<GetRGLSLimitHistor
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
                 .auth().oauth2(new OauthHelper().getTMCApplicationToken())
                 .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+                .contentType(ContentType.JSON)
                 .pathParams(pathParams)
                 .when().get("customers/{customerUuid}/limits/history?products={products}&labels={labels}");
         return this;

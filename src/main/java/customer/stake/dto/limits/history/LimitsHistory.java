@@ -4,6 +4,7 @@ import customer.stake.dto.limits.Current;
 import customer.stake.dto.limits.Future;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
+import customer.stake.enums.Owner;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,19 +21,22 @@ public class LimitsHistory {
     private String product;
     private Label label;
     private String limitUUID;
-    private String owner;
+    private Owner owner;
     private Current current;
     private Future future;
     private String customerUUID;
     private Date createdAt;
     private String createdByClient;
+    private String createdBy;
     private String updatedByClient;
+    private String updatedBy;
     private AuditDetails auditDetails;
     private Date updatedAt;
 
-    public LimitsHistory(LimitType type, String product, Label label, String limitUUID, String owner, Current current,
-                         Future future, String customerUUID, Date createdAt, String createdByClient,
-                         String updatedByClient, AuditDetails auditDetails, Date updatedAt) {
+    public LimitsHistory(LimitType type, String product, Label label, String limitUUID, Owner owner,
+            Current current, Future future, String customerUUID, Date createdAt, String createdByClient,
+            String createdBy, String updatedByClient, String updatedBy,
+            AuditDetails auditDetails, Date updatedAt) {
         this.type = type;
         this.product = product;
         this.label = label;
@@ -43,7 +47,9 @@ public class LimitsHistory {
         this.customerUUID = customerUUID;
         this.createdAt = createdAt;
         this.createdByClient = createdByClient;
+        this.createdBy = createdBy;
         this.updatedByClient = updatedByClient;
+        this.updatedBy = updatedBy;
         this.auditDetails = auditDetails;
         this.updatedAt = updatedAt;
     }
