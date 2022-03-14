@@ -74,12 +74,17 @@ public class GetLimitHistoryTests extends BaseTest {
     }
 
     @DisplayName("Send Get for limit history in Limit Service")
-    @Story("Send Get for limit history in Limit Service with no user Access Token")
-    @Description("Send Get for limit history in Limit Service for new created user with no history with no user Token")
+    @Story("Send Get for limit history in Limit Service with user Access Token")
+    @Description("Send Get for limit history in Limit Service for new created user with no history with and user Token")
     @Test
     public void getLimitHistoryForNewUserUserAuth(){
         accessToken = new OauthHelper().getUserToken(userHelper.getGermanUserName(), userHelper.getGermanUserPassword());
-        new GetRGLSLimitHistoryEndpoint().sendRequest(uuid, accessToken).assertRequestStatusCode();
+        GetRGLSLimitHistoryEndpoint data = new GetRGLSLimitHistoryEndpoint().sendRequest(uuid, accessToken);
+        if (HelpersConfig.isStaging()){
+            data.assertNoContentStatusCode();
+        }else {
+            data.assertRequestStatusCode();
+        }
     }
 
     @DisplayName("Send Get for limit history in Limit Service")
