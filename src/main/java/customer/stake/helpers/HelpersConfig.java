@@ -8,9 +8,11 @@ import java.util.Map;
 
 public class HelpersConfig {
     private static EnvConfig envConfig;
+    private static final String staging = "staging";
 
     public static EnvConfig createConfiguration() {
-        if (!System.getenv("env").equals("staging")) {
+
+        if (!isStaging()) {
             ConfigFactory.setProperty("file", "EnvConfig.properties");
         } else {
             ConfigFactory.setProperty("file", "EnvConfigStaging.properties");
@@ -20,5 +22,9 @@ public class HelpersConfig {
         myVars.put("env", System.getenv("env"));
         envConfig = ConfigFactory.create(EnvConfig.class, myVars);
         return envConfig;
+    }
+
+    public static boolean isStaging(){
+        return System.getenv("env").equals(staging);
     }
 }

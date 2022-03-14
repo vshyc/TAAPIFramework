@@ -10,12 +10,12 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Builder
-public class RGFESGetLimitHistoryWithLCRResponse {
+public class RGFESGetLimitHistoryWithLRCResponse {
 
     private RGFESLimitHistoryProduct sports;
     private RGFESLimitHistoryProduct games;
 
-    public RGFESGetLimitHistoryWithLCRResponse(RGFESLimitHistoryProduct sports, RGFESLimitHistoryProduct games) {
+    public RGFESGetLimitHistoryWithLRCResponse(RGFESLimitHistoryProduct sports, RGFESLimitHistoryProduct games) {
         this.sports = sports;
         this.games = games;
     }

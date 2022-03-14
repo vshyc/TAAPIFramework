@@ -1,7 +1,7 @@
 package customer.stake.rop;
 
 import customer.stake.dto.rgfes.RGFESGetLimitHistoryResponse;
-import customer.stake.dto.rgfes.RGFESGetLimitHistoryWithLCRResponse;
+import customer.stake.dto.rgfes.RGFESGetLimitHistoryWithLRCResponse;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
 import customer.stake.enums.Product;
@@ -33,8 +33,8 @@ public class GetRGFESLimitHistoryEndpoint extends BaseEndpoint<GetRGFESLimitHist
         return HttpStatus.SC_OK;
     }
 
-    public RGFESGetLimitHistoryWithLCRResponse getModelTypeForLimitHistoryWithLRC() {
-        return response.as(RGFESGetLimitHistoryWithLCRResponse.class);
+    public RGFESGetLimitHistoryWithLRCResponse getModelTypeForLimitHistoryWithLRC() {
+        return response.as(RGFESGetLimitHistoryWithLRCResponse.class);
     }
 
     public GetRGFESLimitHistoryEndpoint sendRequest(String sessionId) {

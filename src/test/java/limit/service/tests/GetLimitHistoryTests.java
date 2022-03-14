@@ -7,7 +7,9 @@ import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
 import customer.stake.enums.Owner;
 import customer.stake.enums.Product;
+import customer.stake.helpers.HelpersConfig;
 import customer.stake.helpers.LimitsHelper;
+import customer.stake.helpers.OauthHelper;
 import customer.stake.helpers.UserHelper;
 import customer.stake.rop.GetRGLSLimitHistoryEndpoint;
 import io.qameta.allure.Description;
@@ -30,6 +32,7 @@ public class GetLimitHistoryTests extends BaseTest {
     private GetLimitsHistoryResponseData data;
     private UserHelper userHelper;
     private final LimitsHelper limitHelper= new LimitsHelper();
+    private String accessToken;
 
     @BeforeEach
     @Step("Create a user for test ")
@@ -45,11 +48,38 @@ public class GetLimitHistoryTests extends BaseTest {
     @Test
     public void getLimitHistoryForNewUser(){
         GetRGLSLimitHistoryEndpoint data =  new GetRGLSLimitHistoryEndpoint().sendRequest(uuid);
-        if (envConfig.env().equals("staging")) {
+        if (HelpersConfig.isStaging()) {
             data.assertNoContentStatusCode();
         }else {
             data.assertRequestStatusCode();
         }
+    }
+
+    @DisplayName("Send Get for limit history in Limit Service")
+    @Story("Send Get for limit history in Limit Service with no accessToken")
+    @Description("Send Get for limit history in Limit Service for new created user with no history with no auth Token")
+    @Test
+    public void getLimitHistoryForNewUserNoAuth(){
+        accessToken = "";
+        new GetRGLSLimitHistoryEndpoint().sendRequest(uuid, accessToken).assertNoAuthRequestStatusCode();
+    }
+
+    @DisplayName("Send Get for limit history in Limit Service")
+    @Story("Send Get for limit history in Limit Service with no accessToken")
+    @Description("Send Get for limit history in Limit Service for new created user with no history with no auth Token")
+    @Test
+    public void getLimitHistoryForNewUserWrongAuth(){
+        accessToken = new OauthHelper().getApplicationToken();
+        new GetRGLSLimitHistoryEndpoint().sendRequest(uuid, accessToken).assertForbiddenStatusCode();
+    }
+
+    @DisplayName("Send Get for limit history in Limit Service")
+    @Story("Send Get for limit history in Limit Service with no user Access Token")
+    @Description("Send Get for limit history in Limit Service for new created user with no history with no user Token")
+    @Test
+    public void getLimitHistoryForNewUserUserAuth(){
+        accessToken = new OauthHelper().getUserToken(userHelper.getGermanUserName(), userHelper.getGermanUserPassword());
+        new GetRGLSLimitHistoryEndpoint().sendRequest(uuid, accessToken).assertRequestStatusCode();
     }
 
     @DisplayName("Send Get for limit history in Limit Service")

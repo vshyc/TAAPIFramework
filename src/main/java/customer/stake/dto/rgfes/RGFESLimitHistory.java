@@ -14,7 +14,6 @@ import java.util.Date;
 @Setter
 @Getter
 @NoArgsConstructor
-@Builder
 public class RGFESLimitHistory {
 
     private LimitType limitType;
@@ -22,16 +21,17 @@ public class RGFESLimitHistory {
     private Double value;
     private Interval interval;
     private Date updatedDate;
-    private Product product;
+    private String product;
     private Label label;
 
-    public RGFESLimitHistory(LimitType limitType, Boolean requested, Double value, Interval interval, Date updatedDate, Product product, Label label) {
+    public RGFESLimitHistory(LimitType limitType, Boolean requested, Double value, Interval interval, Date updatedDate,
+            Product product, Label label) {
         this.limitType = limitType;
         this.requested = requested;
         this.value = value;
         this.interval = interval;
         this.updatedDate = updatedDate;
-        this.product = product;
+        this.product = product.name();
         this.label = label;
     }
 }

@@ -39,6 +39,15 @@ public class GetRGLSLimitHistoryEndpoint extends BaseEndpoint<GetRGLSLimitHistor
         return this;
     }
 
+    public GetRGLSLimitHistoryEndpoint sendRequest(String uuid , String accessToken) {
+        response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
+                .auth().oauth2(accessToken)
+                .baseUri(envConfig.baseUri()).basePath(envConfig.limitsPath())
+                .contentType(ContentType.JSON)
+                .when().get("customers/{customerUuid}/limits/history", uuid);
+        return this;
+    }
+
     public GetRGLSLimitHistoryEndpoint sendRequest(String uuid, Product product) {
         HashMap<String, Object> pathParams = new HashMap<>();
         pathParams.put("customerUuid",uuid);
