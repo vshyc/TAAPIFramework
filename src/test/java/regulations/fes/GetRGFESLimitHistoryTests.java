@@ -3,10 +3,11 @@ package regulations.fes;
 import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.dto.rgfes.RGFESGetLimitHistoryResponse;
-import customer.stake.dto.rgfes.RGFESGetLimitHistoryWithLCRResponse;
+import customer.stake.dto.rgfes.RGFESGetLimitHistoryWithLRCResponse;
 import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
+import customer.stake.enums.Product;
 import customer.stake.helpers.LoginHelper;
 import customer.stake.helpers.TermsAndConditionsHelper;
 import customer.stake.helpers.UserHelper;
@@ -16,7 +17,6 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -65,7 +65,7 @@ public class GetRGFESLimitHistoryTests extends BaseTest {
                 softly.assertThat(response.getHistory().get(0).getLimitType()).isEqualTo(LimitType.DEPOSIT);
                 softly.assertThat(response.getHistory().get(0).getValue()).isEqualTo(1000d);
                 softly.assertThat(response.getHistory().get(0).getInterval()).isEqualTo(Interval.MONTH);
-                softly.assertThat(response.getHistory().get(0).getProduct()).isEqualTo("SPORTS");
+                softly.assertThat(response.getHistory().get(0).getProduct()).isEqualTo(Product.SPORTS.name());
                 softly.assertThat(response.getHistory().get(0).getLabel()).isEqualTo(Label.TIPICO);
             });
         }
@@ -79,8 +79,8 @@ public class GetRGFESLimitHistoryTests extends BaseTest {
     @Tag("RegressionTests")
     @TestCaseId(3467)
     @CsvFileSource(files = "src/test/resources/getLimitHistoryWithLRC.csv", numLinesToSkip = 1)
-    public void getLimitHistoryWithLRC(String product, Label label, LimitType type){
-        RGFESGetLimitHistoryWithLCRResponse response = new GetRGFESLimitHistoryEndpoint()
+    public void getLimitHistoryWithLRC(Product product, Label label, LimitType type){
+        RGFESGetLimitHistoryWithLRCResponse response = new GetRGFESLimitHistoryEndpoint()
                 .sendRequest(sessionId,product,label,type).assertRequestStatusCode()
                 .getModelTypeForLimitHistoryWithLRC();
         if (type == LimitType.DEPOSIT && isStaging) {

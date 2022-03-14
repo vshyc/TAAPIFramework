@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum Interval {
     MONTH("MONTH"),
     WEEK("WEEK"),
-    DAY("DAY");
+    DAY("DAY"),
+    DEFAULT("DEFAULT");
 
-    private String interval;
+    private final String interval;
 
     Interval(String interval) {
         this.interval = interval;

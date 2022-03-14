@@ -11,6 +11,7 @@ import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
 import customer.stake.enums.LimitType;
 import customer.stake.enums.Owner;
+import customer.stake.enums.Product;
 import customer.stake.enums.ValidatorResult;
 import customer.stake.helpers.AddCounterHelper;
 import customer.stake.helpers.OauthHelper;
@@ -75,9 +76,9 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
     @TestCaseId(3652)
     @Tag("RegressionTests")
     @CsvFileSource(files = "src/test/resources/addCountersAndLimitsForValidationsData.csv", numLinesToSkip = 1)
-    public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithLimit (Label label, CounterType type, double amount,
-                                                                                          LimitType limitType, Owner owner,
-                                                                                          String product, double limitAmount, Interval interval){
+    public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithLimit (Label label, CounterType type,
+            double amount, LimitType limitType, Owner owner,
+            Product product, double limitAmount, Interval interval){
         if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))){
         createLimit(limitType,owner,label,product,limitAmount,interval);}
 
@@ -100,8 +101,7 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
     @CsvFileSource(files = "src/test/resources/addCountersAndLimitsWithTheSameValueForValidationData.csv", numLinesToSkip = 1)
     public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithTheSameValueAsLimit
             (Label label, CounterType type, double amount,
-             LimitType limitType, Owner owner,
-             String product, double limitAmount, Interval interval){
+             LimitType limitType, Owner owner, Product product, double limitAmount, Interval interval){
         if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))){
             createLimit(limitType,owner,label,product,limitAmount,interval);}
 
@@ -130,8 +130,7 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
     @CsvFileSource(files = "src/test/resources/addCountersAndLimitsWithTheValueHigherThenLimitForValidationData.csv", numLinesToSkip = 1)
     public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithTheHigherValueThenLimit
             (Label label, CounterType type, double amount,
-             LimitType limitType, Owner owner,
-             String product, double limitAmount, Interval interval){
+             LimitType limitType, Owner owner, Product product, double limitAmount, Interval interval){
         if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))){
             createLimit(limitType,owner,label,product,limitAmount,interval);}
 
@@ -151,7 +150,7 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
 
     @Step("Sending a call to Limit Service to create Limit")
     private LimitsResponseData createLimit(LimitType type, Owner owner,
-                                           Label label, String product,
+                                           Label label, Product product,
                                            Double value, Interval interval) {
         LimitCreationData body = LimitCreationData.builder().
                 type(type)

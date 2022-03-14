@@ -3,6 +3,7 @@ package limit.service.tests;
 import configuration.BaseTest;
 import customer.stake.rop.PostLimitEndpoint;
 import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import customer.stake.helpers.UserHelper;
@@ -19,6 +20,7 @@ public class PostCreateLimitsTest extends BaseTest {
     private final String locationPath = "/v1/limits-service/customers";
 
     @BeforeEach
+    @Step("Create a user for test ")
     public void setUp() {
         uuid = new UserHelper().createGermanUserAndGetUuid();
 

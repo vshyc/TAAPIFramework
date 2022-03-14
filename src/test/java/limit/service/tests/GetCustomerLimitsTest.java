@@ -9,6 +9,7 @@ import customer.stake.helpers.UserHelper;
 import customer.stake.dto.limits.LimitsResponseData;
 import customer.stake.rop.GetLimitEndpoint;
 import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,7 @@ public class GetCustomerLimitsTest extends BaseTest {
     private UserHelper userHelper = new UserHelper();
 
     @BeforeEach
+    @Step("Create a user for test ")
     public void setUp() {
         uuid = userHelper.createGermanUserAndGetUuid();
     }

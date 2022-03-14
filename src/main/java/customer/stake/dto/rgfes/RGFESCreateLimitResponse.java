@@ -1,5 +1,6 @@
 package customer.stake.dto.rgfes;
 
+import customer.stake.enums.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,10 @@ public class RGFESCreateLimitResponse {
         this.games = games;
     }
 
-    public RGFESLimit getLimit(String type) {
-        if (type.equals("sports")) {
+    public RGFESLimit getLimit(Product product) {
+        if (product.equals(Product.SPORTS)) {
             return sports;
-        } else if (type.equals("games")) {
+        } else if (product.equals(Product.GAMES)) {
             return games;
         } else return null;
     }
