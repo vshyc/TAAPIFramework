@@ -15,9 +15,12 @@ public enum Label {
     All("All"),
     Tipico("Tipico"),
     Games("Games"),
-    Mysino("Mysino");
+    Mysino("Mysino"),
+    Original_Wetten("original-wetten"),
+    Wettbruder("wettbruder"),
+    Wettenmarkt("wettenmarkt");
 
-    private String label;
+    private final String label;
 
     Label(String label) {
         this.label = label;
