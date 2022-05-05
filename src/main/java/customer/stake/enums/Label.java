@@ -8,6 +8,7 @@ public enum Label {
     TIPICO("TIPICO"),
     GAMES("GAMES"),
     MYSINO("MYSINO"),
+    GLOBAL("GLOBAL"),
     all("all"),
     tipico("tipico"),
     games("games"),

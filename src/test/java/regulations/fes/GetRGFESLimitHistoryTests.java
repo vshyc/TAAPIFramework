@@ -65,8 +65,8 @@ public class GetRGFESLimitHistoryTests extends BaseTest {
                 softly.assertThat(response.getHistory().get(0).getLimitType()).isEqualTo(LimitType.DEPOSIT);
                 softly.assertThat(response.getHistory().get(0).getValue()).isEqualTo(1000d);
                 softly.assertThat(response.getHistory().get(0).getInterval()).isEqualTo(Interval.MONTH);
-                softly.assertThat(response.getHistory().get(0).getProduct()).isEqualTo(Product.SPORTS.name());
-                softly.assertThat(response.getHistory().get(0).getLabel()).isEqualTo(Label.TIPICO);
+                softly.assertThat(response.getHistory().get(0).getProduct()).isEqualTo(Product.GLOBAL.name());
+                softly.assertThat(response.getHistory().get(0).getLabel()).isEqualTo(Label.GLOBAL);
             });
         }
     }
@@ -83,7 +83,7 @@ public class GetRGFESLimitHistoryTests extends BaseTest {
         RGFESGetLimitHistoryWithLRCResponse response = new GetRGFESLimitHistoryEndpoint()
                 .sendRequest(sessionId,product,label,type).assertRequestStatusCode()
                 .getModelTypeForLimitHistoryWithLRC();
-        if (type == LimitType.DEPOSIT && isStaging) {
+        if (response.getLimitHistoryProduct(product)!=null) {
             SoftAssertions.assertSoftly(softly -> {
                 softly.assertThat(response.getLimitHistoryProduct(product).getLimitHistoryType(type).get(0).getValue())
                         .isEqualTo(1000d);

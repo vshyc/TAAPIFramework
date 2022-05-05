@@ -1,9 +1,12 @@
 package customer.stake.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+@JsonPOJOBuilder
 public enum Product {
     SPORTS("sports"),
+    GLOBAL("GLOBAL"),
     GAMES("games");
 
     private final String product;

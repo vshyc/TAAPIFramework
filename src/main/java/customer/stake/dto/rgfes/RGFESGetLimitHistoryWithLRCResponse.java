@@ -1,5 +1,6 @@
 package customer.stake.dto.rgfes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import customer.stake.enums.Product;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,10 +15,19 @@ public class RGFESGetLimitHistoryWithLRCResponse {
 
     private RGFESLimitHistoryProduct sports;
     private RGFESLimitHistoryProduct games;
+    @JsonProperty("GLOBAL")
+    private RGFESLimitHistoryProduct GLOBAL;
 
     public RGFESGetLimitHistoryWithLRCResponse(RGFESLimitHistoryProduct sports, RGFESLimitHistoryProduct games) {
         this.sports = sports;
         this.games = games;
+    }
+
+    public RGFESGetLimitHistoryWithLRCResponse(RGFESLimitHistoryProduct sports,
+            RGFESLimitHistoryProduct games, RGFESLimitHistoryProduct GLOBAL) {
+        this.sports = sports;
+        this.games = games;
+        this.GLOBAL = GLOBAL;
     }
 
     public RGFESLimitHistoryProduct getLimitHistoryProduct(Product product) {
@@ -25,6 +35,8 @@ public class RGFESGetLimitHistoryWithLRCResponse {
             return sports;
         } else if (product.equals(Product.GAMES)) {
             return games;
+        } else if (product.equals(Product.GLOBAL)) {
+            return GLOBAL;
         } else return null;
     }
 }
