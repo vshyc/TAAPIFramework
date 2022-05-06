@@ -7,8 +7,10 @@ import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
-
+@Execution(ExecutionMode.CONCURRENT)
 public class BaseTest {
     public static EnvConfig envConfig = HelpersConfig.createConfiguration();
 
