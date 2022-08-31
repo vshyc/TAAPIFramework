@@ -33,7 +33,7 @@ public class RGFESGetLimitHistoryWithLRCResponse {
     public RGFESLimitHistoryProduct getLimitHistoryProduct(Product product) {
         if (product.equals(Product.SPORTS)) {
             return sports;
-        } else if (product.equals(Product.GAMES)) {
+        } else if (product.equals(Product.GAMBLING)) {
             return games;
         } else if (product.equals(Product.GLOBAL)) {
             return GLOBAL;

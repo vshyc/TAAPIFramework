@@ -1,7 +1,5 @@
 package limit.service.tests;
 
-import com.tipico.ta.reqtest.extension.ReqtestReporterExtension;
-import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.dto.counters.PostCountersResponse;
 import customer.stake.dto.limits.LimitCreationData;
@@ -51,7 +49,6 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
     @ParameterizedTest(name = "{index} -> Sending a call to CSS with label={0} , type={1}, " +
             "amount={2} and checking if there is proper Validation result in response ")
     @DisplayName("Check validation response when incrementing the counter")
-    @TestCaseId(3649)
     @Tag("RegressionTests")
     @CsvFileSource(files = "src/test/resources/addCounterToCustomerStakeService.csv", numLinesToSkip = 1)
     public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounter(Label label, CounterType type, double amount){
@@ -60,7 +57,7 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
         Assertions.assertThat(response.getLabel()).isEqualTo(label);
         Assertions.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
                 .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
-        if ((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))
+        if ((!(envConfig.env().equals("staging")) && type == CounterType.STAKES_BETTING))
             Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
                     .isEqualTo(ValidatorResult.VALID);
         else {
@@ -73,13 +70,12 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
             "amount={2} for the user with limit  type={3} , owner={4}, " +
             " label={0}, product={5}, value={6} , interval={7}  and checking if there is proper Validation result in response ")
     @DisplayName("Check validation response when incrementing the counter with limit on LS")
-    @TestCaseId(3652)
     @Tag("RegressionTests")
     @CsvFileSource(files = "src/test/resources/addCountersAndLimitsForValidationsData.csv", numLinesToSkip = 1)
     public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithLimit (Label label, CounterType type,
             double amount, LimitType limitType, Owner owner,
             Product product, double limitAmount, Interval interval){
-        if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))){
+        if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKES_BETTING && label.isTipico()))){
         createLimit(limitType,owner,label,product,limitAmount,interval);}
 
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
@@ -96,13 +92,12 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
             "amount={2} for the user with limit  type={3} , owner={4}, " +
             " label={0}, product={5}, value={6} , interval={7}  and checking if there is proper Validation result in response ")
     @DisplayName("Check validation response when incrementing the counter to the same value as limit on LS")
-    @TestCaseId(3653)
     @Tag("RegressionTests")
     @CsvFileSource(files = "src/test/resources/addCountersAndLimitsWithTheSameValueForValidationData.csv", numLinesToSkip = 1)
     public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithTheSameValueAsLimit
             (Label label, CounterType type, double amount,
              LimitType limitType, Owner owner, Product product, double limitAmount, Interval interval){
-        if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))){
+        if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKES_BETTING))){
             createLimit(limitType,owner,label,product,limitAmount,interval);}
 
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,
@@ -112,7 +107,7 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
             softly.assertThat(response.getAttributes().getAtribute(type).stream().reduce(0d, Double::sum))
                     .describedAs("Check if sum off all counters for new user is equal to amount").isEqualTo(amount);
         });
-        if ((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET)){
+        if ((!(envConfig.env().equals("staging")) && type == CounterType.STAKES_BETTING)){
             Assertions.assertThat(response.getValidationResponse().getLimitForCounter(type).get(0).getValidationResult())
                 .isEqualTo(ValidatorResult.VALID);}
         else {
@@ -125,13 +120,12 @@ public class PostCountersAndLSValidatorsTests extends BaseTest {
             "amount={2} for the user with limit  type={3} , owner={4}, " +
             " label={0}, product={5}, value={6} , interval={7}  and checking if there is proper Validation result in response ")
     @DisplayName("Check validation response when incrementing the counter to the higher value then limit on LS")
-    @TestCaseId(3654)
     @Tag("RegressionTests")
     @CsvFileSource(files = "src/test/resources/addCountersAndLimitsWithTheValueHigherThenLimitForValidationData.csv", numLinesToSkip = 1)
     public void checkIfThereIsProperValidatorResponseWhenIncrementingTheCounterWithTheHigherValueThenLimit
             (Label label, CounterType type, double amount,
              LimitType limitType, Owner owner, Product product, double limitAmount, Interval interval){
-        if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKE_BET))){
+        if (!((!(envConfig.env().equals("staging")) && type == CounterType.STAKES_BETTING))){
             createLimit(limitType,owner,label,product,limitAmount,interval);}
 
         PostCountersResponse response = new AddCounterHelper().addSingleCounterToCustomerStakeService(uuid, id, label,

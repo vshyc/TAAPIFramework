@@ -41,7 +41,7 @@ public class GetCustomerLimitsTest extends BaseTest {
             data = new GetLimitsHelper().checkIfLimitExistForUser(uuid,
                     Owner.PERSONAL,
                     LimitType.TURNOVER,
-                    Label.tipico);
+                    Label.ALL);
             Assertions.assertThat(data.getCurrent().getValue()).isEqualTo(1000f);
         } catch (NullPointerException e) {
             if (envConfig.env().equals("staging")) {

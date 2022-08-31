@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum CounterType {
 
     PAYIN("payin"),
-    PAYIN_BET("payinBet"),
-    PAYIN_CASINO("payinCasino"),
-    LOSS_BET("lossBet"),
-    LOSS_STAKE("lossStake"),
-    STAKE("stake"),
-    STAKE_BET("stakeBet");
+    PAYINS_BETTING("payinsBetting"),
+    PAYINS_GAMBLING("payinsGambling"),
+    LOSSING_BETS("lossingBets"),
+    LOSSING_STAKES("lossingStakes"),
+    STAKES("stakes"),
+    STAKES_BETTING("stakesBetting");
 
     private String type;
 

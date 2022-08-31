@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 public enum Product {
     SPORTS("sports"),
     GLOBAL("GLOBAL"),
-    GAMES("games");
+    GAMBLING("gambling");
 
     private final String product;
 

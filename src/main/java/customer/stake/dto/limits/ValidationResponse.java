@@ -37,17 +37,17 @@ public class ValidationResponse {
     public List<LimitValidator> getLimitForCounter(CounterType type) {
         if (type == CounterType.PAYIN) {
             return payin;
-        } else if (type == CounterType.PAYIN_BET) {
+        } else if (type == CounterType.PAYINS_BETTING) {
             return payinBet;
-        } else if (type == CounterType.PAYIN_CASINO) {
+        } else if (type == CounterType.PAYINS_GAMBLING) {
             return payinCasino;
-        } else if (type == CounterType.LOSS_BET) {
+        } else if (type == CounterType.LOSSING_BETS) {
             return lossBet;
-        } else if (type == CounterType.LOSS_STAKE) {
+        } else if (type == CounterType.LOSSING_STAKES) {
             return lossStake;
-        } else if (type == CounterType.STAKE) {
+        } else if (type == CounterType.STAKES) {
             return stake;
-        } else if (type == CounterType.STAKE_BET) {
+        } else if (type == CounterType.STAKES_BETTING) {
             return stakeBet;
         } else return null;
     }

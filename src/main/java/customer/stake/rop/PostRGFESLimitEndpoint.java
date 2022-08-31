@@ -10,7 +10,7 @@ import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
 
-import static customer.stake.constants.MediaTypes.RGFS_LIMIT_SERVICE_V2_JSON;
+import static customer.stake.constants.MediaTypes.LIMIT_SERVICE_JSON;
 import static customer.stake.constants.RequestPaths.LIMITS_REQUEST_PATH;
 import static io.restassured.RestAssured.given;
 
@@ -33,7 +33,7 @@ public class PostRGFESLimitEndpoint extends BaseEndpoint<PostRGFESLimitEndpoint,
                 .baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
                 .header("Cookie", String.format("SESSION_ID=%s", sessionId))
                 .contentType(ContentType.JSON)
-                .accept(RGFS_LIMIT_SERVICE_V2_JSON)
+                .accept(LIMIT_SERVICE_JSON)
                 .body(body)
                 .post(LIMITS_REQUEST_PATH);
         return this;

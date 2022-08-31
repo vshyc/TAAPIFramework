@@ -7,11 +7,6 @@
     <groupId>com.tipico.services.taLimitService</groupId>
     <artifactId>taLimitService-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-        <parent>
-            <groupId>com.tipico</groupId>
-            <artifactId>tipico-parent</artifactId>
-            <version>3.1.5</version>
-        </parent>
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -100,12 +95,6 @@
             <artifactId>annotations</artifactId>
             <groupId>org.jetbrains</groupId>
             <version>16.0.1</version>
-        </dependency>
-        <dependency>
-            <artifactId>reqtest-junit-5-extension</artifactId>
-            <groupId>com.tipico.ta</groupId>
-            <scope>test</scope>
-            <version>1.0.2</version>
         </dependency>
         <dependency>
             <artifactId>mysql-connector-java</artifactId>

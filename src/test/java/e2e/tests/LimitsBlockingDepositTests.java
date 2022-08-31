@@ -1,7 +1,5 @@
 package e2e.tests;
 
-import com.tipico.ta.reqtest.extension.ReqtestReporterExtension;
-import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.enums.CounterType;
 import customer.stake.enums.Label;
@@ -25,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 
 @DisplayName("E2E Tests for Limits blocking proper deposits")
-@ExtendWith(ReqtestReporterExtension.class)
 public class LimitsBlockingDepositTests extends BaseTest {
 
     private final String amlErrorMsg = "Jetzt Konto verifizieren! Damit du einzahlen kannst, musst du dein " +
@@ -64,8 +61,9 @@ public class LimitsBlockingDepositTests extends BaseTest {
         loginHelper = new LoginHelper();
         userHelper = new UserHelper();
         paymentHelper = new PaymentHelper();
-        createdUser = userHelper.createGermanUserInWebTestApi();
         tacHelper = new TermsAndConditionsHelper();
+        addCounterHelper = new AddCounterHelper();
+        createdUser = userHelper.createGermanUserInWebTestApi();
         tacResponse = tacHelper.acceptAllDocumentsInTAC(userHelper.getUuid(createdUser));
         loginResponse = loginHelper.LoginUserToAccountApp(userHelper.getGermanUserName());
         sessionId = loginHelper.getSessionId(loginResponse);
@@ -74,12 +72,10 @@ public class LimitsBlockingDepositTests extends BaseTest {
         uuid = userHelper.getUuid(createdUser);
         username = userHelper.getLogin(createdUser);
         id = userHelper.getId(createdUser);
-        addCounterHelper = new AddCounterHelper();
     }
 
     @Test
     @Tag("RegressionTests")
-    @TestCaseId(3445)
     @DisplayName("Check if AML Limit is blocking deposit higher then 100 on staging or 150 on TTS")
     public void checkIfAmlLimitIsBlockingDepositIfHigherThenAMLLimit() {
         Response paymentResponse = paymentHelper.payIn(sessionId, jsession, slaveId, "de",
@@ -96,7 +92,6 @@ public class LimitsBlockingDepositTests extends BaseTest {
 
     @Test
     @Tag("RegressionTests")
-    @TestCaseId(3454)
     @DisplayName("Check if AML Limit is not blocking deposits below limit")
     public void checkIfAmlLimitIsNotBlockingDepositIfLowerThenAMLLimit() {
         Response paymentResponse = paymentHelper.payIn(sessionId, jsession, slaveId, "de",
@@ -106,7 +101,6 @@ public class LimitsBlockingDepositTests extends BaseTest {
 
     @Test
     @Tag("RegressionTests")
-    @TestCaseId(3455)
     @DisplayName("Check if KYC'd user can deposit over AML limit")
     public void checkIf1kLimitIsNotBlockingDepositForKycedCustomersWithDepositHigherThenAMLLimit() throws EbetGatewayException {
         userHelper.getKYCVerifiedStatus(username, uuid);
@@ -117,9 +111,8 @@ public class LimitsBlockingDepositTests extends BaseTest {
 
     @Test
     @Tag("RegressionTests")
-    @TestCaseId(3456)
     @DisplayName("Check if 1k deposit Limit is blocking deposits over the limit")
-    public void checkIf1kLimitIstBlockingDepositForKycedCustomersWithDepositHigherThen1k() throws EbetGatewayException {
+    public void checkIf1kLimitIsBlockingDepositForKycedCustomersWithDepositHigherThen1k() throws EbetGatewayException {
         userHelper.getKYCVerifiedStatus(username, uuid);
         Response paymentResponse = paymentHelper.payIn(sessionId, jsession, slaveId, "de",
                 1500, "app-tipico-sports");
@@ -135,7 +128,6 @@ public class LimitsBlockingDepositTests extends BaseTest {
 
     @Test
     @Tag("RegressionTests")
-    @TestCaseId(3457)
     @DisplayName("Check if 1k deposit Limit is blocking deposits lower then the limit with counters in CSS table")
     public void checkIf1kLimitIstBlockingDepositForKycedCustomersWithLowerHigherThen1kButWithCounters() throws EbetGatewayException {
         userHelper.getKYCVerifiedStatus(username, uuid);

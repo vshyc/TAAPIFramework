@@ -1,7 +1,5 @@
 package regulations.fes;
 
-import com.tipico.ta.reqtest.extension.ReqtestReporterExtension;
-import com.tipico.ta.reqtest.extension.TestCaseId;
 import configuration.BaseTest;
 import customer.stake.enums.Interval;
 import customer.stake.enums.Label;
@@ -35,7 +33,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static customer.stake.constants.MediaTypes.RGFS_LIMIT_HISTORY_V3_JSON;
+import static customer.stake.constants.MediaTypes.LIMIT_HISTORY_V3_JSON;
 
 @DisplayName("RGFES Geting Limits Tests")
 @ExtendWith(ReqtestReporterExtension.class)
@@ -69,7 +67,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Description("Getting Limits by RGFES from Option Service")
     @Test
     @Tag("RegressionTests")
-    @TestCaseId(3458)
     public void getLimitsForOverview() {
         RGFESGetOptionServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId).assertRequestStatusCode()
                 .getResponseModel();
@@ -82,9 +79,8 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Description("Getting Limits by RGFES from Limit Service")
     @Test
     @Tag("RegressionTests")
-    @TestCaseId(3459)
     public void getLimitsForOverviewFromLimitService() {
-        RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, RGFS_LIMIT_HISTORY_V3_JSON)
+        RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, LIMIT_HISTORY_V3_JSON)
                 .assertRequestStatusCode()
                 .getModelTypeForLimitServiceResponse();
         if (!isStaging) {
@@ -103,7 +99,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
             "label={2}, product={3}, value={4} , interval={5} and checking if limit is visible in GET call")
     @CsvFileSource(files = "src/test/resources/getNewCreatedLimit.csv", numLinesToSkip = 1)
     @Tag("RegressionTests")
-    @TestCaseId(3460)
     public void getNewCreatedLimitForOverviewFromLimitService(LimitType limitType, Owner owner, Label label,
             Product product, Double value, Interval interval) {
         if (!isStaging && limitType == LimitType.TURNOVER) {
@@ -111,7 +106,7 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
                     "creating it by RGFES is not posible");
         } else {
             createLimitWithApplicationToken(limitType, owner, label, product, value, interval);
-            RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, RGFS_LIMIT_HISTORY_V3_JSON)
+            RGFESGetLimitServiceLimitResponse response = new GetRGFESLimitEndpoint().sendRequest(sessionId, LIMIT_HISTORY_V3_JSON)
                     .assertRequestStatusCode()
                     .getModelTypeForLimitServiceResponse();
             SoftAssertions.assertSoftly(softly-> {
@@ -127,7 +122,6 @@ public class GetLimitsForOverviewFromOptionsTest extends BaseTest {
     @Description("Getting Limits by RGFES from Option Service without providing proper sessionId")
     @Test
     @Tag("RegressionTests")
-    @TestCaseId(3461)
     public void getLimitsNoAuthForOverview() {
         new GetRGFESLimitEndpoint().sendRequest("").assertNoAuthRequestStatusCode();
     }

@@ -13,9 +13,9 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 
-import static customer.stake.constants.MediaTypes.CAS_CONTENT_TYPE;
-import static customer.stake.constants.MediaTypes.EBET_GATEWAY_CUSTOMER_DOCUMENT_REQUEST_JSON;
-import static customer.stake.constants.MediaTypes.EBET_GATEWAY_CUSTOMER_DOCUMENT_STATUS_JSON;
+import static customer.stake.constants.MediaTypes.CONTENT_TYPE;
+import static customer.stake.constants.MediaTypes.GATEWAY_CUSTOMER_DOCUMENT_REQUEST_JSON;
+import static customer.stake.constants.MediaTypes.GATEWAY_CUSTOMER_DOCUMENT_STATUS_JSON;
 import static io.restassured.RestAssured.given;
 
 
@@ -63,7 +63,7 @@ public class UserHelper {
         requestBody.addProperty("comment", "string");
         int statusCode = given().baseUri(envConfig.apiInt())
                 .basePath(envConfig.ebetGatewayCustomerRequestEndpoint())
-                .contentType(EBET_GATEWAY_CUSTOMER_DOCUMENT_REQUEST_JSON)
+                .contentType(GATEWAY_CUSTOMER_DOCUMENT_REQUEST_JSON)
                 .pathParam("uuid", uuid)
                 .body(requestBody.toString())
                 .log().all()
@@ -79,7 +79,7 @@ public class UserHelper {
         requestBody.addProperty("status", "approved");
         int statusCode = given().baseUri(envConfig.apiInt())
                 .basePath(envConfig.ebetGatewayCustomerStatusEndpoint())
-                .contentType(EBET_GATEWAY_CUSTOMER_DOCUMENT_STATUS_JSON)
+                .contentType(GATEWAY_CUSTOMER_DOCUMENT_STATUS_JSON)
                 .pathParam("uuid", uuid)
                 .body(requestBody.toString())
                 .log().all()
@@ -94,7 +94,7 @@ public class UserHelper {
         Response response = given().baseUri(envConfig.casBaseUri())
                 .basePath(envConfig.caseBasePath())
                 .auth().preemptive().basic("admin", "geheim")
-                .accept(CAS_CONTENT_TYPE)
+                .accept(CONTENT_TYPE)
                 .pathParam("uuid", uuid)
                 .log().all()
                 .get();

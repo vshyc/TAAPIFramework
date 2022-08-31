@@ -47,17 +47,17 @@ public class AddCounterHelper {
 
     private @NotNull List<Attribute> createBetAttributeList(Double amount){
         List<Attribute> attributes = new ArrayList<>();
-        attributes.add(new Attribute(CounterType.STAKE_BET,amount));
-        attributes.add(new Attribute(CounterType.STAKE,amount));
-        attributes.add(new Attribute(CounterType.LOSS_BET,amount));
-        attributes.add(new Attribute(CounterType.LOSS_STAKE,amount));
+        attributes.add(new Attribute(CounterType.STAKES_BETTING,amount));
+        attributes.add(new Attribute(CounterType.STAKES,amount));
+        attributes.add(new Attribute(CounterType.LOSSING_BETS,amount));
+        attributes.add(new Attribute(CounterType.LOSSING_STAKES,amount));
         return attributes;
     }
 
     private @NotNull List<Attribute> createPayinAttributeList(Double amount){
         List<Attribute> attributes = new ArrayList<>();
         attributes.add(new Attribute(CounterType.PAYIN,amount));
-        attributes.add(new Attribute(CounterType.PAYIN_BET,amount));
+        attributes.add(new Attribute(CounterType.PAYINS_BETTING,amount));
         return attributes;
     }
 }

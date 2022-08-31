@@ -103,7 +103,7 @@ public class GetLimitHistoryTests extends BaseTest {
     @Description("Send Get for limit history in Limit Service for new created user with limit, Filtering on non existing Limit")
     @Test
     public void getLimitHistoryWithFiltering(){
-        limitHelper.createLimitWithUserToken(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico, Product.GAMES,
+        limitHelper.createLimitWithUserToken(userHelper,uuid,LimitType.DEPOSIT, Owner.PERSONAL,Label.tipico, Product.GAMBLING,
                 800d, Interval.MONTH);
         new GetRGLSLimitHistoryEndpoint().sendRequest(uuid,Product.SPORTS,
                 Label.tipico, LimitType.DEPOSIT).assertNoContentStatusCode();

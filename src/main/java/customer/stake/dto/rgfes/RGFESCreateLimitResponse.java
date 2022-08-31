@@ -23,7 +23,7 @@ public class RGFESCreateLimitResponse {
     public RGFESLimit getLimit(Product product) {
         if (product.equals(Product.SPORTS)) {
             return sports;
-        } else if (product.equals(Product.GAMES)) {
+        } else if (product.equals(Product.GAMBLING)) {
             return games;
         } else return null;
     }

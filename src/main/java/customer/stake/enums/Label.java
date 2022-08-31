@@ -4,22 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Label {
 
-    ALL("ALL"),
-    TIPICO("TIPICO"),
-    GAMES("GAMES"),
-    MYSINO("MYSINO"),
-    GLOBAL("GLOBAL"),
-    all("all"),
-    tipico("tipico"),
-    games("games"),
-    mysino("mysino"),
-    All("All"),
-    Tipico("Tipico"),
-    Games("Games"),
-    Mysino("Mysino"),
-    Original_Wetten("original-wetten"),
-    Wettbruder("wettbruder"),
-    Wettenmarkt("wettenmarkt");
+    ALL("ALL");
 
     private final String label;
 
@@ -31,4 +16,5 @@ public enum Label {
     public String getLabel() {
         return label;
     }
+    
 }

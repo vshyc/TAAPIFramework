@@ -9,7 +9,7 @@ import org.apache.http.HttpStatus;
 
 import java.lang.reflect.Type;
 
-import static customer.stake.constants.MediaTypes.RGFS_LIMIT_SERVICE_V2_JSON;
+import static customer.stake.constants.MediaTypes.LIMIT_SERVICE_JSON;
 import static customer.stake.constants.RequestPaths.LIMITS_REQUEST_PATH;
 import static io.restassured.RestAssured.given;
 
@@ -34,9 +34,9 @@ public class GetRGFESLimitEndpoint extends BaseEndpoint<GetRGFESLimitEndpoint, R
     public GetRGFESLimitEndpoint sendRequest(String sessionId) {
         response = given().spec(RequestConfigurationBuilder.getDefaultRequestSpecification())
                 .baseUri(envConfig.accountDeUrl()).basePath(envConfig.rgfesPath())
-                .contentType(RGFS_LIMIT_SERVICE_V2_JSON)
+                .contentType(LIMIT_SERVICE_JSON)
                 .header("Cookie", String.format("SESSION_ID=%s", sessionId))
-                .accept(RGFS_LIMIT_SERVICE_V2_JSON)
+                .accept(LIMIT_SERVICE_JSON)
                 .get(LIMITS_REQUEST_PATH);
         return this;
     }

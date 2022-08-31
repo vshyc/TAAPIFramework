@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum Owner {
     AML("AML"),
     PERSONAL("PERSONAL"),
-    IMPOSED("IMPOSED");
+    FORCED("FORCED");
 
     private String owner;
 

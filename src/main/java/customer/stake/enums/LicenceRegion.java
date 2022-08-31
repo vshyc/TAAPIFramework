@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum LicenceRegion {
 
-    GERMANY("DE"),
-    AUSTRIA("AT"),
-    SH("DE_SH"),
-    COM("COM");
+    GERMANY("DE");
 
     private String licenceRegion;
 
